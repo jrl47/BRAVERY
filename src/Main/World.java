@@ -13,6 +13,7 @@ import GameObjects.BorderedText;
 import GameObjects.Button;
 import GameObjects.GameObject;
 import GameObjects.GameStartButton;
+import GameObjects.Stage;
 import GameObjects.Text;
 
 
@@ -29,7 +30,7 @@ public class World {
 		BorderedButton t = null;
 		try {
 			b = new Background(ImageIO.read(World.class.getResource("/titleBackground.png")));
-			t = new GameStartButton(298, 188, "BRAVERY", 4, ImageIO.read(World.class.getResource("/fonts.png")),
+			t = new GameStartButton(464, 268, "BRAVERY", 6, ImageIO.read(World.class.getResource("/fonts.png")),
 					ImageIO.read(World.class.getResource("/bluefonts.png")),
 					ImageIO.read(World.class.getResource("/textbackground.png")),
 					ImageIO.read(World.class.getResource("/textbackgroundhover.png")), myState);
@@ -54,17 +55,21 @@ public class World {
 		if(myState.getState().equals("game")){
 			for(GameObject g: myObjects){
 				g.turnOff();
-				myObjects.remove(g);
 			}
+			myObjects.clear();
 			
 			Background b = null;
+			Stage s = null;
 			try {
 				b = new Background(ImageIO.read(World.class.getResource("/mapBackground.png")));
+				s = new Stage();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			b.turnOn();
+			s.turnOn();
 			myObjects.add(b);
+			myObjects.add(s);
 		}
 	}
 

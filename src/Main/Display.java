@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 public class Display {
-	public static int width = 800;
+	public static int width = 1200;
 	public static int height = (width / 16) * 9;
 	
 	private JFrame frame;
