@@ -13,6 +13,7 @@ import GameObjects.BorderedText;
 import GameObjects.Button;
 import GameObjects.GameObject;
 import GameObjects.GameStartButton;
+import GameObjects.Player;
 import GameObjects.Stage;
 import GameObjects.Text;
 
@@ -22,10 +23,14 @@ public class World {
 	public static final int TICK_SCALAR = 30;
 	private List<GameObject> myObjects;
 	private State myState;
+	private State menuState;
+	private Stage myStage;
+	private Player myPlayer;
 	
 	public World() {
 		myObjects = new ArrayList<GameObject>();
 		myState = new State("main");
+		menuState = new State("main");
 		Background b = null;
 		BorderedButton t = null;
 		try {
@@ -58,18 +63,18 @@ public class World {
 			}
 			myObjects.clear();
 			
+			myPlayer = new Player();
 			Background b = null;
-			Stage s = null;
 			try {
 				b = new Background(ImageIO.read(World.class.getResource("/mapBackground.png")));
-				s = new Stage();
+				myStage = new Stage(myPlayer);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			b.turnOn();
-			s.turnOn();
+			myStage.turnOn();
 			myObjects.add(b);
-			myObjects.add(s);
+			myObjects.add(myStage);
 		}
 	}
 
