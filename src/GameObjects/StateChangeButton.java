@@ -4,21 +4,24 @@ import java.awt.image.BufferedImage;
 
 import Utilities.State;
 
-public class GameStartButton extends BorderedButton{
+public class StateChangeButton extends BorderedButton{
 
 	State myState;
-	public GameStartButton(int xx, int yy, String s, int size,
+	String myNewState;
+	public StateChangeButton(int xx, int yy, String s, int size,
 			BufferedImage font, BufferedImage hoverFont, BufferedImage backing,
-			BufferedImage hoverBacking, State state) {
+			BufferedImage hoverBacking, State state, String newState) {
 		super(xx, yy, s, size, font, hoverFont, backing, hoverBacking);
 		myState = state;
+		myNewState = newState;
 	}
 
 	@Override
 	public void useInput(int i, int j, boolean b) {
 		super.useInput(i,j,b);
+//		System.out.println(isHover);
 		if(b){
-			myState.setState("game");
+			myState.setState(myNewState);
 		}
 	}
 	

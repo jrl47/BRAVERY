@@ -64,9 +64,12 @@ public class Button extends GameObject{
 			g.drawImage(fSelect.getStringImage(myString, mySize), x, y, null);
 			return;
 		}
+		
+//		System.out.println(isHover);
 		if(!isHover){
 			g.drawImage(fStd.getStringImage(myString, mySize), x, y, null);
 		} else{
+//			System.out.println("hapen");
 			g.drawImage(fHover.getStringImage(myString, mySize), x, y, null);
 		}
 	}
