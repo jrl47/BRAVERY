@@ -19,7 +19,6 @@ public class StateChangeButton extends BorderedButton{
 	@Override
 	public void useInput(int i, int j, boolean b) {
 		super.useInput(i,j,b);
-//		System.out.println(isHover);
 		if(b){
 			myState.setState(myNewState);
 		}

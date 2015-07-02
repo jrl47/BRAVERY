@@ -1,7 +1,5 @@
 package Main;
-import java.awt.Graphics;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -9,30 +7,25 @@ import javax.imageio.ImageIO;
 import Utilities.State;
 import GameObjects.Background;
 import GameObjects.BorderedButton;
-import GameObjects.BorderedText;
-import GameObjects.Button;
 import GameObjects.GameObject;
+import GameObjects.Menu;
 import GameObjects.Player;
 import GameObjects.Stage;
 import GameObjects.StateChangeButton;
-import GameObjects.Text;
 
 
-public class World {
+public class World extends GameObject{
 	
 	public static final int TICK_SCALAR = 30;
-	private List<GameObject> myObjects;
 	private State myState;
 	private String oldState;
-	private State menuState;
 	private Stage myStage;
 	private Player myPlayer;
+	private Menu myMenu;
 	
 	public World() {
-		myObjects = new ArrayList<GameObject>();
 		myState = new State("main");
 		oldState = "main";
-		menuState = new State("main");
 		Background b = null;
 		BorderedButton t = null;
 		try {
@@ -44,58 +37,44 @@ public class World {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		b.turnOn();
-		t.turnOn();
-		myObjects.add(b);
-		myObjects.add(t);
+		myActiveObjects.add(b);
+		myActiveObjects.add(t);
 	}
 	
 	public void step() {
 		manageState();
-		for(GameObject g: myObjects){
-			if(g.isOn()){
-				g.step();
-			}
+		for(GameObject g: myActiveObjects){
+			g.step();
 		}
 	}
 	private void manageState() {
 		if(myState.getState().equals("game") && !oldState.equals("game")){
 			oldState = "game";
-			for(GameObject g: myObjects){
-				g.turnOff();
-			}
-			myObjects.clear();
+			myActiveObjects.clear();
 			
 			myPlayer = new Player();
+			myMenu = new Menu(myPlayer);
 			Background b = null;
 			StateChangeButton moveMenuOpen = null;
 			try {
 				b = new Background(ImageIO.read(World.class.getResource("/mapBackground.png")));
-				moveMenuOpen = new StateChangeButton(1000, 50, "MOVE", 3, ImageIO.read(World.class.getResource("/fonts.png")),
-						ImageIO.read(World.class.getResource("/bluefonts.png")),
-						ImageIO.read(World.class.getResource("/textbackground.png")),
-						ImageIO.read(World.class.getResource("/textbackgroundhover.png")), menuState, "move");
 				myStage = new Stage(myPlayer);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			b.turnOn();
-			moveMenuOpen.turnOn();
-			myStage.turnOn();
-			myObjects.add(b);
-			myObjects.add(moveMenuOpen);
-			myObjects.add(myStage);
+			myActiveObjects.add(b);
+			myActiveObjects.add(myStage);
+			myActiveObjects.add(myMenu);
 		}
 		
 	}
-
-	public void draw(Graphics g) {
-		for(GameObject go: myObjects){
-			if(go.isOn())
-				go.draw(g);
-		}
-	}
 	public List<GameObject> getComponents() {
-		return myObjects;
+		return myActiveObjects;
+	}
+
+	@Override
+	public void useInput(int i, int j, boolean b) {
+		// TODO Auto-generated method stub
+		
 	}
 }

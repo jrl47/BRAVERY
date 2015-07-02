@@ -11,30 +11,17 @@ import java.util.List;
 
 public abstract class GameObject {
 
-	private List<GameObject> myComponents;
+	protected List<GameObject> myActiveObjects;
 	protected Shape myBounds;
-	private boolean on;
 	protected boolean isHover;
 	protected BufferedImage myImage; 
 	
 	public GameObject(){
-		myComponents = new ArrayList<GameObject>();
-	}
-	
-	public void turnOn(){
-		on = true;
-	}
-	
-	public void turnOff(){
-		on = false;
-	}
-	
-	public boolean isOn(){
-		return on;
+		myActiveObjects = new ArrayList<GameObject>();
 	}
 	
 	public List<GameObject> getComponents() {
-		return myComponents;
+		return myActiveObjects;
 	}
 
 	public Shape getBounds() {
@@ -45,11 +32,15 @@ public abstract class GameObject {
 	
 	public abstract void step();
 	
-	public abstract void draw(Graphics g);
+	public void draw(Graphics g) {
+		for(GameObject go: myActiveObjects){
+			go.draw(g);
+		}
+	}
 
 	public void stopHover() {
 		isHover = false;
-		for(GameObject g: myComponents){
+		for(GameObject g: myActiveObjects){
 			g.stopHover();
 		}
 	}
