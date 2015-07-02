@@ -26,6 +26,7 @@ public class Display {
 		canvas.setPreferredSize(size);
 		canvas.addMouseListener(l);
 		canvas.addMouseMotionListener(l);
+		canvas.addKeyListener(l);
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setTitle("BRAVERY");

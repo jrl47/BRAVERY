@@ -36,6 +36,8 @@ public class Menu extends GameObject{
 		
 		mySubMenus.put("main", new ArrayList<GameObject>());
 		mySubMenus.get("main").add(moveMenuOpen);
+		
+		mySubMenus.put("move", new ArrayList<GameObject>());
 	}
 	
 	@Override

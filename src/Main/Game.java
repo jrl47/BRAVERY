@@ -57,6 +57,6 @@ public class Game implements Runnable{
 		view.render(model);
 	}
 	public void useInput() {
-		listener.step(model.getComponents());
+		listener.step(model);
 	}
 }

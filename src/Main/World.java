@@ -26,6 +26,7 @@ public class World extends GameObject{
 	public World() {
 		myState = new State("main");
 		oldState = "main";
+		myPlayer = new Player();
 		Background b = null;
 		BorderedButton t = null;
 		try {
@@ -43,16 +44,17 @@ public class World extends GameObject{
 	
 	public void step() {
 		manageState();
+		executePlayerCommand();
 		for(GameObject g: myActiveObjects){
 			g.step();
 		}
 	}
+
 	private void manageState() {
 		if(myState.getState().equals("game") && !oldState.equals("game")){
 			oldState = "game";
 			myActiveObjects.clear();
 			
-			myPlayer = new Player();
 			myMenu = new Menu(myPlayer);
 			Background b = null;
 			StateChangeButton moveMenuOpen = null;
@@ -68,6 +70,26 @@ public class World extends GameObject{
 		}
 		
 	}
+	
+	private void executePlayerCommand() {
+		if(myPlayer.getCommand()==null)
+			return;
+		
+		
+		if(myPlayer.getCommand().equals("Up")){
+			myPlayer.setY(myPlayer.getY() - 1);
+		}
+		if(myPlayer.getCommand().equals("Down")){
+			myPlayer.setY(myPlayer.getY() + 1);
+		}
+		if(myPlayer.getCommand().equals("Left")){
+			myPlayer.setX(myPlayer.getX() - 1);
+		}
+		if(myPlayer.getCommand().equals("Right")){
+			myPlayer.setX(myPlayer.getX() + 1);
+		}
+	}
+	
 	public List<GameObject> getComponents() {
 		return myActiveObjects;
 	}
@@ -76,5 +98,9 @@ public class World extends GameObject{
 	public void useInput(int i, int j, boolean b) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Player getPlayer() {
+		return myPlayer;
 	}
 }

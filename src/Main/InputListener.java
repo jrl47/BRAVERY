@@ -1,5 +1,7 @@
 package Main;
 import java.awt.Shape;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -7,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import GameObjects.GameObject;
+import GameObjects.Player;
 
 /**
  * 
@@ -14,27 +17,35 @@ import GameObjects.GameObject;
  * 
  * Keeps track of all currently pressed keys.
  */
-public class InputListener implements MouseListener, MouseMotionListener{
+public class InputListener implements MouseListener, MouseMotionListener, KeyListener{
 	
+	private KeyEvent mostRecentKeyEvent = null;
 	private MouseEvent mostRecentEvent = null;
 	private boolean clicked = false;
 	private boolean moved = false;
-	public void step(List<GameObject> list) {
+	private Player myPlayer;
+	public void step(World model) {
+		myPlayer = model.getPlayer();
+		List<GameObject> components = model.getComponents();
+		
+		myPlayer.useKeyPress(mostRecentKeyEvent);
+		
 		if(clicked){
-			for(GameObject g: list){
+			for(GameObject g: components){
 				doClick(g);
 			}
 		}
 		if(moved){
-			for(GameObject g: list){
+			for(GameObject g: components){
 				doHover(g);
 			}
 		}
 		mostRecentEvent = null;
+		mostRecentKeyEvent = null;
 		clicked = false;
 		moved = false;
 	}
-	
+
 	private void doClick(GameObject g) {
 		Shape s = g.getBounds();
 		if(s==null) return;
@@ -96,5 +107,20 @@ public class InputListener implements MouseListener, MouseMotionListener{
 	public void mouseMoved(MouseEvent arg0) {
 		mostRecentEvent = arg0;
 		moved = true;
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		mostRecentKeyEvent = arg0;
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		
 	}
 }
