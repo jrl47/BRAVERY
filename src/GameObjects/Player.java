@@ -8,6 +8,8 @@ public class Player extends GameObject{
 	private int myX;
 	private int myY;
 	
+	private boolean preparedMove;
+	
 	private String myCommand;
 	
 	public Player(){
@@ -43,7 +45,10 @@ public class Player extends GameObject{
 	public String getCommand(){
 		return myCommand;
 	}
-
+	public void setCommand(String s){
+		myCommand = s;
+	}
+	
 	public void useKeyPress(KeyEvent k) {
 		if(k==null){
 			myCommand = null;
@@ -57,5 +62,15 @@ public class Player extends GameObject{
 			myCommand = "Left";
 		if(k.getKeyCode()==KeyEvent.VK_RIGHT)
 			myCommand = "Right";
+	}
+
+	public void stopMove() {
+		preparedMove = false;
+	}
+	public void prepareMove(){
+		preparedMove = true;
+	}
+	public boolean movePrepared(){
+		return preparedMove;
 	}
 }

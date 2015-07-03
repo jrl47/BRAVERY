@@ -44,7 +44,6 @@ public class World extends GameObject{
 	
 	public void step() {
 		manageState();
-		executePlayerCommand();
 		for(GameObject g: myActiveObjects){
 			g.step();
 		}
@@ -69,25 +68,6 @@ public class World extends GameObject{
 			myActiveObjects.add(myMenu);
 		}
 		
-	}
-	
-	private void executePlayerCommand() {
-		if(myPlayer.getCommand()==null)
-			return;
-		
-		
-		if(myPlayer.getCommand().equals("Up")){
-			myPlayer.setY(myPlayer.getY() - 1);
-		}
-		if(myPlayer.getCommand().equals("Down")){
-			myPlayer.setY(myPlayer.getY() + 1);
-		}
-		if(myPlayer.getCommand().equals("Left")){
-			myPlayer.setX(myPlayer.getX() - 1);
-		}
-		if(myPlayer.getCommand().equals("Right")){
-			myPlayer.setX(myPlayer.getX() + 1);
-		}
 	}
 	
 	public List<GameObject> getComponents() {

@@ -23,13 +23,21 @@ public class Menu extends GameObject{
 		myBounds = new Rectangle(928, 0, 272, 675);
 		myPlayer = p;
 		myState = new State("main");
+		oldState = "main";
 		mySubMenus = new HashMap<String, List<GameObject>>();
+		
 		StateChangeButton moveMenuOpen = null;
+		
+		StateChangeButton back = null;
 		try {
-			moveMenuOpen = new StateChangeButton(1000, 50, "MOVE", 3, ImageIO.read(World.class.getResource("/fonts.png")),
+			moveMenuOpen = new StateChangeButton(984, 50, "MOVE", 3, ImageIO.read(World.class.getResource("/fonts.png")),
 					ImageIO.read(World.class.getResource("/bluefonts.png")),
 					ImageIO.read(World.class.getResource("/textbackground.png")),
 					ImageIO.read(World.class.getResource("/textbackgroundhover.png")), myState, "move");
+			back = new StateChangeButton(984, 550, "BACK", 3, ImageIO.read(World.class.getResource("/fonts.png")),
+					ImageIO.read(World.class.getResource("/bluefonts.png")),
+					ImageIO.read(World.class.getResource("/textbackground.png")),
+					ImageIO.read(World.class.getResource("/textbackgroundhover.png")), myState, "main");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -38,6 +46,8 @@ public class Menu extends GameObject{
 		mySubMenus.get("main").add(moveMenuOpen);
 		
 		mySubMenus.put("move", new ArrayList<GameObject>());
+		mySubMenus.get("move").add(back);
+		
 	}
 	
 	@Override
@@ -53,6 +63,15 @@ public class Menu extends GameObject{
 
 	private void manageState() {
 		myActiveObjects = mySubMenus.get(myState.getState());
+		if(!oldState.equals(myState.getState())){
+			if(myState.getState().equals("main")){
+				myPlayer.stopMove();
+			}
+			if(myState.getState().equals("move")){
+				myPlayer.prepareMove();
+			}
+			oldState = myState.getState();
+		}
 	}
 
 }
