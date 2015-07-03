@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import Main.World;
+import Utilities.MoveDrawer;
 
 public class Stage extends GameObject{
 
@@ -100,6 +101,12 @@ public class Stage extends GameObject{
 			xcounter++;
 			ycounter=0;
 		}
+		
+		if(myPlayer.movePrepared()){
+			MoveDrawer.drawMoves(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g);
+		}
+		
+		
 		g.setColor(Color.GREEN);
 		g.fillRect(((MAP_WIDTH/2))*BLOCK_SIZE, 1+(((MAP_HEIGHT/2))*BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE);
 		g.setColor(Color.GRAY);
