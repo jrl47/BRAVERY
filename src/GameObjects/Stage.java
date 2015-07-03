@@ -53,6 +53,8 @@ public class Stage extends GameObject{
 		if(!wasInput){
 			hoverX = -1;
 			hoverY = -1;
+			myPlayer.setTargetX(Integer.MIN_VALUE);
+			myPlayer.setTargetY(Integer.MIN_VALUE);
 		}
 		
 		if(myPlayer.getCommand()==null)
@@ -124,13 +126,15 @@ public class Stage extends GameObject{
 			g.drawRect(((MAP_WIDTH/2))*BLOCK_SIZE, 1+(((MAP_HEIGHT/2))*BLOCK_SIZE), BLOCK_SIZE-1, BLOCK_SIZE-1);
 			
 			if(myPlayer.movePrepared()){
-				if(myMap.getRGB(myPlayer.getX() + hoverX - MAP_WIDTH/2, myPlayer.getY() + hoverY - MAP_HEIGHT/2)!=-16777216){
+				if(!(myPlayer.getX() + hoverX - MAP_WIDTH/2 < 0 || myPlayer.getY() + hoverY - MAP_HEIGHT/2 < 0 
+						|| myPlayer.getX() + hoverX - MAP_WIDTH/2 >= myMap.getWidth() || myPlayer.getY() + hoverY - MAP_HEIGHT/2 >= myMap.getHeight())
+						&& myMap.getRGB(myPlayer.getX() + hoverX - MAP_WIDTH/2, myPlayer.getY() + hoverY - MAP_HEIGHT/2)!=-16777216){
 					myPlayer.setTargetX(hoverX - MAP_WIDTH/2);
 					myPlayer.setTargetY(-hoverY + MAP_HEIGHT/2);
 				}
 				else{
-					myPlayer.setTargetX(-1);
-					myPlayer.setTargetY(-1);
+					myPlayer.setTargetX(Integer.MIN_VALUE);
+					myPlayer.setTargetY(Integer.MIN_VALUE);
 				}
 			}
 		}

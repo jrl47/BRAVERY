@@ -12,12 +12,15 @@ import Main.World;
 import Utilities.State;
 
 public class Menu extends GameObject{
-
 	private State myState;
 	private String oldState;
 	private Player myPlayer;
 	
 	private HashMap<String, List<GameObject>> mySubMenus;
+
+	private Text mySelectionDialog;
+	private Text noSelectionDialog;
+	
 	
 	public Menu(Player p){
 		myBounds = new Rectangle(928, 0, 272, 675);
@@ -38,6 +41,8 @@ public class Menu extends GameObject{
 					ImageIO.read(World.class.getResource("/bluefonts.png")),
 					ImageIO.read(World.class.getResource("/textbackground.png")),
 					ImageIO.read(World.class.getResource("/textbackgroundhover.png")), myState, "main");
+			
+			noSelectionDialog = new Text(900, 50, "SELECT A VALID MOVE", 2, ImageIO.read(World.class.getResource("/fonts.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -47,7 +52,6 @@ public class Menu extends GameObject{
 		
 		mySubMenus.put("move", new ArrayList<GameObject>());
 		mySubMenus.get("move").add(back);
-		
 	}
 	
 	@Override
@@ -78,9 +82,30 @@ public class Menu extends GameObject{
 
 	
 	private void managePlayerMovement() {
+		myActiveObjects.remove(mySelectionDialog);
 		if(!myPlayer.movePrepared() && myState.getState().equals("move")){
 			myState.setState("main");
 			oldState = "main";
+		}
+
+		if(myState.getState().equals("move")){
+			if(myPlayer.getTargetX()==Integer.MIN_VALUE || myPlayer.getTargetY()==Integer.MIN_VALUE){
+				mySelectionDialog = noSelectionDialog;
+			}
+			else if(myPlayer.getTargetX()==0 || myPlayer.getTargetY()==0){
+				try {
+					mySelectionDialog = new Text(900, 50, "ORTHOGONAL MOVE", 2, ImageIO.read(World.class.getResource("/fonts.png")));
+				} catch (IOException e) {}
+			}
+			else if(myPlayer.getTargetX()==myPlayer.getTargetY() || myPlayer.getTargetX()==-myPlayer.getTargetY()){
+				try {
+					mySelectionDialog = new Text(900, 50, "DIAGONAL MOVE", 2, ImageIO.read(World.class.getResource("/fonts.png")));
+				} catch (IOException e) {}
+			}
+			else{
+				mySelectionDialog = noSelectionDialog;
+			}
+			myActiveObjects.add(mySelectionDialog);
 		}
 	}
 	

@@ -18,8 +18,8 @@ public class Player extends GameObject{
 		myX = 2;
 		myY = 2;
 		
-		targetX = -1;
-		targetY = -1;
+		targetX = Integer.MIN_VALUE;
+		targetY = Integer.MIN_VALUE;
 	}
 	
 	@Override
@@ -29,8 +29,7 @@ public class Player extends GameObject{
 
 	@Override
 	public void step() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	public int getX() {
