@@ -40,7 +40,12 @@ public class InputListener implements MouseListener, MouseMotionListener, KeyLis
 				doHover(g);
 			}
 		}
-		mostRecentEvent = null;
+		
+		for(GameObject g: components){
+			doIdle(g);
+		}
+		
+//		mostRecentEvent = null;
 		mostRecentKeyEvent = null;
 		clicked = false;
 		moved = false;
@@ -63,6 +68,19 @@ public class InputListener implements MouseListener, MouseMotionListener, KeyLis
 		if(s!=null&&s.contains(mostRecentEvent.getX(), mostRecentEvent.getY())){
 			for(GameObject gg: g.getComponents()){
 				doHover(gg);
+			}
+			g.useInput((int)(mostRecentEvent.getX())-(int)(s.getBounds().x),
+				(int)(mostRecentEvent.getY())-(int)(s.getBounds().y), false);
+		} else{
+			g.stopHover();
+		}
+	}
+	
+	private void doIdle(GameObject g) {
+		Shape s = g.getBounds();
+		if(s!=null&&s.contains(mostRecentEvent.getX(), mostRecentEvent.getY())){
+			for(GameObject gg: g.getComponents()){
+				doIdle(gg);
 			}
 			g.useInput((int)(mostRecentEvent.getX())-(int)(s.getBounds().x),
 				(int)(mostRecentEvent.getY())-(int)(s.getBounds().y), false);

@@ -8,52 +8,59 @@ import GameObjects.Player;
 
 public class MoveDrawer {
 
-	public static void drawMoves(int MAP_WIDTH, int MAP_HEIGHT, int BLOCK_SIZE, BufferedImage myMap, Player myPlayer, Graphics g) {
-		for(int i=0; i<MAP_WIDTH; i++){
-			if(myPlayer.getX() + i - MAP_WIDTH/2 > 0 &&
-					myPlayer.getX() + i - MAP_WIDTH/2 <= myMap.getWidth() &&
-					myMap.getRGB(myPlayer.getX() + i - MAP_WIDTH/2, myPlayer.getY())!=-16777216){
-				g.setColor(new Color(.7f, .5f, .4f));
-				g.fillRect(i*BLOCK_SIZE, ((MAP_HEIGHT/2))*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-				g.setColor(Color.GRAY);
-				g.drawRect(i*BLOCK_SIZE, ((MAP_HEIGHT/2))*BLOCK_SIZE, BLOCK_SIZE-1, BLOCK_SIZE-1);
-			}
-		}
-		for(int i=0; i<MAP_HEIGHT; i++){
-			if(myPlayer.getY() + i - MAP_HEIGHT/2 > 0 &&
-					myPlayer.getY() + i - MAP_HEIGHT/2 <= myMap.getHeight() &&
-					myMap.getRGB(myPlayer.getX(), myPlayer.getY() + i - MAP_HEIGHT/2)!=-16777216){
-				g.setColor(new Color(.7f, .5f, .4f));
-				g.fillRect(((MAP_WIDTH/2))*BLOCK_SIZE, i*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-				g.setColor(Color.GRAY);
-				g.drawRect(((MAP_WIDTH/2))*BLOCK_SIZE, i*BLOCK_SIZE, BLOCK_SIZE-1, BLOCK_SIZE-1);
-			}
-		}
+	public static void drawMoves(int MAP_WIDTH, int MAP_HEIGHT, int BLOCK_SIZE, BufferedImage myMap, Player myPlayer, Graphics g) {		
+		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 0, 1, new Color(.7f, .5f, .4f));
+		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 1, 0, new Color(.7f, .5f, .4f));
 		
-		// don't make the map taller than it is wide! :P
-		int shift = (MAP_WIDTH - MAP_HEIGHT)/2;
-		for(int i=0; i<MAP_WIDTH; i++){
-			if(myPlayer.getX() + i + shift - MAP_WIDTH/2 > 0 &&
-					myPlayer.getX() + i + shift - MAP_WIDTH/2 <= myMap.getWidth() &&
-					myPlayer.getY() + i - MAP_HEIGHT/2 > 0 &&
-					myPlayer.getY() + i - MAP_HEIGHT/2 <= myMap.getHeight() &&
-					myMap.getRGB(myPlayer.getX() + i + shift - MAP_WIDTH/2, myPlayer.getY() + i - MAP_HEIGHT/2)!=-16777216){
-				g.setColor(Color.lightGray);
-				g.fillRect((i+ shift)*BLOCK_SIZE, i*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, -1, 1, Color.lightGray);
+		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 1, 1, Color.lightGray);
+		
+		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, -1, 2, Color.BLUE);
+		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 1, 2, Color.BLUE);
+		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, -2, 1, Color.BLUE);
+		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 2, 1, Color.BLUE);
+		
+		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, -1, 3, Color.RED);
+		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 1, 3, Color.RED);
+		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, -3, 1, Color.RED);
+		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 3, 1, Color.RED);
+		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, -2, 3, Color.RED);
+		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 2, 3, Color.RED);
+		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, -3, 2, Color.RED);
+		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 3, 2, Color.RED);	
+	}
+
+	private static void drawLine(int MAP_WIDTH, int MAP_HEIGHT, int BLOCK_SIZE,
+			BufferedImage myMap, Player myPlayer, Graphics g, int xScale, int yScale, Color c) {
+		int max = Math.max(Math.abs(xScale), Math.abs(yScale));
+		for(int i=0; i<=MAP_WIDTH/(2*max); i++){
+			if(myPlayer.getX() + xScale*i > 0 &&
+					myPlayer.getX() + xScale*i <= myMap.getWidth() &&
+					myPlayer.getY() - yScale*i > 0 &&
+					myPlayer.getY() - yScale*i <= myMap.getHeight() &&
+					myMap.getRGB(myPlayer.getX() + xScale*i, myPlayer.getY() - yScale*i)!=-16777216){
+				g.setColor(c);
+				g.fillRect((MAP_WIDTH/2 + xScale*i)*BLOCK_SIZE, ((MAP_HEIGHT/2) - yScale*i)*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 				g.setColor(Color.GRAY);
-				g.drawRect((i + shift)*BLOCK_SIZE, i*BLOCK_SIZE, BLOCK_SIZE-1, BLOCK_SIZE-1);
+				g.drawRect((MAP_WIDTH/2 + xScale*i)*BLOCK_SIZE, ((MAP_HEIGHT/2) - yScale*i)*BLOCK_SIZE, BLOCK_SIZE-1, BLOCK_SIZE-1);
+			}
+			else{
+				break;
 			}
 		}
-		for(int i=0; i<MAP_WIDTH; i++){
-			if(myPlayer.getX() + i + shift - MAP_WIDTH/2 > 0 &&
-					myPlayer.getX() + i + shift - MAP_WIDTH/2 <= myMap.getWidth() &&
-					myPlayer.getY() + (MAP_HEIGHT - 1 - i) - MAP_HEIGHT/2 > 0 &&
-					myPlayer.getY() + (MAP_HEIGHT - 1 - i) - MAP_HEIGHT/2 <= myMap.getHeight() &&
-					myMap.getRGB(myPlayer.getX() + i + shift - MAP_WIDTH/2, myPlayer.getY() + (MAP_HEIGHT - 1 - i) - MAP_HEIGHT/2)!=-16777216){
-				g.setColor(Color.lightGray);
-				g.fillRect((i + shift)*BLOCK_SIZE, (MAP_HEIGHT - 1 - i)*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+		for(int i=0; i<=MAP_WIDTH/(2*max); i++){
+			if(myPlayer.getX() - xScale*i> 0 &&
+					myPlayer.getX() - xScale*i<= myMap.getWidth() &&
+					myPlayer.getY() + yScale*i > 0 &&
+					myPlayer.getY() + yScale*i <= myMap.getHeight() &&
+					myMap.getRGB(myPlayer.getX() - xScale*i, myPlayer.getY() + yScale*i)!=-16777216){
+				g.setColor(c);
+				g.fillRect((MAP_WIDTH/2 - xScale*i)*BLOCK_SIZE, ((MAP_HEIGHT/2) + yScale*i)*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 				g.setColor(Color.GRAY);
-				g.drawRect((i + shift)*BLOCK_SIZE, (MAP_HEIGHT - 1 - i)*BLOCK_SIZE, BLOCK_SIZE-1, BLOCK_SIZE-1);
+				g.drawRect((MAP_WIDTH/2 - xScale*i)*BLOCK_SIZE, ((MAP_HEIGHT/2) + yScale*i)*BLOCK_SIZE, BLOCK_SIZE-1, BLOCK_SIZE-1);
+			}
+			else{
+				break;
 			}
 		}
 	}

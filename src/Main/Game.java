@@ -28,9 +28,9 @@ public class Game implements Runnable{
 	public void run() {
 		long firstTime = System.nanoTime();
 		while(exitGame==false){
+			useInput();
 			step();
 			render();
-			useInput();
 			long now = System.nanoTime();
 			while(now - (firstTime+ticks*TICK_LENGTH) < TICK_LENGTH){
 				Thread.yield();

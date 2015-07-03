@@ -50,6 +50,11 @@ public class Stage extends GameObject{
 
 	@Override
 	public void step() {
+		if(!wasInput){
+			hoverX = -1;
+			hoverY = -1;
+		}
+		
 		if(myPlayer.getCommand()==null)
 			return;
 		
@@ -112,12 +117,14 @@ public class Stage extends GameObject{
 		g.setColor(Color.GRAY);
 		g.drawRect(((MAP_WIDTH/2))*BLOCK_SIZE, 1+(((MAP_HEIGHT/2))*BLOCK_SIZE), BLOCK_SIZE-1, BLOCK_SIZE-1);
 		
-//		if(hoverX!=-1 || hoverY!=-1){
-//			g.setColor(Color.lightGray);
-//			g.fillRect((hoverX)*BLOCK_SIZE, 1+((hoverY)*BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE);
-//			g.setColor(Color.GRAY);
-//			g.drawRect(((MAP_WIDTH/2))*BLOCK_SIZE, 1+(((MAP_HEIGHT/2))*BLOCK_SIZE), BLOCK_SIZE-1, BLOCK_SIZE-1);
-//		}
+		if(hoverX!=-1 || hoverY!=-1){
+			g.setColor(Color.lightGray);
+			g.fillRect((hoverX)*BLOCK_SIZE, 1+((hoverY)*BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE);
+			g.setColor(Color.GRAY);
+			g.drawRect(((MAP_WIDTH/2))*BLOCK_SIZE, 1+(((MAP_HEIGHT/2))*BLOCK_SIZE), BLOCK_SIZE-1, BLOCK_SIZE-1);
+		}
+		
+		wasInput = false;
 	}
 
 }

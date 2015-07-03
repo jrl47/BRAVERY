@@ -53,13 +53,13 @@ public class Player extends GameObject{
 			myCommand = null;
 			return;
 		}
-		if(k.getKeyCode()==KeyEvent.VK_UP)
+		if(k.getKeyCode()==KeyEvent.VK_W)
 			myCommand = "Up";
-		if(k.getKeyCode()==KeyEvent.VK_DOWN)
+		if(k.getKeyCode()==KeyEvent.VK_S)
 			myCommand = "Down";
-		if(k.getKeyCode()==KeyEvent.VK_LEFT)
+		if(k.getKeyCode()==KeyEvent.VK_A)
 			myCommand = "Left";
-		if(k.getKeyCode()==KeyEvent.VK_RIGHT)
+		if(k.getKeyCode()==KeyEvent.VK_D)
 			myCommand = "Right";
 	}
 
