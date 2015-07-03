@@ -59,10 +59,10 @@ public class Menu extends GameObject{
 	@Override
 	public void step() {
 		manageState();
+		managePlayerMovement();
 	}
 
 	private void manageState() {
-		myActiveObjects = mySubMenus.get(myState.getState());
 		if(!oldState.equals(myState.getState())){
 			if(myState.getState().equals("main")){
 				myPlayer.stopMove();
@@ -72,6 +72,16 @@ public class Menu extends GameObject{
 			}
 			oldState = myState.getState();
 		}
+		
+		myActiveObjects = mySubMenus.get(myState.getState());
 	}
 
+	
+	private void managePlayerMovement() {
+		if(!myPlayer.movePrepared() && myState.getState().equals("move")){
+			myState.setState("main");
+			oldState = "main";
+		}
+	}
+	
 }

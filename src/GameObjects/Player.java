@@ -7,13 +7,19 @@ public class Player extends GameObject{
 	private int myX;
 	private int myY;
 	
+	private String myCommand;
 	private boolean preparedMove;
 	
-	private String myCommand;
+	private int targetX;
+	private int targetY;
+	
 	
 	public Player(){
 		myX = 2;
 		myY = 2;
+		
+		targetX = -1;
+		targetY = -1;
 	}
 	
 	@Override
@@ -36,9 +42,25 @@ public class Player extends GameObject{
 	
 	public void setX(int x){
 		myX = x;
+		stopMove();
 	}
 	public void setY(int y){
 		myY = y;
+		stopMove();
+	}
+	
+	public int getTargetX() {
+		return targetX;
+	}
+	public int getTargetY() {
+		return targetY;
+	}
+	
+	public void setTargetX(int x){
+		targetX = x;
+	}
+	public void setTargetY(int y){
+		targetY = y;
 	}
 	
 	public String getCommand(){
