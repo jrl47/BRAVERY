@@ -46,6 +46,17 @@ public class Stage extends GameObject{
 			hoverX = -1;
 			hoverY = -1;
 		}
+		
+		int x = Math.abs(myPlayer.getTargetX());
+		int y = Math.abs(myPlayer.getTargetY());
+		int locX = myPlayer.getX()+myPlayer.getTargetX();
+		int locY = myPlayer.getY()+myPlayer.getTargetY();
+		if(b && myPlayer.movePrepared() && 
+				(x==0 || y==0 || x==y || 2*x==y || x==2*y || 3*x==y || x==3*y || 3*x==2*y || 2*x==3*y) 
+				&& !(locX < 0 || locY < 0 || locX >= myMap.getWidth() || locY >= myMap.getHeight())
+				&& myMap.getRGB(locX, locY)!=-16777216){
+			myPlayer.move(); // BUG! THIS DOES NOT ACCOUNT FOR GOING THROUGH WALLS WHERE HIGHLIGHTING DOES! FIX!
+		}
 	}
 
 	@Override
@@ -130,7 +141,7 @@ public class Stage extends GameObject{
 						|| myPlayer.getX() + hoverX - MAP_WIDTH/2 >= myMap.getWidth() || myPlayer.getY() + hoverY - MAP_HEIGHT/2 >= myMap.getHeight())
 						&& myMap.getRGB(myPlayer.getX() + hoverX - MAP_WIDTH/2, myPlayer.getY() + hoverY - MAP_HEIGHT/2)!=-16777216){
 					myPlayer.setTargetX(hoverX - MAP_WIDTH/2);
-					myPlayer.setTargetY(-hoverY + MAP_HEIGHT/2);
+					myPlayer.setTargetY(hoverY - MAP_HEIGHT/2);
 				}
 				else{
 					myPlayer.setTargetX(Integer.MIN_VALUE);

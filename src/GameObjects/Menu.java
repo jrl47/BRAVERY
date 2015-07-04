@@ -20,7 +20,7 @@ public class Menu extends GameObject{
 
 	private Text mySelectionDialog;
 	private Text noSelectionDialog;
-	
+	private Text myCostDialog;
 	
 	public Menu(Player p){
 		myBounds = new Rectangle(928, 0, 272, 675);
@@ -83,29 +83,69 @@ public class Menu extends GameObject{
 	
 	private void managePlayerMovement() {
 		myActiveObjects.remove(mySelectionDialog);
+		myActiveObjects.remove(myCostDialog);
 		if(!myPlayer.movePrepared() && myState.getState().equals("move")){
 			myState.setState("main");
 			oldState = "main";
 		}
 
 		if(myState.getState().equals("move")){
+			int x = Math.abs(myPlayer.getTargetX());
+			int y = Math.abs(myPlayer.getTargetY());
 			if(myPlayer.getTargetX()==Integer.MIN_VALUE || myPlayer.getTargetY()==Integer.MIN_VALUE){
 				mySelectionDialog = noSelectionDialog;
-			}
-			else if(myPlayer.getTargetX()==0 || myPlayer.getTargetY()==0){
 				try {
-					mySelectionDialog = new Text(900, 50, "ORTHOGONAL MOVE", 2, ImageIO.read(World.class.getResource("/fonts.png")));
+					myCostDialog = new Text(900, 90, " ", 2, ImageIO.read(World.class.getResource("/fonts.png")));
 				} catch (IOException e) {}
 			}
-			else if(myPlayer.getTargetX()==myPlayer.getTargetY() || myPlayer.getTargetX()==-myPlayer.getTargetY()){
+			else if(x==0 || y==0){
 				try {
-					mySelectionDialog = new Text(900, 50, "DIAGONAL MOVE", 2, ImageIO.read(World.class.getResource("/fonts.png")));
+					mySelectionDialog = new Text(900, 50, "ORTHOGONAL MOVE:", 2, ImageIO.read(World.class.getResource("/fonts.png")));
+					if(Math.max(x, y)==1){
+						myCostDialog = new Text(900, 90, 
+								(int)0 + " EARTH ENERGY",
+								2, ImageIO.read(World.class.getResource("/fonts.png")));
+					}
+					else{
+						myCostDialog = new Text(900, 90, 
+								(int)Math.pow(Math.max(x, y), 6) + " EARTH ENERGY",
+								2, ImageIO.read(World.class.getResource("/fonts.png")));
+					}
+				} catch (IOException e) {}
+			}
+			else if(x==y){
+				try {
+					mySelectionDialog = new Text(900, 50, "DIAGONAL MOVE:", 2, ImageIO.read(World.class.getResource("/fonts.png")));
+					myCostDialog = new Text(900, 90, 
+							(int)Math.pow(1+Math.max(x, y), 6) + " AIR ENERGY",
+							2, ImageIO.read(World.class.getResource("/fonts.png")));
+				} catch (IOException e) {}
+			}
+			else if(x==2*y || 2*x==y){
+				try {
+					mySelectionDialog = new Text(900, 50, "SKEW MOVE:", 2, ImageIO.read(World.class.getResource("/fonts.png")));
+					myCostDialog = new Text(900, 90, 
+							(int)Math.pow(1+Math.max(x, y), 6) + " WATER ENERGY",
+							2, ImageIO.read(World.class.getResource("/fonts.png")));
+				} catch (IOException e) {}
+			}
+			else if(x==3*y || 3*x==y
+					|| 2*x==3*y || 3*x==2*y){
+				try {
+					mySelectionDialog = new Text(900, 50, "STRAY MOVE:", 2, ImageIO.read(World.class.getResource("/fonts.png")));
+					myCostDialog = new Text(900, 90, 
+							(int)Math.pow(1+Math.max(x, y), 6) + " FIRE ENERGY",
+							2, ImageIO.read(World.class.getResource("/fonts.png")));
 				} catch (IOException e) {}
 			}
 			else{
 				mySelectionDialog = noSelectionDialog;
+				try {
+					myCostDialog = new Text(900, 90, " ", 2, ImageIO.read(World.class.getResource("/fonts.png")));
+				} catch (IOException e) {}
 			}
 			myActiveObjects.add(mySelectionDialog);
+			myActiveObjects.add(myCostDialog);
 		}
 	}
 	

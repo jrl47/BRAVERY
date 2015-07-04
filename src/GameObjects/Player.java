@@ -13,7 +13,6 @@ public class Player extends GameObject{
 	private int targetX;
 	private int targetY;
 	
-	
 	public Player(){
 		myX = 2;
 		myY = 2;
@@ -92,5 +91,12 @@ public class Player extends GameObject{
 	}
 	public boolean movePrepared(){
 		return preparedMove;
+	}
+	public void move(){
+		myX += targetX;
+		myY += targetY;
+		targetX = 0;
+		targetY = 0;
+		stopMove();
 	}
 }

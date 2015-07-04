@@ -34,7 +34,8 @@ public abstract class GameObject {
 	
 	public void draw(Graphics g) {
 		for(GameObject go: myActiveObjects){
-			go.draw(g);
+			if(go!=null)
+				go.draw(g);
 		}
 	}
 
