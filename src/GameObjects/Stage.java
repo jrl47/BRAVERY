@@ -15,7 +15,7 @@ import Utilities.MoveDrawer;
 
 public class Stage extends GameObject{
 
-	private static final int BLOCK_SIZE = 32;
+	public static final int BLOCK_SIZE = 32;
 	private static final int MAP_WIDTH = 27;
 	private static final int MAP_HEIGHT = 21;
 	private Player myPlayer;
@@ -43,7 +43,7 @@ public class Stage extends GameObject{
 		
 		for(int i=0; i<myMap.getWidth(); i++){
 			for(int j=0; j<myMap.getHeight(); j++){
-				myCells.get(i).add(new MapCell());
+				myCells.get(i).add(new MapCell(i, j));
 				if(myMap.getRGB(i,j)!=-16777216)
 					myCells.get(i).get(j).setPassable(true);
 			}
@@ -115,18 +115,13 @@ public class Stage extends GameObject{
 			for(int j=myPlayer.getY() - (MAP_HEIGHT/2); j<(MAP_HEIGHT/2) + 1 + myPlayer.getY(); j++){
 				if(i < 0 || j < 0 || i >= myCells.size() || j >=myCells.get(0).size()){
 					g.setColor(Color.BLACK);
+					g.fillRect(xcounter*BLOCK_SIZE, 1+(ycounter*BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE);
+					g.setColor(Color.GRAY);
+					g.drawRect(xcounter*BLOCK_SIZE, 1+(ycounter*BLOCK_SIZE), BLOCK_SIZE-1, BLOCK_SIZE-1);
 				}
 				else{
-					if(myCells.get(i).get(j).isPassable()){
-						g.setColor(Color.WHITE);
-					}
-					else if(!myCells.get(i).get(j).isPassable()){
-						g.setColor(Color.BLACK);
-					}
+					myCells.get(i).get(j).draw(g,xcounter,ycounter);
 				}
-				g.fillRect(xcounter*BLOCK_SIZE, 1+(ycounter*BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE);
-				g.setColor(Color.GRAY);
-				g.drawRect(xcounter*BLOCK_SIZE, 1+(ycounter*BLOCK_SIZE), BLOCK_SIZE-1, BLOCK_SIZE-1);
 				ycounter++;
 			}
 			xcounter++;

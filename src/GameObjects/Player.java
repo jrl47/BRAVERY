@@ -13,12 +13,16 @@ public class Player extends GameObject{
 	private int targetX;
 	private int targetY;
 	
+	private Inventory myInventory;
+	
 	public Player(){
 		myX = 2;
 		myY = 2;
 		
 		targetX = Integer.MIN_VALUE;
 		targetY = Integer.MIN_VALUE;
+		
+		myInventory = new Inventory();
 	}
 	
 	@Override
@@ -66,6 +70,10 @@ public class Player extends GameObject{
 	}
 	public void setCommand(String s){
 		myCommand = s;
+	}
+	
+	public Inventory getInventory(){
+		return myInventory;
 	}
 	
 	public void useKeyPress(KeyEvent k) {
