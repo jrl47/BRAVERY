@@ -16,8 +16,8 @@ import Utilities.MoveDrawer;
 public class Stage extends GameObject{
 
 	public static final int BLOCK_SIZE = 32;
-	private static final int MAP_WIDTH = 27;
-	private static final int MAP_HEIGHT = 21;
+	public static final int MAP_WIDTH = 27;
+	public static final int MAP_HEIGHT = 21;
 	private Player myPlayer;
 	private BufferedImage myMap;
 	
@@ -44,8 +44,12 @@ public class Stage extends GameObject{
 		for(int i=0; i<myMap.getWidth(); i++){
 			for(int j=0; j<myMap.getHeight(); j++){
 				myCells.get(i).add(new MapCell(i, j));
-				if(myMap.getRGB(i,j)!=-16777216)
+				if(myMap.getRGB(i,j)!=-16777216){
 					myCells.get(i).get(j).setPassable(true);
+					if(i==4 && j == 3){
+						myCells.get(i).get(j).setCollectible(new Collectible(2000, "earth"));
+					}
+				}
 			}
 		}
 		
@@ -62,15 +66,22 @@ public class Stage extends GameObject{
 			hoverX = -1;
 			hoverY = -1;
 		}
-		
-		int x = Math.abs(myPlayer.getTargetX());
-		int y = Math.abs(myPlayer.getTargetY());
+
 		int locX = myPlayer.getX()+myPlayer.getTargetX();
 		int locY = myPlayer.getY()+myPlayer.getTargetY();
 		if(b && myPlayer.movePrepared() && myCells.get(locX).get(locY).isAvailable()){
-			myPlayer.move();
-			myPlayer.chargeForMove(myCells.get(locX).get(locY));
+			movePlayer();
 		}
+	}
+
+	private void movePlayer() {
+		int locX = myPlayer.getX()+myPlayer.getTargetX();
+		int locY = myPlayer.getY()+myPlayer.getTargetY();
+		
+		myPlayer.move();
+		myPlayer.chargeForMove(myCells.get(locX).get(locY));
+		myPlayer.getCollectible(myCells.get(locX).get(locY));
+		
 	}
 
 	@Override
@@ -88,22 +99,30 @@ public class Stage extends GameObject{
 		
 		if(myPlayer.getCommand().equals("Up")){
 			if(myCells.get(myPlayer.getX()).get(myPlayer.getY()-1).isPassable()){
-				myPlayer.setY(myPlayer.getY() - 1);
+				myPlayer.setTargetX(0);
+				myPlayer.setTargetY(-1);
+				movePlayer();
 			}
 		}
 		if(myPlayer.getCommand().equals("Down")){
 			if(myCells.get(myPlayer.getX()).get(myPlayer.getY()+1).isPassable()){
-				myPlayer.setY(myPlayer.getY() + 1);
+				myPlayer.setTargetX(0);
+				myPlayer.setTargetY(1);
+				movePlayer();
 			}
 		}
 		if(myPlayer.getCommand().equals("Left")){
 			if(myCells.get(myPlayer.getX()-1).get(myPlayer.getY()).isPassable()){
-				myPlayer.setX(myPlayer.getX() - 1);
+				myPlayer.setTargetX(-1);
+				myPlayer.setTargetY(0);
+				movePlayer();
 			}
 		}
 		if(myPlayer.getCommand().equals("Right")){
 			if(myCells.get(myPlayer.getX()+1).get(myPlayer.getY()).isPassable()){
-				myPlayer.setX(myPlayer.getX() + 1);
+				myPlayer.setTargetX(1);
+				myPlayer.setTargetY(0);
+				movePlayer();
 			}
 		}
 	}
@@ -135,11 +154,7 @@ public class Stage extends GameObject{
 			clearAvailability(myCells);
 		}
 		
-		
-		g.setColor(Color.GREEN);
-		g.fillRect(((MAP_WIDTH/2))*BLOCK_SIZE, 1+(((MAP_HEIGHT/2))*BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE);
-		g.setColor(Color.GRAY);
-		g.drawRect(((MAP_WIDTH/2))*BLOCK_SIZE, 1+(((MAP_HEIGHT/2))*BLOCK_SIZE), BLOCK_SIZE-1, BLOCK_SIZE-1);
+		myPlayer.draw(g);
 		
 		if(hoverX!=-1 || hoverY!=-1){
 			g.setColor(Color.lightGray);
@@ -168,6 +183,7 @@ public class Stage extends GameObject{
 		for(int i=0; i<myCells.size(); i++){
 			for(int j=0; j<myCells.get(0).size(); j++){
 				myCells.get(i).get(j).setAvailable(false);
+				myCells.get(i).get(j).setCost(0);
 			}
 		}
 	}

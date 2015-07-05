@@ -1,5 +1,7 @@
 package GameObjects;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 public class Player extends GameObject{
@@ -33,6 +35,14 @@ public class Player extends GameObject{
 	@Override
 	public void step() {
 
+	}
+	
+	@Override
+	public void draw(Graphics g){
+		g.setColor(Color.GREEN);
+		g.fillRect(((Stage.MAP_WIDTH/2))*Stage.BLOCK_SIZE, 1+(((Stage.MAP_HEIGHT/2))*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE, Stage.BLOCK_SIZE);
+		g.setColor(Color.GRAY);
+		g.drawRect(((Stage.MAP_WIDTH/2))*Stage.BLOCK_SIZE, 1+(((Stage.MAP_HEIGHT/2))*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE-1, Stage.BLOCK_SIZE-1);
 	}
 
 	public int getX() {
@@ -117,5 +127,21 @@ public class Player extends GameObject{
 			myInventory.setWater(myInventory.getWater()-mapCell.getCost());
 		if(mapCell.getCostType().equals("fire"))
 			myInventory.setFire(myInventory.getFire()-mapCell.getCost());
+	}
+
+	public void getCollectible(MapCell mapCell) {
+		if(mapCell.getCollectible()==null)
+			return;
+		
+		if(mapCell.getCollectible().getType().equals("earth"))
+			myInventory.setEarth(myInventory.getEarth()+mapCell.getCollectible().getAmount());
+		if(mapCell.getCollectible().getType().equals("air"))
+			myInventory.setAir(myInventory.getAir()+mapCell.getCollectible().getAmount());
+		if(mapCell.getCollectible().getType().equals("water"))
+			myInventory.setWater(myInventory.getWater()+mapCell.getCollectible().getAmount());
+		if(mapCell.getCollectible().getType().equals("fire"))
+			myInventory.setFire(myInventory.getFire()+mapCell.getCollectible().getAmount());
+		
+		mapCell.removeCollectible();
 	}
 }
