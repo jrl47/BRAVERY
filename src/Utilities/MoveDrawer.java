@@ -3,12 +3,14 @@ package Utilities;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
+import GameObjects.MapCell;
 import GameObjects.Player;
 
 public class MoveDrawer {
 
-	public static void drawMoves(int MAP_WIDTH, int MAP_HEIGHT, int BLOCK_SIZE, BufferedImage myMap, Player myPlayer, Graphics g) {		
+	public static void drawMoves(int MAP_WIDTH, int MAP_HEIGHT, int BLOCK_SIZE, List<List<MapCell>> myMap, Player myPlayer, Graphics g) {		
 		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 0, 1, new Color(.6f, .4f, .3f));
 		drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 1, 0, new Color(.6f, .4f, .3f));
 		
@@ -31,21 +33,22 @@ public class MoveDrawer {
 	}
 
 	private static void drawLine(int MAP_WIDTH, int MAP_HEIGHT, int BLOCK_SIZE,
-			BufferedImage myMap, Player myPlayer, Graphics g, int xScale, int yScale, Color c) {
+			List<List<MapCell>> myCells, Player myPlayer, Graphics g, int xScale, int yScale, Color c) {
 		Color original = new Color(c.getRed(), c.getGreen(), c.getBlue());
 		int max = Math.max(Math.abs(xScale), Math.abs(yScale));
 		
 		for(int i=1; i<=MAP_WIDTH/(2*max); i++){
 			c = new Color(Math.min((int)(c.getRed()+10*max), 255), Math.min((int)(c.getGreen()+10*max), 255), Math.min((int)(c.getBlue()+10*max), 255));
 			if(myPlayer.getX() + xScale*i > 0 &&
-					myPlayer.getX() + xScale*i <= myMap.getWidth() &&
+					myPlayer.getX() + xScale*i <= myCells.size() &&
 					myPlayer.getY() - yScale*i > 0 &&
-					myPlayer.getY() - yScale*i <= myMap.getHeight() &&
-					myMap.getRGB(myPlayer.getX() + xScale*i, myPlayer.getY() - yScale*i)!=-16777216){
+					myPlayer.getY() - yScale*i <= myCells.get(0).size() &&
+					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).isPassable()){
 				g.setColor(c);
 				g.fillRect((MAP_WIDTH/2 + xScale*i)*BLOCK_SIZE, ((MAP_HEIGHT/2) - yScale*i)*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 				g.setColor(Color.GRAY);
 				g.drawRect((MAP_WIDTH/2 + xScale*i)*BLOCK_SIZE, ((MAP_HEIGHT/2) - yScale*i)*BLOCK_SIZE, BLOCK_SIZE-1, BLOCK_SIZE-1);
+				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAvailable(true);
 			}
 			else{
 				break;
@@ -55,14 +58,15 @@ public class MoveDrawer {
 		for(int i=1; i<=MAP_HEIGHT/(2*max); i++){
 			c = new Color(Math.min((int)(c.getRed()+10*max), 255), Math.min((int)(c.getGreen()+10*max), 255), Math.min((int)(c.getBlue()+10*max), 255));
 			if(myPlayer.getX() - xScale*i> 0 &&
-					myPlayer.getX() - xScale*i<= myMap.getWidth() &&
+					myPlayer.getX() - xScale*i<= myCells.size() &&
 					myPlayer.getY() + yScale*i > 0 &&
-					myPlayer.getY() + yScale*i <= myMap.getHeight() &&
-					myMap.getRGB(myPlayer.getX() - xScale*i, myPlayer.getY() + yScale*i)!=-16777216){
+					myPlayer.getY() + yScale*i <= myCells.get(0).size() &&
+					myCells.get(myPlayer.getX() - xScale*i).get(myPlayer.getY() + yScale*i).isPassable()){
 				g.setColor(c);
 				g.fillRect((MAP_WIDTH/2 - xScale*i)*BLOCK_SIZE, ((MAP_HEIGHT/2) + yScale*i)*BLOCK_SIZE+1, BLOCK_SIZE, BLOCK_SIZE);
 				g.setColor(Color.GRAY);
 				g.drawRect((MAP_WIDTH/2 - xScale*i)*BLOCK_SIZE, ((MAP_HEIGHT/2) + yScale*i)*BLOCK_SIZE+1, BLOCK_SIZE-1, BLOCK_SIZE-1);
+				myCells.get(myPlayer.getX() - xScale*i).get(myPlayer.getY() + yScale*i).setAvailable(true);
 			}
 			else{
 				break;
