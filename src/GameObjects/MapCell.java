@@ -93,5 +93,8 @@ public class MapCell extends GameObject{
 	public void removeEnemy() {
 		myEnemy = null;
 	}
+	public Enemy getEnemy() {
+		return myEnemy;
+	}
 
 }

@@ -21,7 +21,6 @@ public class Menu extends GameObject{
 	
 	private HashMap<String, List<GameObject>> mySubMenus;
 
-	
 	private Text myTileObjectInfo1;
 	private Text myTileObjectInfo2;
 	
@@ -52,6 +51,7 @@ public class Menu extends GameObject{
 		}
 		
 		StateChangeButton moveMenuOpen = null;
+		StateChangeButton attackMenuOpen = null;
 		
 		StateChangeButton back = null;
 		try {
@@ -59,6 +59,10 @@ public class Menu extends GameObject{
 					ImageIO.read(World.class.getResource("/bluefonts.png")),
 					ImageIO.read(World.class.getResource("/textbackground.png")),
 					ImageIO.read(World.class.getResource("/textbackgroundhover.png")), myState, "move");
+			attackMenuOpen = new StateChangeButton(964, 120, "ATTACK", 3, myFont,
+					ImageIO.read(World.class.getResource("/bluefonts.png")),
+					ImageIO.read(World.class.getResource("/textbackground.png")),
+					ImageIO.read(World.class.getResource("/textbackgroundhover.png")), myState, "attack");
 			back = new StateChangeButton(984, 550, "BACK", 3, myFont,
 					ImageIO.read(World.class.getResource("/bluefonts.png")),
 					ImageIO.read(World.class.getResource("/textbackground.png")),
@@ -78,6 +82,7 @@ public class Menu extends GameObject{
 		
 		mySubMenus.put("main", new ArrayList<GameObject>());
 		mySubMenus.get("main").add(moveMenuOpen);
+		mySubMenus.get("main").add(attackMenuOpen);
 		mySubMenus.get("main").add(myTileObjectInfo1);
 		mySubMenus.get("main").add(myTileObjectInfo2);
 		
@@ -88,6 +93,9 @@ public class Menu extends GameObject{
 		mySubMenus.get("move").add(myAirDialog);
 		mySubMenus.get("move").add(myWaterDialog);
 		mySubMenus.get("move").add(myFireDialog);
+		
+		mySubMenus.put("attack", new ArrayList<GameObject>());
+		mySubMenus.get("attack").add(back);
 	}
 	
 	@Override
@@ -126,6 +134,10 @@ public class Menu extends GameObject{
 		if(myPlayer.getTargetX()==Integer.MIN_VALUE || myPlayer.getTargetY()==Integer.MIN_VALUE){
 			myTileObjectInfo1 = new Text(900, 400, " ", 2, myFont);
 			myTileObjectInfo2 = new Text(900, 440, " ", 2, myFont);
+		} else if(myCells.get(xLoc).get(yLoc).getEnemy()!=null){
+			Enemy e = myCells.get(xLoc).get(yLoc).getEnemy();
+			myTileObjectInfo1 = new Text(900, 400, "ENEMY:", 2, myFont);
+//			myTileObjectInfo2 = new Text(900, 440, c.getAmount() + " " + c.getType().toUpperCase() + " ENERGY", 2, myFont);
 		}
 		else if(myCells.get(xLoc).get(yLoc).getCollectible()!=null){
 			Collectible c = myCells.get(xLoc).get(yLoc).getCollectible();

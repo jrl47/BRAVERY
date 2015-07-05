@@ -16,6 +16,7 @@ public class Enemy extends GameObject{
 	public Enemy(int x, int y, int range){
 		myX = 3;
 		myY = 9;
+		sightRange = range;
 	}
 	
 	@Override
@@ -50,6 +51,7 @@ public class Enemy extends GameObject{
 			for(int i=4; i>0; i--){
 			int rand = r.nextInt(i);
 			preferredMoves.add(availableMoves.get(rand));
+			availableMoves.remove(availableMoves.get(rand));
 			}
 		} else{
 			if(Math.abs(p.getX() - myX) > Math.abs(p.getY() - myY)){
@@ -76,7 +78,7 @@ public class Enemy extends GameObject{
 				}
 			}
 		}
-		
+
 		if(!myCells.get(myX).get(myY-1).isPassable())
 			preferredMoves.remove("u");
 		if(!myCells.get(myX).get(myY+1).isPassable())
