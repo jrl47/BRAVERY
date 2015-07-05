@@ -107,4 +107,15 @@ public class Player extends GameObject{
 		targetY = 0;
 		stopMove();
 	}
+
+	public void chargeForMove(MapCell mapCell) {
+		if(mapCell.getCostType().equals("earth"))
+			myInventory.setEarth(myInventory.getEarth()-mapCell.getCost());
+		if(mapCell.getCostType().equals("air"))
+			myInventory.setAir(myInventory.getAir()-mapCell.getCost());
+		if(mapCell.getCostType().equals("water"))
+			myInventory.setWater(myInventory.getWater()-mapCell.getCost());
+		if(mapCell.getCostType().equals("fire"))
+			myInventory.setFire(myInventory.getFire()-mapCell.getCost());
+	}
 }

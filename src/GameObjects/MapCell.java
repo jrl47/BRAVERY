@@ -10,10 +10,12 @@ public class MapCell extends GameObject{
 	private int myX;
 	private int myY;
 	private int myCost;
+	private String myCostType;
 	
 	public MapCell(int x, int y){
 		myX = x;
 		myY = y;
+		myCostType = "";
 	}
 	public void setPassable(boolean b){
 		isPassable = b;
@@ -34,6 +36,13 @@ public class MapCell extends GameObject{
 	}
 	public int getCost(){
 		return myCost;
+	}
+	
+	public void setCostType(String t){
+		myCostType = t;
+	}
+	public String getCostType(){
+		return myCostType;
 	}
 	
 	@Override
