@@ -1,4 +1,4 @@
-package GameObjects;
+package UtilityObjects;
 
 public class Inventory {
 	

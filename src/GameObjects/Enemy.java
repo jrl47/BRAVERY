@@ -106,5 +106,9 @@ public class Enemy extends GameObject{
 			myCells.get(myX).get(myY).setEnemy(this);
 		}
 	}
+	
+	public int getSightRange(){
+		return sightRange;
+	}
 
 }

@@ -76,8 +76,10 @@ public class Stage extends GameObject{
 
 		int locX = myPlayer.getX()+myPlayer.getTargetX();
 		int locY = myPlayer.getY()+myPlayer.getTargetY();
-		if(b && myPlayer.movePrepared() && myCells.get(locX).get(locY).isAvailable()){
-			movePlayer();
+		if(myPlayer.getTargetX()!=Integer.MIN_VALUE && myPlayer.getTargetY()!=Integer.MIN_VALUE){
+			if(b && myPlayer.movePrepared() && myCells.get(locX).get(locY).isAvailable()){
+				movePlayer();
+			}
 		}
 	}
 

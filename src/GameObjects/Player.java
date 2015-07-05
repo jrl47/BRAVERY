@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
+import UtilityObjects.Inventory;
+
 public class Player extends GameObject{
 
 	private int myX;
@@ -11,6 +13,7 @@ public class Player extends GameObject{
 	
 	private String myCommand;
 	private boolean preparedMove;
+	private boolean preparedAttack;
 	
 	private int targetX;
 	private int targetY;
@@ -56,11 +59,11 @@ public class Player extends GameObject{
 	
 	public void setX(int x){
 		myX = x;
-		stopMove();
+		stopAction();
 	}
 	public void setY(int y){
 		myY = y;
-		stopMove();
+		stopAction();
 	}
 	
 	public int getTargetX() {
@@ -103,21 +106,34 @@ public class Player extends GameObject{
 			myCommand = "Right";
 	}
 
-	public void stopMove() {
+	public void stopAction() {
 		preparedMove = false;
+		preparedAttack = false;
 	}
+	public boolean actionPrepared() {
+		return preparedMove || preparedAttack;
+	}
+	
 	public void prepareMove(){
 		preparedMove = true;
 	}
 	public boolean movePrepared(){
 		return preparedMove;
 	}
+
+	public void prepareAttack() {
+		preparedAttack = true;
+	}
+	public boolean attackPrepared(){
+		return preparedAttack;
+	}
+	
 	public void move(){
 		myX += targetX;
 		myY += targetY;
 		targetX = 0;
 		targetY = 0;
-		stopMove();
+		stopAction();
 		tookAction = true;
 	}
 
