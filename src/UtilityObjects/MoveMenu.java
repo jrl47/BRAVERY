@@ -41,14 +41,6 @@ public class MoveMenu extends SubMenu{
 	}
 
 	public void managePlayerMovement(State oldState) {
-		if(!myPlayer.actionPrepared() && !myState.getState().equals("main")){
-			myState.setState("main");
-			oldState = new State("main");
-		}
-
-		if(!myState.getState().equals("move"))
-			return;
-
 		int x = Math.abs(myPlayer.getTargetX());
 		int y = Math.abs(myPlayer.getTargetY());
 		int xLoc = myPlayer.getX() + myPlayer.getTargetX();

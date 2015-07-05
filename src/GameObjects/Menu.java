@@ -64,7 +64,9 @@ public class Menu extends GameObject{
 		manageActiveObjects();
 		myTileHandler.manageTileInfo();
 		myInventoryHandler.manageInventory();
-		((MoveMenu)mySubMenus.get("move")).managePlayerMovement(oldState);
+		if(myState.getState().equals("move")){
+			((MoveMenu)mySubMenus.get("move")).managePlayerMovement(oldState);
+		}
 	}
 
 	private void manageActiveObjects() {
@@ -79,7 +81,7 @@ public class Menu extends GameObject{
 	}
 
 	private void manageState() {
-		if(!oldState.equals(myState.getState())){
+		if(!oldState.getState().equals(myState.getState())){
 			if(myState.getState().equals("main")){
 				myPlayer.stopAction();
 			}
@@ -89,6 +91,11 @@ public class Menu extends GameObject{
 			if(myState.getState().equals("attack")){
 				myPlayer.prepareAttack();
 			}
+			oldState = new State(myState.getState());
+			return;
+		}
+		if(!myPlayer.actionPrepared() && !myState.getState().equals("main")){
+			myState.setState("main");
 			oldState = new State(myState.getState());
 		}
 	}
