@@ -22,6 +22,7 @@ public class Stage extends GameObject{
 	private BufferedImage myMap;
 	
 	private List<List<MapCell>> myCells;
+	private List<Enemy> myEnemies;
 	
 	private boolean wasInput;
 	private int hoverX = -1;
@@ -31,6 +32,7 @@ public class Stage extends GameObject{
 		super();
 		myBounds = new Rectangle(0, 0, MAP_WIDTH * 32, 675);
 		myPlayer = p;
+		myEnemies = new ArrayList<Enemy>();
 		myCells = new ArrayList<List<MapCell>>();
 		try {
 			myMap = ImageIO.read(World.class.getResource("/mapData.png"));
@@ -50,7 +52,9 @@ public class Stage extends GameObject{
 						myCells.get(i).get(j).setCollectible(new Collectible(2000, "earth"));
 					}
 					if(i==3 && j == 9){
-						myCells.get(i).get(j).setEnemy(new Enemy(3,9,4));
+						Enemy e = new Enemy(3,9,4);
+						myEnemies.add(e);
+						myCells.get(i).get(j).setEnemy(e);
 					}
 				}
 			}
@@ -96,6 +100,10 @@ public class Stage extends GameObject{
 			myPlayer.setTargetY(Integer.MIN_VALUE);
 		}
 		
+		if(myPlayer.checkForEnemyTurn()){
+			executeEnemyTurns();
+		}
+		
 		if(myPlayer.getCommand()==null)
 			return;
 		
@@ -127,6 +135,12 @@ public class Stage extends GameObject{
 				myPlayer.setTargetY(0);
 				movePlayer();
 			}
+		}
+	}
+
+	private void executeEnemyTurns() {
+		for(Enemy e: myEnemies){
+			e.move(myPlayer, myCells);
 		}
 	}
 
