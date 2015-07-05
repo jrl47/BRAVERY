@@ -49,6 +49,9 @@ public class Stage extends GameObject{
 					if(i==4 && j == 3){
 						myCells.get(i).get(j).setCollectible(new Collectible(2000, "earth"));
 					}
+					if(i==3 && j == 9){
+						myCells.get(i).get(j).setEnemy(new Enemy(3,9,4));
+					}
 				}
 			}
 		}
@@ -162,17 +165,15 @@ public class Stage extends GameObject{
 			g.setColor(Color.GRAY);
 			g.drawRect(((MAP_WIDTH/2))*BLOCK_SIZE, 1+(((MAP_HEIGHT/2))*BLOCK_SIZE), BLOCK_SIZE-1, BLOCK_SIZE-1);
 			
-			if(myPlayer.movePrepared()){
-				if(!(myPlayer.getX() + hoverX - MAP_WIDTH/2 < 0 || myPlayer.getY() + hoverY - MAP_HEIGHT/2 < 0 
-						|| myPlayer.getX() + hoverX - MAP_WIDTH/2 >= myCells.size() || myPlayer.getY() + hoverY - MAP_HEIGHT/2 >= myCells.get(0).size())
-						&& myCells.get(myPlayer.getX() + hoverX - MAP_WIDTH/2).get(myPlayer.getY() + hoverY - MAP_HEIGHT/2).isPassable()){
-					myPlayer.setTargetX(hoverX - MAP_WIDTH/2);
-					myPlayer.setTargetY(hoverY - MAP_HEIGHT/2);
-				}
-				else{
-					myPlayer.setTargetX(Integer.MIN_VALUE);
-					myPlayer.setTargetY(Integer.MIN_VALUE);
-				}
+			if(!(myPlayer.getX() + hoverX - MAP_WIDTH/2 < 0 || myPlayer.getY() + hoverY - MAP_HEIGHT/2 < 0 
+					|| myPlayer.getX() + hoverX - MAP_WIDTH/2 >= myCells.size() || myPlayer.getY() + hoverY - MAP_HEIGHT/2 >= myCells.get(0).size())
+					&& myCells.get(myPlayer.getX() + hoverX - MAP_WIDTH/2).get(myPlayer.getY() + hoverY - MAP_HEIGHT/2).isPassable()){
+				myPlayer.setTargetX(hoverX - MAP_WIDTH/2);
+				myPlayer.setTargetY(hoverY - MAP_HEIGHT/2);
+			}
+			else{
+				myPlayer.setTargetX(Integer.MIN_VALUE);
+				myPlayer.setTargetY(Integer.MIN_VALUE);
 			}
 		}
 		

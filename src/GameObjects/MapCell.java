@@ -13,6 +13,7 @@ public class MapCell extends GameObject{
 	private String myCostType;
 	
 	private Collectible myCollectible;
+	private Enemy myEnemy;
 	
 	public MapCell(int x, int y){
 		myX = x;
@@ -71,6 +72,10 @@ public class MapCell extends GameObject{
 			g.setColor(Color.WHITE);
 			if(myCollectible!=null)
 				g.setColor(Color.MAGENTA);
+			if(myEnemy!=null){
+				myEnemy.draw(g, x, y);
+				return;
+			}
 		}
 		else{
 			g.setColor(Color.BLACK);
@@ -81,6 +86,12 @@ public class MapCell extends GameObject{
 	}
 	public void removeCollectible() {
 		myCollectible = null;
+	}
+	public void setEnemy(Enemy enemy) {
+		myEnemy = enemy;
+	}
+	public void removeEnemy() {
+		myEnemy = null;
 	}
 
 }

@@ -21,9 +21,14 @@ public class Menu extends GameObject{
 	
 	private HashMap<String, List<GameObject>> mySubMenus;
 
+	
+	private Text myTileObjectInfo1;
+	private Text myTileObjectInfo2;
+	
 	private Text mySelectionDialog;
 	private Text noSelectionDialog;
 	private Text myCostDialog;
+	
 	private Text myAvailableDialog;
 	private Text myEarthDialog;
 	private Text myAirDialog;
@@ -61,6 +66,9 @@ public class Menu extends GameObject{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		myTileObjectInfo1 = new Text(900, 400, " ", 2, myFont);
+		myTileObjectInfo2 = new Text(900, 440, " ", 2, myFont);
+		
 		noSelectionDialog = new Text(900, 50, "SELECT A VALID MOVE", 2, myFont);
 		myAvailableDialog = new Text(900, 300, "AVAILABLE ENERGY:", 2, myFont);
 		myEarthDialog = new Text(900, 340, myPlayer.getInventory().getEarth() + " EARTH ENERGY", 2, myFont);
@@ -70,6 +78,8 @@ public class Menu extends GameObject{
 		
 		mySubMenus.put("main", new ArrayList<GameObject>());
 		mySubMenus.get("main").add(moveMenuOpen);
+		mySubMenus.get("main").add(myTileObjectInfo1);
+		mySubMenus.get("main").add(myTileObjectInfo2);
 		
 		mySubMenus.put("move", new ArrayList<GameObject>());
 		mySubMenus.get("move").add(back);
@@ -89,6 +99,7 @@ public class Menu extends GameObject{
 	@Override
 	public void step() {
 		manageState();
+		manageTileInfo();
 		manageInventory();
 		managePlayerMovement();
 	}
@@ -105,6 +116,28 @@ public class Menu extends GameObject{
 		}
 		
 		myActiveObjects = mySubMenus.get(myState.getState());
+	}
+	
+	private void manageTileInfo() {
+		mySubMenus.get("main").remove(myTileObjectInfo1);
+		mySubMenus.get("main").remove(myTileObjectInfo2);
+		int xLoc = myPlayer.getX() + myPlayer.getTargetX();
+		int yLoc = myPlayer.getY() + myPlayer.getTargetY();
+		if(myPlayer.getTargetX()==Integer.MIN_VALUE || myPlayer.getTargetY()==Integer.MIN_VALUE){
+			myTileObjectInfo1 = new Text(900, 400, " ", 2, myFont);
+			myTileObjectInfo2 = new Text(900, 440, " ", 2, myFont);
+		}
+		else if(myCells.get(xLoc).get(yLoc).getCollectible()!=null){
+			Collectible c = myCells.get(xLoc).get(yLoc).getCollectible();
+			myTileObjectInfo1 = new Text(900, 400, "COLLECTIBLE:", 2, myFont);
+			myTileObjectInfo2 = new Text(900, 440, c.getAmount() + " " + c.getType().toUpperCase() + " ENERGY", 2, myFont);
+		} else{
+			myTileObjectInfo1 = new Text(900, 400, " ", 2, myFont);
+			myTileObjectInfo2 = new Text(900, 440, " ", 2, myFont);
+		}
+		mySubMenus.get("main").add(myTileObjectInfo1);
+		mySubMenus.get("main").add(myTileObjectInfo2);
+
 	}
 	
 	

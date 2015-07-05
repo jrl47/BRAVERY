@@ -15,6 +15,8 @@ public class Player extends GameObject{
 	private int targetX;
 	private int targetY;
 	
+	private boolean tookAction;
+	
 	private Inventory myInventory;
 	
 	public Player(){
@@ -116,6 +118,7 @@ public class Player extends GameObject{
 		targetX = 0;
 		targetY = 0;
 		stopMove();
+		tookAction = true;
 	}
 
 	public void chargeForMove(MapCell mapCell) {
@@ -143,5 +146,13 @@ public class Player extends GameObject{
 			myInventory.setFire(myInventory.getFire()+mapCell.getCollectible().getAmount());
 		
 		mapCell.removeCollectible();
+	}
+	
+	public boolean checkForEnemyTurn(){
+		if(tookAction){
+			tookAction = false;
+			return true;
+		}
+		return tookAction;
 	}
 }
