@@ -171,4 +171,11 @@ public class Stage extends GameObject{
 		}
 	}
 
+	public Player getPlayer() {
+		return myPlayer;
+	}
+	public List<List<MapCell>> getCells(){
+		return myCells;
+	}
+
 }

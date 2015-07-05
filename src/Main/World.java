@@ -55,7 +55,6 @@ public class World extends GameObject{
 			oldState = "game";
 			myActiveObjects.clear();
 			
-			myMenu = new Menu(myPlayer);
 			Background b = null;
 			StateChangeButton moveMenuOpen = null;
 			try {
@@ -64,6 +63,7 @@ public class World extends GameObject{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			myMenu = new Menu(myStage);
 			myActiveObjects.add(b);
 			myActiveObjects.add(myStage);
 			myActiveObjects.add(myMenu);

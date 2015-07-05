@@ -15,6 +15,8 @@ public class Menu extends GameObject{
 	private State myState;
 	private String oldState;
 	private Player myPlayer;
+	private Stage myStage;
+	private List<List<MapCell>> myCells;
 	
 	private HashMap<String, List<GameObject>> mySubMenus;
 
@@ -22,9 +24,11 @@ public class Menu extends GameObject{
 	private Text noSelectionDialog;
 	private Text myCostDialog;
 	
-	public Menu(Player p){
+	public Menu(Stage s){
 		myBounds = new Rectangle(928, 0, 272, 675);
-		myPlayer = p;
+		myStage = s;
+		myCells = myStage.getCells();
+		myPlayer = myStage.getPlayer();
 		myState = new State("main");
 		oldState = "main";
 		mySubMenus = new HashMap<String, List<GameObject>>();
@@ -92,7 +96,16 @@ public class Menu extends GameObject{
 		if(myState.getState().equals("move")){
 			int x = Math.abs(myPlayer.getTargetX());
 			int y = Math.abs(myPlayer.getTargetY());
+			int xLoc = myPlayer.getX() + myPlayer.getTargetX();
+			int yLoc = myPlayer.getY() + myPlayer.getTargetY();
+			
 			if(myPlayer.getTargetX()==Integer.MIN_VALUE || myPlayer.getTargetY()==Integer.MIN_VALUE){
+				mySelectionDialog = noSelectionDialog;
+				try {
+					myCostDialog = new Text(900, 90, " ", 2, ImageIO.read(World.class.getResource("/fonts.png")));
+				} catch (IOException e) {}
+			}
+			else if(!myCells.get(xLoc).get(yLoc).isAvailable()){
 				mySelectionDialog = noSelectionDialog;
 				try {
 					myCostDialog = new Text(900, 90, " ", 2, ImageIO.read(World.class.getResource("/fonts.png")));
@@ -103,12 +116,12 @@ public class Menu extends GameObject{
 					mySelectionDialog = new Text(900, 50, "ORTHOGONAL MOVE:", 2, ImageIO.read(World.class.getResource("/fonts.png")));
 					if(Math.max(x, y)==1){
 						myCostDialog = new Text(900, 90, 
-								(int)0 + " EARTH ENERGY",
+								myCells.get(xLoc).get(yLoc).getCost() + " EARTH ENERGY",
 								2, ImageIO.read(World.class.getResource("/fonts.png")));
 					}
 					else{
 						myCostDialog = new Text(900, 90, 
-								(int)Math.pow(Math.max(x, y), 6) + " EARTH ENERGY",
+								myCells.get(xLoc).get(yLoc).getCost() + " EARTH ENERGY",
 								2, ImageIO.read(World.class.getResource("/fonts.png")));
 					}
 				} catch (IOException e) {}
@@ -117,7 +130,7 @@ public class Menu extends GameObject{
 				try {
 					mySelectionDialog = new Text(900, 50, "DIAGONAL MOVE:", 2, ImageIO.read(World.class.getResource("/fonts.png")));
 					myCostDialog = new Text(900, 90, 
-							(int)Math.pow(1+Math.max(x, y), 6) + " AIR ENERGY",
+							myCells.get(xLoc).get(yLoc).getCost() + " AIR ENERGY",
 							2, ImageIO.read(World.class.getResource("/fonts.png")));
 				} catch (IOException e) {}
 			}
@@ -125,7 +138,7 @@ public class Menu extends GameObject{
 				try {
 					mySelectionDialog = new Text(900, 50, "SKEW MOVE:", 2, ImageIO.read(World.class.getResource("/fonts.png")));
 					myCostDialog = new Text(900, 90, 
-							(int)Math.pow(1+Math.max(x, y), 6) + " WATER ENERGY",
+							myCells.get(xLoc).get(yLoc).getCost() + " WATER ENERGY",
 							2, ImageIO.read(World.class.getResource("/fonts.png")));
 				} catch (IOException e) {}
 			}
@@ -134,7 +147,7 @@ public class Menu extends GameObject{
 				try {
 					mySelectionDialog = new Text(900, 50, "STRAY MOVE:", 2, ImageIO.read(World.class.getResource("/fonts.png")));
 					myCostDialog = new Text(900, 90, 
-							(int)Math.pow(1+Math.max(x, y), 6) + " FIRE ENERGY",
+							myCells.get(xLoc).get(yLoc).getCost() + " FIRE ENERGY",
 							2, ImageIO.read(World.class.getResource("/fonts.png")));
 				} catch (IOException e) {}
 			}

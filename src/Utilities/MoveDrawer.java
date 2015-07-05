@@ -49,6 +49,17 @@ public class MoveDrawer {
 				g.setColor(Color.GRAY);
 				g.drawRect((MAP_WIDTH/2 + xScale*i)*BLOCK_SIZE, ((MAP_HEIGHT/2) - yScale*i)*BLOCK_SIZE, BLOCK_SIZE-1, BLOCK_SIZE-1);
 				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAvailable(true);
+				if((xScale==0 || yScale==0) && i==1){
+					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCost(0);
+				}
+				else if((xScale==0 || yScale==0)){
+					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCost(
+							(int) Math.pow(i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6));
+				}
+				else{
+					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCost(
+							(int) Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6));
+				}
 			}
 			else{
 				break;
@@ -67,6 +78,17 @@ public class MoveDrawer {
 				g.setColor(Color.GRAY);
 				g.drawRect((MAP_WIDTH/2 - xScale*i)*BLOCK_SIZE, ((MAP_HEIGHT/2) + yScale*i)*BLOCK_SIZE+1, BLOCK_SIZE-1, BLOCK_SIZE-1);
 				myCells.get(myPlayer.getX() - xScale*i).get(myPlayer.getY() + yScale*i).setAvailable(true);
+				if((xScale==0 || yScale==0) && i==1){
+					myCells.get(myPlayer.getX() - xScale*i).get(myPlayer.getY() + yScale*i).setCost(0);
+				}
+				else if((xScale==0 || yScale==0)){
+					myCells.get(myPlayer.getX() - xScale*i).get(myPlayer.getY() + yScale*i).setCost(
+							(int) Math.pow(i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6));
+				}
+				else{
+					myCells.get(myPlayer.getX() - xScale*i).get(myPlayer.getY() + yScale*i).setCost(
+							(int) Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6));
+				}
 			}
 			else{
 				break;
