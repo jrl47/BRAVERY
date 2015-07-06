@@ -17,6 +17,9 @@ import Utilities.State;
 public class SubMenu {
 
 	protected BufferedImage myFont;
+	protected BufferedImage myBlueFont;
+	protected BufferedImage myBackground;
+	protected BufferedImage myHoverBackground;
 	protected Stage myStage;
 	protected State myState;
 	protected Player myPlayer;
@@ -31,6 +34,9 @@ public class SubMenu {
 		myCells = myStage.getCells();
 		try {
 			myFont = ImageIO.read(World.class.getResource("/fonts.png"));
+			myBlueFont = ImageIO.read(World.class.getResource("/bluefonts.png"));
+			myBackground = ImageIO.read(World.class.getResource("/textbackground.png"));
+			myHoverBackground = ImageIO.read(World.class.getResource("/textbackgroundhover.png"));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

@@ -4,7 +4,6 @@ import Utilities.State;
 import GameObjects.Collectible;
 import GameObjects.Enemy;
 import GameObjects.Stage;
-import GameObjects.StateChangeButton;
 import GameObjects.Text;
 
 public class TileObjectInfoHandler extends SubMenu{
