@@ -52,7 +52,7 @@ public class Stage extends GameObject{
 						myCells.get(i).get(j).setCollectible(new Collectible(2000, "earth"));
 					}
 					if(i==3 && j == 9){
-						Enemy e = new Enemy(3,9,4);
+						Enemy e = new Enemy(3,9,5);
 						myEnemies.add(e);
 						myCells.get(i).get(j).setEnemy(e);
 					}

@@ -11,7 +11,7 @@ public class MoveMenu extends SubMenu{
 	private Text myCostDialog;
 	
 	
-	StateChangeButton back;
+	private StateChangeButton back;
 	
 	public MoveMenu(Stage stage, State state){
 		super(stage, state);
@@ -26,7 +26,7 @@ public class MoveMenu extends SubMenu{
 		myObjects.add(back);
 	}
 
-	public void managePlayerMovement(State oldState) {
+	public void managePlayerMovement() {
 		myObjects.remove(mySelectionDialog);
 		myObjects.remove(myCostDialog);
 		myObjects.remove(back);

@@ -65,7 +65,10 @@ public class Menu extends GameObject{
 		myTileHandler.manageTileInfo();
 		myInventoryHandler.manageInventory();
 		if(myState.getState().equals("move")){
-			((MoveMenu)mySubMenus.get("move")).managePlayerMovement(oldState);
+			((MoveMenu)mySubMenus.get("move")).managePlayerMovement();
+		}
+		if(myState.getState().equals("attack")){
+			((AttackMenu)mySubMenus.get("attack")).managePlayerAttack();
 		}
 	}
 
