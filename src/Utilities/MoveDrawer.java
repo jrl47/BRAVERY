@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
 
+import UtilityObjects.Action;
 import GameObjects.MapCell;
 import GameObjects.Player;
 
@@ -44,41 +45,33 @@ public class MoveDrawer {
 					myPlayer.getY() - yScale*i <= myCells.get(0).size() &&
 					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).isPassable()){
 				if((xScale==0 || yScale==0) && i==1){
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCost(0);
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCostType("earth");
+					Action a = new Action(0, "earth", 0);
+					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAction(a);
 				}
 				else if((xScale==0 || yScale==0)){
 					if(myPlayer.getInventory().getEarth()<Math.pow(i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6))
 						break;
-					
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCost(
-							(int) Math.pow(i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6));
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCostType("earth");
+					Action a = new Action((int) Math.pow(i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6), "earth", 0);
+					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAction(a);
 				}
 				else{
 					if(Math.abs(xScale)==Math.abs(yScale)){
 						if(myPlayer.getInventory().getAir()<Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6))
 							break;
-						
-						myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCost(
-								(int) Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6));
-						myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCostType("air");
+						Action a = new Action((int) Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6), "air", 0);
+						myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAction(a);
 					}
 					else if(Math.abs(xScale)==2*Math.abs(yScale) || 2*Math.abs(xScale)==Math.abs(yScale)){
 						if(myPlayer.getInventory().getWater()<Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6))
 							break;
-						
-						myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCost(
-								(int) Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6));
-						myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCostType("water");
+						Action a = new Action((int) Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6), "water", 0);
+						myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAction(a);
 					}
 					else{
 						if(myPlayer.getInventory().getFire()<Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6))
 							break;
-						
-						myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCost(
-								(int) Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6));
-						myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCostType("fire");
+						Action a = new Action((int) Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6), "fire", 0);
+						myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAction(a);
 					}
 				}
 				

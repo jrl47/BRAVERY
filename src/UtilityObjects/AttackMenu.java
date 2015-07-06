@@ -11,6 +11,8 @@ public class AttackMenu extends SubMenu{
 	private Text noSelectionDialog;
 	private Text emptySelectionDialog;
 	private Text myCostDialog;
+	private Text myPowerDialog;
+	private Text emptyDialog;
 	
 	private StateChangeButton back;
 	private StateChangeButton earth;
@@ -31,8 +33,10 @@ public class AttackMenu extends SubMenu{
 		
 		noSelectionDialog = new Text(886, 20, "SELECT A VALID ATTACK", 2, myFont);
 		emptySelectionDialog = new Text(886, 20, "NO ENEMY ON THIS TILE", 2, myFont);
-		mySelectionDialog = new Text(900, 20, " ", 2, myFont);
-		myCostDialog = new Text(900, 20, " ", 2, myFont);
+		emptyDialog = new Text(900, 20, " ", 2, myFont);
+		mySelectionDialog = emptyDialog;
+		myCostDialog = emptyDialog;
+		myPowerDialog = emptyDialog;
 		
 		back = new StateChangeButton(930, 600, "MAIN MENU", 3, myFont, myBlueFont, myBackground, myHoverBackground, myState, "main");
 		earth = new StateChangeButton(924, 20, "EARTH", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "earth");
@@ -62,24 +66,30 @@ public class AttackMenu extends SubMenu{
 			
 			if(myPlayer.getTargetX()==Integer.MIN_VALUE || myPlayer.getTargetY()==Integer.MIN_VALUE){
 				mySelectionDialog = noSelectionDialog;
-					myCostDialog = new Text(900, 60, " ", 2, myFont);
+					myCostDialog = emptyDialog;
+					myPowerDialog = emptyDialog;
 			}
 			else if(!myCells.get(xLoc).get(yLoc).isAvailable()){
 				mySelectionDialog = noSelectionDialog;
-					myCostDialog = new Text(900, 60, " ", 2, myFont);
+					myCostDialog = emptyDialog;
+					myPowerDialog = emptyDialog;
 			}
 			else if(myCells.get(xLoc).get(yLoc).getEnemy()==null){
 				mySelectionDialog = emptySelectionDialog;
-					myCostDialog = new Text(900, 60, " ", 2, myFont);
+					myCostDialog = emptyDialog;
+					myPowerDialog = emptyDialog;
 			}
-			else if(myCells.get(xLoc).get(yLoc).getCost()!=0){
+			else if(myCells.get(xLoc).get(yLoc).getAction().getCost()!=0){
 				mySelectionDialog = new Text(900, 20, myAttack.getState().toUpperCase() + ":", 2, myFont);
 				myCostDialog = new Text(900, 60, 
-						myCells.get(xLoc).get(yLoc).getCost() + " " + myCells.get(xLoc).get(yLoc).getCostType().toUpperCase(), 2, myFont);
+						myCells.get(xLoc).get(yLoc).getAction().getCost() + " " + myCells.get(xLoc).get(yLoc).getAction().getType().toUpperCase() + " ENERGY", 2, myFont);
+				myPowerDialog = new Text(900, 100, 
+						myCells.get(xLoc).get(yLoc).getAction().getCost() + " " + myCells.get(xLoc).get(yLoc).getAction().getType().toUpperCase() + " ENERGY", 2, myFont);
 			}
 			else{
 				mySelectionDialog = noSelectionDialog;
-				myCostDialog = new Text(900, 60, " ", 2, myFont);
+				myCostDialog = emptyDialog;
+				myPowerDialog = emptyDialog;
 			}
 			return;
 		}
@@ -99,7 +109,7 @@ public class AttackMenu extends SubMenu{
 		}
 	}
 	public void manageState() {
-		if(!myPlayer.actionPrepared() && !myState.getState().equals("main")){
+		if(!myPlayer.actionPrepared() && (!myAttack.getState().equals("main")|| !myAttackType.getState().equals("main"))){
 			myAttack.setState("main");
 			myAttackType.setState("main");
 		}

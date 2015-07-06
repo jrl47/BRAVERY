@@ -44,31 +44,31 @@ public class MoveMenu extends SubMenu{
 			mySelectionDialog = noSelectionDialog;
 				myCostDialog = new Text(900, 60, " ", 2, myFont);
 		}
-		else if(myCells.get(xLoc).get(yLoc).getCostType().equals("earth")){
+		else if(myCells.get(xLoc).get(yLoc).getAction().getType().equals("earth")){
 			mySelectionDialog = new Text(900, 20, "ORTHOGONAL MOVE:", 2, myFont);
 			if(Math.max(x, y)==1){
 				myCostDialog = new Text(900, 60, 
-				myCells.get(xLoc).get(yLoc).getCost() + " EARTH ENERGY", 2, myFont);
+				myCells.get(xLoc).get(yLoc).getAction().getCost() + " EARTH ENERGY", 2, myFont);
 			}
 			else{
 				myCostDialog = new Text(900, 60, 
-				myCells.get(xLoc).get(yLoc).getCost() + " EARTH ENERGY", 2, myFont);
+				myCells.get(xLoc).get(yLoc).getAction().getCost() + " EARTH ENERGY", 2, myFont);
 			}
 		}
-		else if(myCells.get(xLoc).get(yLoc).getCostType().equals("air")){
+		else if(myCells.get(xLoc).get(yLoc).getAction().getType().equals("air")){
 				mySelectionDialog = new Text(900, 20, "DIAGONAL MOVE:", 2, myFont);
 				myCostDialog = new Text(900, 60, 
-				myCells.get(xLoc).get(yLoc).getCost() + " AIR ENERGY", 2, myFont);
+				myCells.get(xLoc).get(yLoc).getAction().getCost() + " AIR ENERGY", 2, myFont);
 		}
-		else if(myCells.get(xLoc).get(yLoc).getCostType().equals("water")){
+		else if(myCells.get(xLoc).get(yLoc).getAction().getType().equals("water")){
 				mySelectionDialog = new Text(900, 20, "SKEW MOVE:", 2, myFont);
 				myCostDialog = new Text(900, 60, 
-				myCells.get(xLoc).get(yLoc).getCost() + " WATER ENERGY", 2, myFont);
+				myCells.get(xLoc).get(yLoc).getAction().getCost() + " WATER ENERGY", 2, myFont);
 		}
-		else if(myCells.get(xLoc).get(yLoc).getCostType().equals("fire")){
+		else if(myCells.get(xLoc).get(yLoc).getAction().getType().equals("fire")){
 			mySelectionDialog = new Text(900, 20, "STRAY MOVE:", 2, myFont);
 			myCostDialog = new Text(900, 60, 
-			myCells.get(xLoc).get(yLoc).getCost() + " FIRE ENERGY",2, myFont);
+			myCells.get(xLoc).get(yLoc).getAction().getCost() + " FIRE ENERGY",2, myFont);
 		}
 		else{
 			mySelectionDialog = noSelectionDialog;

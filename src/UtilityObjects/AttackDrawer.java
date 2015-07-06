@@ -33,8 +33,8 @@ public class AttackDrawer {
 				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).getEnemy()!=null)){
 
 				if(myPlayer.getCommand().equals("boulderfall")){
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCost(2000);
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCostType("earth");
+					Action a = new Action(2000, "earth", 5);
+					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAction(a);
 				}
 					
 				g.setColor(c);

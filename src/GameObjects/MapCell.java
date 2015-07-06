@@ -3,6 +3,8 @@ package GameObjects;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import UtilityObjects.Action;
+
 public class MapCell extends GameObject{
 
 	private boolean isPassable;
@@ -15,6 +17,7 @@ public class MapCell extends GameObject{
 	private Collectible myCollectible;
 	private Enemy myEnemy;
 	private Player myPlayer;
+	private Action myAction;
 	
 	public MapCell(int x, int y){
 		myX = x;
@@ -35,18 +38,11 @@ public class MapCell extends GameObject{
 		return isAvailable;
 	}
 	
-	public void setCost(int c){
-		myCost = c;
+	public void setAction(Action a){
+		myAction = a;
 	}
-	public int getCost(){
-		return myCost;
-	}
-	
-	public void setCostType(String t){
-		myCostType = t;
-	}
-	public String getCostType(){
-		return myCostType;
+	public Action getAction(){
+		return myAction;
 	}
 	
 	public void setCollectible(Collectible c){

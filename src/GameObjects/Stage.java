@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import Main.World;
 import Utilities.MoveDrawer;
+import UtilityObjects.Action;
 import UtilityObjects.AttackDrawer;
 
 public class Stage extends GameObject{
@@ -52,7 +53,7 @@ public class Stage extends GameObject{
 						myCells.get(i).get(j).setCollectible(new Collectible(2000, "earth"));
 					}
 					if(i==3 && j == 9){
-						Enemy e = new Enemy(3,9,5);
+						Enemy e = new Enemy(3,9,5, 10, this);
 						myEnemies.add(e);
 						myCells.get(i).get(j).setEnemy(e);
 					}
@@ -152,7 +153,7 @@ public class Stage extends GameObject{
 
 	private void executeEnemyTurns() {
 		for(Enemy e: myEnemies){
-			e.move(myPlayer, myCells);
+			e.move(myPlayer);
 		}
 	}
 
@@ -213,7 +214,7 @@ public class Stage extends GameObject{
 		for(int i=0; i<myCells.size(); i++){
 			for(int j=0; j<myCells.get(0).size(); j++){
 				myCells.get(i).get(j).setAvailable(false);
-				myCells.get(i).get(j).setCost(0);
+				myCells.get(i).get(j).setAction(new Action(0, "null", 0));
 			}
 		}
 	}

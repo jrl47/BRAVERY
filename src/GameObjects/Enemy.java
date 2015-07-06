@@ -11,12 +11,19 @@ public class Enemy extends GameObject{
 	private int myX;
 	private int myY;
 	
-	private int sightRange;
+	private int myHealth;
 	
-	public Enemy(int x, int y, int range){
+	private int sightRange;
+	private Stage myStage;
+	private List<List<MapCell>> myCells;
+	
+	public Enemy(int x, int y, int range, int health, Stage stage){
+		myStage = stage;
+		myCells = myStage.getCells();
 		myX = 3;
 		myY = 9;
 		sightRange = range;
+		myHealth = health;
 	}
 	
 	@Override
@@ -30,6 +37,13 @@ public class Enemy extends GameObject{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void doDamage(int i){
+		myHealth-=i;
+		if(myHealth<0){
+			myCells.get(myX).get(myY).setEnemy(this);
+		}
+	}
 
 	public void draw(Graphics g, int x, int y){
 		g.setColor(Color.PINK);
@@ -38,7 +52,7 @@ public class Enemy extends GameObject{
 		g.drawRect(x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE-1, Stage.BLOCK_SIZE-1);
 	}
 	
-	public void move(Player p, List<List<MapCell>> myCells){
+	public void move(Player p){
 		int dist = Math.abs(p.getX() - myX) + Math.abs(p.getY() - myY);
 		List<String> availableMoves = new ArrayList<String>();
 		availableMoves.add("u");
