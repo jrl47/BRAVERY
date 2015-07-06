@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import UtilityObjects.Action;
+
 public class Enemy extends GameObject{
 
 	private int myX;
@@ -38,10 +40,14 @@ public class Enemy extends GameObject{
 		
 	}
 	
-	public void doDamage(int i){
-		myHealth-=i;
-		if(myHealth<0){
-			myCells.get(myX).get(myY).setEnemy(this);
+	public boolean isDead(){
+		return myHealth<=0;
+	}
+	
+	public void doDamage(Action action){
+		myHealth-=action.getPower();
+		if(myHealth<=0){
+			myCells.get(myX).get(myY).removeEnemy();
 		}
 	}
 

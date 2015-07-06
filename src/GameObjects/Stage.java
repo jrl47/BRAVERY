@@ -11,9 +11,9 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import Main.World;
+import Utilities.AttackDrawer;
 import Utilities.MoveDrawer;
 import UtilityObjects.Action;
-import UtilityObjects.AttackDrawer;
 
 public class Stage extends GameObject{
 
@@ -89,16 +89,13 @@ public class Stage extends GameObject{
 	}
 
 	private void movePlayer() {
-		int locX = myPlayer.getX()+myPlayer.getTargetX();
-		int locY = myPlayer.getY()+myPlayer.getTargetY();
-		
 		myPlayer.move();
-		myPlayer.chargeForMove(myCells.get(locX).get(locY));
-		myPlayer.getCollectible(myCells.get(locX).get(locY));
 	}
 	
 	private void doPlayerAttack() {
-		// do player attack here! 
+		int locX = myPlayer.getX()+myPlayer.getTargetX();
+		int locY = myPlayer.getY()+myPlayer.getTargetY();
+		myPlayer.attack(myCells.get(locX).get(locY).getEnemy());
 	}
 
 	@Override
@@ -152,6 +149,13 @@ public class Stage extends GameObject{
 	}
 
 	private void executeEnemyTurns() {
+		for(int i=0; i<myEnemies.size(); i++){
+			Enemy e = myEnemies.get(i);
+			if(e.isDead()){
+				myEnemies.remove(e);
+				i--;
+			}
+		}
 		for(Enemy e: myEnemies){
 			e.move(myPlayer);
 		}
@@ -197,7 +201,6 @@ public class Stage extends GameObject{
 			
 			if(!(myPlayer.getX() + hoverX - MAP_WIDTH/2 < 0 || myPlayer.getY() + hoverY - MAP_HEIGHT/2 < 0 
 					|| myPlayer.getX() + hoverX - MAP_WIDTH/2 >= myCells.size() || myPlayer.getY() + hoverY - MAP_HEIGHT/2 >= myCells.get(0).size())){
-//					&& myCells.get(myPlayer.getX() + hoverX - MAP_WIDTH/2).get(myPlayer.getY() + hoverY - MAP_HEIGHT/2).isPassable()){
 				myPlayer.setTargetX(hoverX - MAP_WIDTH/2);
 				myPlayer.setTargetY(hoverY - MAP_HEIGHT/2);
 			}

@@ -1,9 +1,10 @@
-package UtilityObjects;
+package Utilities;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
 
+import UtilityObjects.Action;
 import GameObjects.MapCell;
 import GameObjects.Player;
 
@@ -33,6 +34,8 @@ public class AttackDrawer {
 				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).getEnemy()!=null)){
 
 				if(myPlayer.getCommand().equals("boulderfall")){
+					if(myPlayer.getInventory().getEarth()<2000)
+						break;
 					Action a = new Action(2000, "earth", 5);
 					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAction(a);
 				}

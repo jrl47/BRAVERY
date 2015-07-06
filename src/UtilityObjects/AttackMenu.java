@@ -56,10 +56,11 @@ public class AttackMenu extends SubMenu{
 	public void managePlayerAttack() {
 		myObjects.clear();
 		if(!myAttack.getState().equals("main")){
-			myPlayer.setCommand("boulderfall");
+			myPlayer.setCommand(myAttack.getState());
 			myObjects.add(cancel);
 			myObjects.add(mySelectionDialog);
 			myObjects.add(myCostDialog);
+			myObjects.add(myPowerDialog);
 
 			int xLoc = myPlayer.getX() + myPlayer.getTargetX();
 			int yLoc = myPlayer.getY() + myPlayer.getTargetY();
@@ -84,7 +85,7 @@ public class AttackMenu extends SubMenu{
 				myCostDialog = new Text(900, 60, 
 						myCells.get(xLoc).get(yLoc).getAction().getCost() + " " + myCells.get(xLoc).get(yLoc).getAction().getType().toUpperCase() + " ENERGY", 2, myFont);
 				myPowerDialog = new Text(900, 100, 
-						myCells.get(xLoc).get(yLoc).getAction().getCost() + " " + myCells.get(xLoc).get(yLoc).getAction().getType().toUpperCase() + " ENERGY", 2, myFont);
+						myCells.get(xLoc).get(yLoc).getAction().getPower() +  " POWER", 2, myFont);
 			}
 			else{
 				mySelectionDialog = noSelectionDialog;
@@ -92,6 +93,9 @@ public class AttackMenu extends SubMenu{
 				myPowerDialog = emptyDialog;
 			}
 			return;
+		}
+		else{
+			myPlayer.setCommand(null);
 		}
 		
 		if(myAttackType.getState().equals("main")){
@@ -112,6 +116,9 @@ public class AttackMenu extends SubMenu{
 		if(!myPlayer.actionPrepared() && (!myAttack.getState().equals("main")|| !myAttackType.getState().equals("main"))){
 			myAttack.setState("main");
 			myAttackType.setState("main");
+		}
+		if(myPlayer.getCommand()==null){
+			myAttack.setState("main");
 		}
 	}
 }

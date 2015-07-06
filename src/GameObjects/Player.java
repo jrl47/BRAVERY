@@ -138,10 +138,22 @@ public class Player extends GameObject{
 		targetY = 0;
 		stopAction();
 		tookAction = true;
-		myCells.get(myX).get(myY).addPlayer(this);
+		MapCell cell = myCells.get(myX).get(myY);
+		chargeForAction(cell);
+		getCollectible(cell);
+		cell.addPlayer(this);
+	}
+	
+	public void attack(Enemy enemy) {
+		stopAction();
+		tookAction = true;
+		MapCell cell = myCells.get(myX+targetX).get(myY+targetY);
+		Enemy e = cell.getEnemy();
+		e.doDamage(cell.getAction());
+		chargeForAction(cell);
 	}
 
-	public void chargeForMove(MapCell mapCell) {
+	public void chargeForAction(MapCell mapCell) {
 		if(mapCell.getAction().getType().equals("earth"))
 			myInventory.setEarth(myInventory.getEarth()-mapCell.getAction().getCost());
 		if(mapCell.getAction().getType().equals("air"))
