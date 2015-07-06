@@ -30,7 +30,7 @@ public class AttackMenu extends SubMenu{
 		myAttack = new State("main");
 		
 		noSelectionDialog = new Text(886, 20, "SELECT A VALID ATTACK", 2, myFont);
-		emptySelectionDialog = new Text(900, 20, "NO ENEMY ON THIS TILE", 2, myFont);
+		emptySelectionDialog = new Text(886, 20, "NO ENEMY ON THIS TILE", 2, myFont);
 		mySelectionDialog = new Text(900, 20, " ", 2, myFont);
 		myCostDialog = new Text(900, 20, " ", 2, myFont);
 		
@@ -41,7 +41,7 @@ public class AttackMenu extends SubMenu{
 		fire = new StateChangeButton(1044, 90, "FIRE", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "fire");
 		subBack = new StateChangeButton(984, 600, "BACK", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "main");
 		cancel = new StateChangeButton(964, 600, "CANCEL", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "main");
-		boulderFall = new StateChangeButton(914, 20, "BOULDERFALL", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "boulderfall");
+		boulderFall = new StateChangeButton(912, 20, "BOULDERFALL", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "boulderfall");
 		
 		myObjects.add(back);
 		myObjects.add(earth);
@@ -52,6 +52,7 @@ public class AttackMenu extends SubMenu{
 	public void managePlayerAttack() {
 		myObjects.clear();
 		if(!myAttack.getState().equals("main")){
+			myPlayer.setCommand("boulderfall");
 			myObjects.add(cancel);
 			myObjects.add(mySelectionDialog);
 			myObjects.add(myCostDialog);

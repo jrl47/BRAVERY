@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import Main.World;
 import Utilities.MoveDrawer;
+import UtilityObjects.AttackDrawer;
 
 public class Stage extends GameObject{
 
@@ -80,6 +81,10 @@ public class Stage extends GameObject{
 			if(b && myPlayer.movePrepared() && myCells.get(locX).get(locY).isAvailable()){
 				movePlayer();
 			}
+			if(b && myPlayer.attackPrepared() && myCells.get(locX).get(locY).getEnemy()!=null){
+				doPlayerAttack();
+				myPlayer.clearCommand();
+			}
 		}
 	}
 
@@ -90,7 +95,10 @@ public class Stage extends GameObject{
 		myPlayer.move();
 		myPlayer.chargeForMove(myCells.get(locX).get(locY));
 		myPlayer.getCollectible(myCells.get(locX).get(locY));
-		
+	}
+	
+	private void doPlayerAttack() {
+		// do player attack here! 
 	}
 
 	@Override
@@ -115,6 +123,7 @@ public class Stage extends GameObject{
 				myPlayer.setTargetX(0);
 				myPlayer.setTargetY(-1);
 				movePlayer();
+				myPlayer.clearCommand();
 			}
 		}
 		if(myPlayer.getCommand().equals("Down")){
@@ -122,6 +131,7 @@ public class Stage extends GameObject{
 				myPlayer.setTargetX(0);
 				myPlayer.setTargetY(1);
 				movePlayer();
+				myPlayer.clearCommand();
 			}
 		}
 		if(myPlayer.getCommand().equals("Left")){
@@ -129,6 +139,7 @@ public class Stage extends GameObject{
 				myPlayer.setTargetX(-1);
 				myPlayer.setTargetY(0);
 				movePlayer();
+				myPlayer.clearCommand();
 			}
 		}
 		if(myPlayer.getCommand().equals("Right")){
@@ -136,6 +147,7 @@ public class Stage extends GameObject{
 				myPlayer.setTargetX(1);
 				myPlayer.setTargetY(0);
 				movePlayer();
+				myPlayer.clearCommand();
 			}
 		}
 	}
@@ -169,7 +181,10 @@ public class Stage extends GameObject{
 		
 		if(myPlayer.movePrepared()){
 			MoveDrawer.drawMoves(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myCells, myPlayer, g);
-		} else{
+		} else if(myPlayer.actionPrepared()){
+			AttackDrawer.drawAttacks(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myCells, myPlayer, g);
+		}
+		else{
 			clearAvailability(myCells);
 		}
 		

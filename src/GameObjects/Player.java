@@ -77,6 +77,9 @@ public class Player extends GameObject{
 	public void setCommand(String s){
 		myCommand = s;
 	}
+	public void clearCommand(){
+		myCommand = null;
+	}
 	
 	public Inventory getInventory(){
 		return myInventory;
@@ -84,7 +87,6 @@ public class Player extends GameObject{
 	
 	public void useKeyPress(KeyEvent k) {
 		if(k==null){
-			myCommand = null;
 			return;
 		}
 		if(k.getKeyCode()==KeyEvent.VK_W)
