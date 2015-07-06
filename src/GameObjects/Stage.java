@@ -29,10 +29,9 @@ public class Stage extends GameObject{
 	private int hoverX = -1;
 	private int hoverY = -1;
 	
-	public Stage(Player p) {
+	public Stage() {
 		super();
 		myBounds = new Rectangle(0, 0, MAP_WIDTH * 32, 675);
-		myPlayer = p;
 		myEnemies = new ArrayList<Enemy>();
 		myCells = new ArrayList<List<MapCell>>();
 		try {
@@ -117,7 +116,6 @@ public class Stage extends GameObject{
 		if(myPlayer.getCommand()==null)
 			return;
 		
-		
 		if(myPlayer.getCommand().equals("Up")){
 			if(myCells.get(myPlayer.getX()).get(myPlayer.getY()-1).isPassable()){
 				myPlayer.setTargetX(0);
@@ -126,7 +124,7 @@ public class Stage extends GameObject{
 				myPlayer.clearCommand();
 			}
 		}
-		if(myPlayer.getCommand().equals("Down")){
+		else if(myPlayer.getCommand().equals("Down")){
 			if(myCells.get(myPlayer.getX()).get(myPlayer.getY()+1).isPassable()){
 				myPlayer.setTargetX(0);
 				myPlayer.setTargetY(1);
@@ -134,7 +132,7 @@ public class Stage extends GameObject{
 				myPlayer.clearCommand();
 			}
 		}
-		if(myPlayer.getCommand().equals("Left")){
+		else if(myPlayer.getCommand().equals("Left")){
 			if(myCells.get(myPlayer.getX()-1).get(myPlayer.getY()).isPassable()){
 				myPlayer.setTargetX(-1);
 				myPlayer.setTargetY(0);
@@ -142,7 +140,7 @@ public class Stage extends GameObject{
 				myPlayer.clearCommand();
 			}
 		}
-		if(myPlayer.getCommand().equals("Right")){
+		else if(myPlayer.getCommand().equals("Right")){
 			if(myCells.get(myPlayer.getX()+1).get(myPlayer.getY()).isPassable()){
 				myPlayer.setTargetX(1);
 				myPlayer.setTargetY(0);
@@ -197,8 +195,8 @@ public class Stage extends GameObject{
 			g.drawRect(((MAP_WIDTH/2))*BLOCK_SIZE, 1+(((MAP_HEIGHT/2))*BLOCK_SIZE), BLOCK_SIZE-1, BLOCK_SIZE-1);
 			
 			if(!(myPlayer.getX() + hoverX - MAP_WIDTH/2 < 0 || myPlayer.getY() + hoverY - MAP_HEIGHT/2 < 0 
-					|| myPlayer.getX() + hoverX - MAP_WIDTH/2 >= myCells.size() || myPlayer.getY() + hoverY - MAP_HEIGHT/2 >= myCells.get(0).size())
-					&& myCells.get(myPlayer.getX() + hoverX - MAP_WIDTH/2).get(myPlayer.getY() + hoverY - MAP_HEIGHT/2).isPassable()){
+					|| myPlayer.getX() + hoverX - MAP_WIDTH/2 >= myCells.size() || myPlayer.getY() + hoverY - MAP_HEIGHT/2 >= myCells.get(0).size())){
+//					&& myCells.get(myPlayer.getX() + hoverX - MAP_WIDTH/2).get(myPlayer.getY() + hoverY - MAP_HEIGHT/2).isPassable()){
 				myPlayer.setTargetX(hoverX - MAP_WIDTH/2);
 				myPlayer.setTargetY(hoverY - MAP_HEIGHT/2);
 			}
@@ -225,6 +223,10 @@ public class Stage extends GameObject{
 	}
 	public List<List<MapCell>> getCells(){
 		return myCells;
+	}
+
+	public void addPlayer(Player player) {
+		myPlayer = player;
 	}
 
 }

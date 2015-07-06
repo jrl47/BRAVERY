@@ -26,22 +26,24 @@ public class AttackDrawer {
 		
 		for(int i=start; i<=end; i++){
 			if(myPlayer.getX() + xScale*i > 0 &&
-					myPlayer.getX() + xScale*i <= myCells.size() &&
-					myPlayer.getY() - yScale*i > 0 &&
-					myPlayer.getY() - yScale*i <= myCells.get(0).size() &&
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).isPassable()){
-				
+				myPlayer.getX() + xScale*i <= myCells.size() &&
+				myPlayer.getY() - yScale*i > 0 &&
+				myPlayer.getY() - yScale*i <= myCells.get(0).size() &&
+				(myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).isPassable() ||
+				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).getEnemy()!=null)){
+
 				if(myPlayer.getCommand().equals("boulderfall")){
 					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCost(2000);
 					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setCostType("earth");
 				}
-				
+					
 				g.setColor(c);
 				g.fillRect((MAP_WIDTH/2 + xScale*i)*BLOCK_SIZE, ((MAP_HEIGHT/2) - yScale*i)*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 				g.setColor(Color.GRAY);
 				g.drawRect((MAP_WIDTH/2 + xScale*i)*BLOCK_SIZE, ((MAP_HEIGHT/2) - yScale*i)*BLOCK_SIZE, BLOCK_SIZE-1, BLOCK_SIZE-1);
 				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAvailable(true);
 			}
+			
 			else{
 				break;
 			}

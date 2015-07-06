@@ -14,6 +14,7 @@ public class MapCell extends GameObject{
 	
 	private Collectible myCollectible;
 	private Enemy myEnemy;
+	private Player myPlayer;
 	
 	public MapCell(int x, int y){
 		myX = x;
@@ -24,7 +25,7 @@ public class MapCell extends GameObject{
 		isPassable = b;
 	}
 	public boolean isPassable(){
-		return isPassable;
+		return isPassable && myPlayer==null && myEnemy==null;
 	}
 	
 	public void setAvailable(boolean b){
@@ -95,6 +96,12 @@ public class MapCell extends GameObject{
 	}
 	public Enemy getEnemy() {
 		return myEnemy;
+	}
+	public void addPlayer(Player player) {
+		myPlayer = player;
+	}
+	public void removePlayer() {
+		myPlayer = null;
 	}
 
 }

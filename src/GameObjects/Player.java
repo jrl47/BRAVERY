@@ -3,6 +3,7 @@ package GameObjects;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 import UtilityObjects.Inventory;
 
@@ -18,13 +19,21 @@ public class Player extends GameObject{
 	private int targetX;
 	private int targetY;
 	
+	private Stage myStage;
+	private List<List<MapCell>> myCells;
+	
 	private boolean tookAction;
 	
 	private Inventory myInventory;
 	
-	public Player(){
+	public Player(Stage stage){
 		myX = 2;
 		myY = 2;
+		
+		myStage = stage;
+		myCells = myStage.getCells();
+		
+		myCells.get(myX).get(myY).addPlayer(this);
 		
 		targetX = Integer.MIN_VALUE;
 		targetY = Integer.MIN_VALUE;
@@ -122,12 +131,14 @@ public class Player extends GameObject{
 	}
 	
 	public void move(){
+		myCells.get(myX).get(myY).removePlayer();
 		myX += targetX;
 		myY += targetY;
 		targetX = 0;
 		targetY = 0;
 		stopAction();
 		tookAction = true;
+		myCells.get(myX).get(myY).addPlayer(this);
 	}
 
 	public void chargeForMove(MapCell mapCell) {

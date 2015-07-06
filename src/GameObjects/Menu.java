@@ -69,6 +69,7 @@ public class Menu extends GameObject{
 		}
 		if(myState.getState().equals("attack")){
 			((AttackMenu)mySubMenus.get("attack")).managePlayerAttack();
+			((AttackMenu)mySubMenus.get("attack")).manageState();
 		}
 	}
 

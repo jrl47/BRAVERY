@@ -26,7 +26,9 @@ public class World extends GameObject{
 	public World() {
 		myState = new State("main");
 		oldState = "main";
-		myPlayer = new Player();
+		myStage = new Stage();
+		myPlayer = new Player(myStage);
+		myStage.addPlayer(myPlayer);
 		Background b = null;
 		BorderedButton t = null;
 		try {
@@ -58,7 +60,6 @@ public class World extends GameObject{
 			StateChangeButton moveMenuOpen = null;
 			try {
 				b = new Background(ImageIO.read(World.class.getResource("/mapBackground.png")));
-				myStage = new Stage(myPlayer);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

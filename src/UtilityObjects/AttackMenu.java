@@ -75,7 +75,7 @@ public class AttackMenu extends SubMenu{
 			else if(myCells.get(xLoc).get(yLoc).getCost()!=0){
 				mySelectionDialog = new Text(900, 20, myAttack.getState().toUpperCase() + ":", 2, myFont);
 				myCostDialog = new Text(900, 60, 
-						myCells.get(xLoc).get(yLoc).getCost() + " " + myCells.get(xLoc).get(yLoc).getCostType(), 2, myFont);
+						myCells.get(xLoc).get(yLoc).getCost() + " " + myCells.get(xLoc).get(yLoc).getCostType().toUpperCase(), 2, myFont);
 			}
 			else{
 				mySelectionDialog = noSelectionDialog;
@@ -96,6 +96,12 @@ public class AttackMenu extends SubMenu{
 			if(myAttackType.getState().equals("earth")){
 				myObjects.add(boulderFall);
 			}
+		}
+	}
+	public void manageState() {
+		if(!myPlayer.actionPrepared() && !myState.getState().equals("main")){
+			myAttack.setState("main");
+			myAttackType.setState("main");
 		}
 	}
 }
