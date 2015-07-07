@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+import UtilityObjects.Action;
 import UtilityObjects.Inventory;
 
 public class Player extends GameObject{
@@ -19,6 +20,8 @@ public class Player extends GameObject{
 	private int targetX;
 	private int targetY;
 	
+	private int myHealth;
+	
 	private Stage myStage;
 	private List<List<MapCell>> myCells;
 	
@@ -30,6 +33,8 @@ public class Player extends GameObject{
 		myX = 2;
 		myY = 2;
 		
+		myHealth = 10;
+		
 		myStage = stage;
 		myCells = myStage.getCells();
 		
@@ -39,6 +44,17 @@ public class Player extends GameObject{
 		targetY = Integer.MIN_VALUE;
 		
 		myInventory = new Inventory();
+	}
+	
+	public boolean isDead(){
+		return myHealth<=0;
+	}
+	
+	public void doDamage(Action action){
+		myHealth-=action.getPower();
+		if(myHealth<=0){
+			myCells.get(myX).get(myY).removeEnemy();
+		}
 	}
 	
 	@Override

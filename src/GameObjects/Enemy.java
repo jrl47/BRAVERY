@@ -14,17 +14,22 @@ public class Enemy extends GameObject{
 	private int myY;
 	
 	private int myHealth;
+	private int myPower;
 	
 	private int sightRange;
+	private int attackRange;
+	
 	private Stage myStage;
 	private List<List<MapCell>> myCells;
 	
-	public Enemy(int x, int y, int range, int health, Stage stage){
+	public Enemy(int x, int y, int sightrange, int attackrange, int health, int power, Stage stage){
 		myStage = stage;
 		myCells = myStage.getCells();
 		myX = 3;
 		myY = 9;
-		sightRange = range;
+		sightRange = sightrange;
+		attackRange = attackrange;
+		myPower = power;
 		myHealth = health;
 	}
 	
@@ -56,6 +61,10 @@ public class Enemy extends GameObject{
 		g.fillRect(x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE, Stage.BLOCK_SIZE);
 		g.setColor(Color.GRAY);
 		g.drawRect(x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE-1, Stage.BLOCK_SIZE-1);
+	}
+	
+	public void attack(Player p){
+		p.doDamage(new Action(0, "earth", myPower));
 	}
 	
 	public void move(Player p){
@@ -129,6 +138,16 @@ public class Enemy extends GameObject{
 	
 	public int getSightRange(){
 		return sightRange;
+	}
+
+	public void doTurn(Player myPlayer) {
+		int dist = Math.abs(myPlayer.getX() - myX) + Math.abs(myPlayer.getY() - myY);
+		if(dist <= attackRange){
+			attack(myPlayer);
+		}
+		else{
+			move(myPlayer);
+		}
 	}
 
 }

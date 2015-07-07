@@ -68,6 +68,20 @@ public class World extends GameObject{
 			myActiveObjects.add(myStage);
 			myActiveObjects.add(myMenu);
 		}
+		if(myState.getState().equals("end") && !oldState.equals("end")){
+			oldState = "end";
+			myActiveObjects.clear();
+			Background b = null;
+			try {
+				b = new Background(ImageIO.read(World.class.getResource("/gameOverBackground.png")));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			myActiveObjects.add(b);
+		}
+		if(myStage.isGameOver()){
+			myState.setState("end");
+		}
 		
 	}
 	

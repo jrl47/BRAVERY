@@ -53,7 +53,7 @@ public class Stage extends GameObject{
 						myCells.get(i).get(j).setCollectible(new Collectible(2000, "earth"));
 					}
 					if(i==3 && j == 9){
-						Enemy e = new Enemy(3,9,5, 10, this);
+						Enemy e = new Enemy(3,9, 6, 3, 10, 5, this);
 						myEnemies.add(e);
 						myCells.get(i).get(j).setEnemy(e);
 					}
@@ -100,6 +100,10 @@ public class Stage extends GameObject{
 
 	@Override
 	public void step() {
+		if(myPlayer.isDead()){
+			
+		}
+		
 		if(!wasInput){
 			hoverX = -1;
 			hoverY = -1;
@@ -157,7 +161,7 @@ public class Stage extends GameObject{
 			}
 		}
 		for(Enemy e: myEnemies){
-			e.move(myPlayer);
+			e.doTurn(myPlayer);
 		}
 	}
 
@@ -231,6 +235,10 @@ public class Stage extends GameObject{
 
 	public void addPlayer(Player player) {
 		myPlayer = player;
+	}
+
+	public boolean isGameOver() {
+		return myPlayer.isDead();
 	}
 
 }
