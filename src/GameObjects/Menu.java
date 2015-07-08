@@ -15,6 +15,8 @@ import UtilityObjects.AttackMenu;
 import UtilityObjects.InventoryHandler;
 import UtilityObjects.MainMenu;
 import UtilityObjects.MoveMenu;
+import UtilityObjects.PlayerInfoHandler;
+import UtilityObjects.RecentActionHandler;
 import UtilityObjects.SubMenu;
 import UtilityObjects.TileObjectInfoHandler;
 
@@ -29,6 +31,8 @@ public class Menu extends GameObject{
 	
 	private TileObjectInfoHandler myTileHandler;
 	private InventoryHandler myInventoryHandler;
+	private PlayerInfoHandler myInfoHandler;
+	private RecentActionHandler myActionHandler;
 	
 	private BufferedImage myFont;
 	
@@ -41,6 +45,8 @@ public class Menu extends GameObject{
 		oldState = new State("main");
 		myTileHandler = new TileObjectInfoHandler(myStage, myState);
 		myInventoryHandler = new InventoryHandler(myStage, myState);
+		myInfoHandler = new PlayerInfoHandler(myStage, myState);
+		myActionHandler = new RecentActionHandler(myStage, myState);
 		mySubMenus = new HashMap<String, SubMenu>();
 		try {
 			myFont = ImageIO.read(World.class.getResource("/fonts.png"));
@@ -62,13 +68,15 @@ public class Menu extends GameObject{
 	public void step() {
 		manageState();
 		manageActiveObjects();
-		myTileHandler.manageTileInfo();
-		myInventoryHandler.manageInventory();
+		myTileHandler.manageInfo();
+		myInventoryHandler.manageInfo();
+		myInfoHandler.manageInfo();
+		myActionHandler.manageInfo();
 		if(myState.getState().equals("move")){
-			((MoveMenu)mySubMenus.get("move")).managePlayerMovement();
+			((MoveMenu)mySubMenus.get("move")).manageInfo();
 		}
 		if(myState.getState().equals("attack")){
-			((AttackMenu)mySubMenus.get("attack")).managePlayerAttack();
+			((AttackMenu)mySubMenus.get("attack")).manageInfo();
 		}
 		((AttackMenu)mySubMenus.get("attack")).manageState();
 	}
@@ -78,6 +86,8 @@ public class Menu extends GameObject{
 		myActiveObjects.addAll(mySubMenus.get(myState.getState()).getObjects());
 		if(myState.getState().equals("main")){
 			myActiveObjects.addAll(myTileHandler.getObjects());
+			myActiveObjects.addAll(myInfoHandler.getObjects());
+			myActiveObjects.addAll(myActionHandler.getObjects());
 		}
 		if(myState.getState().equals("move") || myState.getState().equals("attack")){
 			myActiveObjects.addAll(myInventoryHandler.getObjects());

@@ -26,7 +26,7 @@ public class MoveMenu extends SubMenu{
 		myObjects.add(back);
 	}
 
-	public void managePlayerMovement() {
+	public void manageInfo() {
 		myObjects.remove(mySelectionDialog);
 		myObjects.remove(myCostDialog);
 		myObjects.remove(back);

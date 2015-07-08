@@ -20,7 +20,7 @@ public class TileObjectInfoHandler extends SubMenu{
 
 	}
 
-	public void manageTileInfo() {
+	public void manageInfo() {
 		myObjects.remove(myTileObjectInfo1);
 		myObjects.remove(myTileObjectInfo2);
 		int xLoc = myPlayer.getX() + myPlayer.getTargetX();

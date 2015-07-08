@@ -53,7 +53,7 @@ public class AttackMenu extends SubMenu{
 		myObjects.add(water);
 		myObjects.add(fire);
 	}
-	public void managePlayerAttack() {
+	public void manageInfo() {
 		myObjects.clear();
 		if(!myAttack.getState().equals("main")){
 			myPlayer.setCommand(myAttack.getState());

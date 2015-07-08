@@ -22,6 +22,8 @@ public class Player extends GameObject{
 	
 	private int myHealth;
 	
+	private int damageTaken;
+	
 	private Stage myStage;
 	private List<List<MapCell>> myCells;
 	
@@ -33,7 +35,7 @@ public class Player extends GameObject{
 		myX = 2;
 		myY = 2;
 		
-		myHealth = 10;
+		myHealth = 12;
 		
 		myStage = stage;
 		myCells = myStage.getCells();
@@ -52,9 +54,14 @@ public class Player extends GameObject{
 	
 	public void doDamage(Action action){
 		myHealth-=action.getPower();
+		damageTaken += action.getPower();
 		if(myHealth<=0){
 			myCells.get(myX).get(myY).removeEnemy();
 		}
+	}
+	
+	public int getDamageTaken(){
+		return damageTaken;
 	}
 	
 	@Override
@@ -127,6 +134,7 @@ public class Player extends GameObject{
 	public void stopAction() {
 		preparedMove = false;
 		preparedAttack = false;
+		damageTaken = 0;
 	}
 	public boolean actionPrepared() {
 		return preparedMove || preparedAttack;
@@ -202,5 +210,9 @@ public class Player extends GameObject{
 			return true;
 		}
 		return tookAction;
+	}
+
+	public int getHealth() {
+		return myHealth;
 	}
 }

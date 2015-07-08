@@ -14,7 +14,7 @@ import GameObjects.Stage;
 import Main.World;
 import Utilities.State;
 
-public class SubMenu {
+public abstract class SubMenu {
 
 	protected BufferedImage myFont;
 	protected BufferedImage myBlueFont;
@@ -45,4 +45,6 @@ public class SubMenu {
 	public List<GameObject> getObjects() {
 		return myObjects;
 	}
+	
+	public abstract void manageInfo();
 }

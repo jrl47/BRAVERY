@@ -25,7 +25,7 @@ public class InventoryHandler extends SubMenu {
 		myObjects.add(myWaterDialog);
 		myObjects.add(myFireDialog);
 	}
-	public void manageInventory() {
+	public void manageInfo() {
 		myObjects.remove(myAvailableDialog);
 		myObjects.remove(myEarthDialog);
 		myObjects.remove(myAirDialog);
