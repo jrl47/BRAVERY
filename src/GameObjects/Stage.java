@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import Main.World;
 import Utilities.AttackDrawer;
+import Utilities.DeciduousTileManager;
 import Utilities.MoveDrawer;
 import UtilityObjects.Action;
 
@@ -25,6 +26,7 @@ public class Stage extends GameObject{
 	
 	private List<List<MapCell>> myCells;
 	private List<Enemy> myEnemies;
+	private DeciduousTileManager manager;
 	
 	private boolean wasInput;
 	private int hoverX = -1;
@@ -35,6 +37,11 @@ public class Stage extends GameObject{
 		myBounds = new Rectangle(0, 0, MAP_WIDTH * 32, 675);
 		myEnemies = new ArrayList<Enemy>();
 		myCells = new ArrayList<List<MapCell>>();
+		try {
+			manager = new DeciduousTileManager(this);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		try {
 			myMap = ImageIO.read(World.class.getResource("/mapData.png"));
 		} catch (IOException e) {
@@ -178,7 +185,7 @@ public class Stage extends GameObject{
 					g.drawRect(xcounter*BLOCK_SIZE, 1+(ycounter*BLOCK_SIZE), BLOCK_SIZE-1, BLOCK_SIZE-1);
 				}
 				else{
-					myCells.get(i).get(j).draw(g,xcounter,ycounter);
+					myCells.get(i).get(j).draw(g, manager, xcounter,ycounter);
 				}
 				ycounter++;
 			}
@@ -239,6 +246,14 @@ public class Stage extends GameObject{
 
 	public boolean isGameOver() {
 		return myPlayer.isDead();
+	}
+
+	public MapCell getCell(int x, int y) {
+		return myCells.get(x).get(y);
+	}
+
+	public int getWidth() {
+		return myCells.size();
 	}
 
 }

@@ -3,16 +3,29 @@ package GameObjects;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import Utilities.DeciduousTileManager;
 import UtilityObjects.Action;
 
 public class MapCell extends GameObject{
 
+	public static final String GRASS = "grass";
+	public static final String DIRT = "dirt";
+	public static final String SMALL_ROCKS = "srocks";
+	public static final String LARGE_ROCKS = "lrocks";
+	public static final String WATER = "water";
+	public static final String FLOWERS = "flowers";
+	public static final String BRICKS = "bricks";
+	public static final String SHOALS = "shoals";
+	public static final String FOREST = "forest";
+	
 	private boolean isPassable;
 	private boolean isAvailable; // referring to immediate access for movement, attack, etc. "highlightability"
 	private int myX;
 	private int myY;
 	private int myCost;
 	private String myCostType;
+	
+	private String myID;
 	
 	private Collectible myCollectible;
 	private Enemy myEnemy;
@@ -22,7 +35,14 @@ public class MapCell extends GameObject{
 	public MapCell(int x, int y){
 		myX = x;
 		myY = y;
+		myID = GRASS;
 		myCostType = "";
+	}
+	public String getID(){
+		return myID;
+	}
+	public void setID(String s){
+		myID = s;
 	}
 	public void setPassable(boolean b){
 		isPassable = b;
@@ -64,22 +84,29 @@ public class MapCell extends GameObject{
 		
 	}
 	
-	public void draw(Graphics g, int x, int y){
+	public void draw(Graphics g, DeciduousTileManager manager, int x, int y){
 		if(isPassable){
-			g.setColor(Color.WHITE);
-			if(myCollectible!=null)
+			if(myCollectible!=null){
 				g.setColor(Color.MAGENTA);
+				g.fillRect(x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE, Stage.BLOCK_SIZE);
+				g.setColor(Color.GRAY);
+				g.drawRect(x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE-1, Stage.BLOCK_SIZE-1);
+				return;
+			}
 			if(myEnemy!=null){
 				myEnemy.draw(g, x, y);
+				return;
+			} else{
+				g.drawImage(manager.getImage(this),x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), null);
 				return;
 			}
 		}
 		else{
 			g.setColor(Color.BLACK);
+			g.fillRect(x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE, Stage.BLOCK_SIZE);
+			g.setColor(Color.GRAY);
+			g.drawRect(x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE-1, Stage.BLOCK_SIZE-1);
 		}
-		g.fillRect(x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE, Stage.BLOCK_SIZE);
-		g.setColor(Color.GRAY);
-		g.drawRect(x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE-1, Stage.BLOCK_SIZE-1);
 	}
 	public void removeCollectible() {
 		myCollectible = null;
@@ -98,6 +125,12 @@ public class MapCell extends GameObject{
 	}
 	public void removePlayer() {
 		myPlayer = null;
+	}
+	public int getX() {
+		return myX;
+	}
+	public int getY() {
+		return myY;
 	}
 
 }
