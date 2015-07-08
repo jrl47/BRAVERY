@@ -88,6 +88,7 @@ public class Menu extends GameObject{
 			myActiveObjects.addAll(myTileHandler.getObjects());
 			myActiveObjects.addAll(myInfoHandler.getObjects());
 			myActiveObjects.addAll(myActionHandler.getObjects());
+			myActiveObjects.addAll(myInventoryHandler.getObjects());
 		}
 		if(myState.getState().equals("move") || myState.getState().equals("attack")){
 			myActiveObjects.addAll(myInventoryHandler.getObjects());

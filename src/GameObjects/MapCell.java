@@ -87,15 +87,12 @@ public class MapCell extends GameObject{
 	}
 	
 	public void draw(Graphics g, DeciduousTileManager manager, int x, int y){
+		g.drawImage(manager.getImage(this),x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), null);
 		if(myCollectible!=null){
 			g.drawImage(myStage.getManager().getImage(myCollectible),x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), null);
-			return;
 		}
 		if(myEnemy!=null){
 			myEnemy.draw(g, x, y);
-			return;
-		} else{
-			g.drawImage(manager.getImage(this),x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), null);
 			return;
 		}
 	}

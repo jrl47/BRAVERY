@@ -57,10 +57,7 @@ public class Enemy extends GameObject{
 	}
 
 	public void draw(Graphics g, int x, int y){
-		g.setColor(Color.PINK);
-		g.fillRect(x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE, Stage.BLOCK_SIZE);
-		g.setColor(Color.GRAY);
-		g.drawRect(x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE-1, Stage.BLOCK_SIZE-1);
+		g.drawImage(myStage.getManager().getImage(this),x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), null);
 	}
 	
 	public void attack(Player p){

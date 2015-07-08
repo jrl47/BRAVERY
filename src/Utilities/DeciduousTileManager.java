@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import GameObjects.Collectible;
+import GameObjects.Enemy;
 import GameObjects.MapCell;
 import GameObjects.Player;
 import GameObjects.Stage;
@@ -186,6 +187,10 @@ public class DeciduousTileManager extends TileManager{
 	
 	public BufferedImage getImage(Collectible c) {
 		return myImage.getSubimage(0*32, 2*32, 32, 32);
+	}
+	
+	public BufferedImage getImage(Enemy enemy) {
+		return myImage.getSubimage(1*32, 2*32, 32, 32);
 	}
 
 }
