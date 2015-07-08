@@ -147,4 +147,8 @@ public class Enemy extends GameObject{
 		}
 	}
 
+	public int getAttackRange() {
+		return attackRange;
+	}
+
 }

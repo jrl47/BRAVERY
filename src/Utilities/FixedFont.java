@@ -22,15 +22,15 @@ public class FixedFont {
 			}
 		}
 	}
-	public BufferedImage getStringImage(String s, int scale){
+	public BufferedImage getStringImage(String s, double scale){
 		BufferedImage bb = new BufferedImage((myWidth+1)*s.length()-1, myHeight, BufferedImage.TYPE_INT_ARGB);
 		Graphics g = bb.getGraphics();
 		for(int i=0; i<s.length(); i++){
 				g.drawImage(myImages.get((int)s.charAt(i)-32), (myWidth+1)*i, 0, null);
 		}
-		BufferedImage sc = new BufferedImage(bb.getWidth()*scale, bb.getHeight()*scale,BufferedImage.TYPE_INT_ARGB);
+		BufferedImage sc = new BufferedImage((int)(bb.getWidth()*scale), (int)(bb.getHeight()*scale),BufferedImage.TYPE_INT_ARGB);
 		Graphics2D gg = sc.createGraphics();
-		gg.drawImage(bb,  0,  0, bb.getWidth()*scale, bb.getHeight()*scale, null);
+		gg.drawImage(bb,  0,  0, (int)(bb.getWidth()*scale), (int)(bb.getHeight()*scale), null);
 		gg.dispose();
 		return sc;
 	}

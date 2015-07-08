@@ -19,22 +19,22 @@ public class BorderedFixedFont extends FixedFont{
 			}
 		}
 	}
-	public BufferedImage getStringImage(String s, int scale){
+	public BufferedImage getStringImage(String s, double scale){
 		BufferedImage bb = new BufferedImage((myWidth+1)*s.length()-1, myHeight, BufferedImage.TYPE_INT_ARGB);
 		Graphics g = bb.getGraphics();
 		for(int i=0; i<s.length(); i++){
 			g.drawImage(myImages.get((int)s.charAt(i)-32), (myWidth+1)*i, 0, null);
 		}
-		BufferedImage sc = new BufferedImage(bb.getWidth()*scale, bb.getHeight()*scale,BufferedImage.TYPE_INT_ARGB);
+		BufferedImage sc = new BufferedImage((int)(bb.getWidth()*scale), (int)(bb.getHeight()*scale),BufferedImage.TYPE_INT_ARGB);
 		g = sc.createGraphics();
-		g.drawImage(bb,  0,  0, bb.getWidth()*scale, bb.getHeight()*scale, null);
+		g.drawImage(bb,  0,  0, (int)(bb.getWidth()*scale), (int)(bb.getHeight()*scale), null);
 		g.dispose();
 		BufferedImage result = prepareBackground(s, scale);
 		g = result.createGraphics();
-		g.drawImage(sc, 3*scale, 3*scale, null);
+		g.drawImage(sc, (int)(3*scale), (int)(3*scale), null);
 		return result;
 	}
-	private BufferedImage prepareBackground(String ss, int scale) {
+	private BufferedImage prepareBackground(String ss, double scale) {
 		String s = "";
 		s += "A";
 		for(int i=0; i<ss.length()-1; i++){
@@ -46,9 +46,9 @@ public class BorderedFixedFont extends FixedFont{
 		for(int i=0; i<s.length(); i++){
 			g.drawImage(myBorderImages.get((int)s.charAt(i)-65), (myWidth+1)*i, 0, null);
 		}
-		BufferedImage sc = new BufferedImage(bb.getWidth()*scale, bb.getHeight()*scale,BufferedImage.TYPE_INT_ARGB);
+		BufferedImage sc = new BufferedImage((int)(bb.getWidth()*scale), (int)(bb.getHeight()*scale),BufferedImage.TYPE_INT_ARGB);
 		g = sc.createGraphics();
-		g.drawImage(bb,  0,  0, bb.getWidth()*scale, bb.getHeight()*scale, null);
+		g.drawImage(bb,  0,  0, (int)(bb.getWidth()*scale), (int)(bb.getHeight()*scale), null);
 		g.dispose();
 		return sc;
 	}

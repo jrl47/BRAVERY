@@ -10,15 +10,15 @@ public class Text extends GameObject {
 
 	protected String myString;
 	protected BufferedImage myFont;
-	protected int mySize;
+	protected double mySize;
 	protected int x;
 	protected int y;
 	protected FixedFont f;
-	public Text(int xx, int yy, String s, int size, BufferedImage font) {
+	public Text(int xx, int yy, String s, double d, BufferedImage font) {
 		x = xx;
 		y = yy;
 		myString = s;
-		mySize = size;
+		mySize = d;
 		myFont = font;
 		f = new FixedFont(myFont, 6);
 	}
