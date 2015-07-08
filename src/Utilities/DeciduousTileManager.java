@@ -1,18 +1,19 @@
 package Utilities;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import GameObjects.Collectible;
 import GameObjects.MapCell;
+import GameObjects.Player;
 import GameObjects.Stage;
 
 public class DeciduousTileManager extends TileManager{
 
-	private BufferedImage myRobotSprite;
-	private BufferedImage myRobotFactorySprite;
 	public DeciduousTileManager(Stage m) throws IOException {
 		super(ImageIO.read(DeciduousTileManager.class.getResource("/deciduousspritesheet.png")), m);
 	}
@@ -22,6 +23,8 @@ public class DeciduousTileManager extends TileManager{
 		BufferedImage bb = doBackground(m);
 		return bb;
 	}
+	
+	
 	public BufferedImage doBackground(MapCell m){
 		if(m.getID().equals(MapCell.GRASS))
 			return generateGrass();
@@ -105,6 +108,9 @@ public class DeciduousTileManager extends TileManager{
 	}
 
 	private void fuzzBorderWithGrass(MapCell m, Graphics g) {
+		if(m.getX()<0 || m.getY()<0)
+			return;
+		
 		String up = "";
 		String down = "";
 		String left = "";
@@ -172,6 +178,14 @@ public class DeciduousTileManager extends TileManager{
 	}
 	private BufferedImage generateShoals() {
 		return myImage.getSubimage(2*32, 1*32, 32, 32);
+	}
+
+	public BufferedImage getImage(Player player) {
+		return myImage.getSubimage(9*32, 1*32, 32, 32);
+	}
+	
+	public BufferedImage getImage(Collectible c) {
+		return myImage.getSubimage(0*32, 2*32, 32, 32);
 	}
 
 }

@@ -32,6 +32,8 @@ public class Stage extends GameObject{
 	private int hoverX = -1;
 	private int hoverY = -1;
 	
+	private MapCell outsideBorder;
+	
 	public Stage() {
 		super();
 		myBounds = new Rectangle(0, 0, MAP_WIDTH * 32, 675);
@@ -53,7 +55,7 @@ public class Stage extends GameObject{
 		
 		for(int i=0; i<myMap.getWidth(); i++){
 			for(int j=0; j<myMap.getHeight(); j++){
-				myCells.get(i).add(new MapCell(i, j));
+				myCells.get(i).add(new MapCell(i, j, this));
 				if(myMap.getRGB(i,j)!=-16777216){
 					myCells.get(i).get(j).setPassable(true);
 					if(i==4 && j == 3){
@@ -65,8 +67,13 @@ public class Stage extends GameObject{
 						myCells.get(i).get(j).setEnemy(e);
 					}
 				}
+				else{
+					myCells.get(i).get(j).setID(MapCell.WATER);
+				}
 			}
 		}
+		outsideBorder = new MapCell(-1, -1, this);
+		outsideBorder.setID(MapCell.WATER);
 		
 	}
 	
@@ -179,10 +186,7 @@ public class Stage extends GameObject{
 		for(int i=myPlayer.getX() - (MAP_WIDTH/2); i<=(MAP_WIDTH/2) + myPlayer.getX(); i++){
 			for(int j=myPlayer.getY() - (MAP_HEIGHT/2); j<(MAP_HEIGHT/2) + 1 + myPlayer.getY(); j++){
 				if(i < 0 || j < 0 || i >= myCells.size() || j >=myCells.get(0).size()){
-					g.setColor(Color.BLACK);
-					g.fillRect(xcounter*BLOCK_SIZE, 1+(ycounter*BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE);
-					g.setColor(Color.GRAY);
-					g.drawRect(xcounter*BLOCK_SIZE, 1+(ycounter*BLOCK_SIZE), BLOCK_SIZE-1, BLOCK_SIZE-1);
+					g.drawImage(manager.getImage(outsideBorder), xcounter*Stage.BLOCK_SIZE, 1+(ycounter*Stage.BLOCK_SIZE), null);
 				}
 				else{
 					myCells.get(i).get(j).draw(g, manager, xcounter,ycounter);
@@ -205,10 +209,7 @@ public class Stage extends GameObject{
 		myPlayer.draw(g);
 		
 		if(hoverX!=-1 || hoverY!=-1){
-			g.setColor(Color.lightGray);
-			g.fillRect((hoverX)*BLOCK_SIZE, 1+((hoverY)*BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE);
-			g.setColor(Color.GRAY);
-			g.drawRect(((MAP_WIDTH/2))*BLOCK_SIZE, 1+(((MAP_HEIGHT/2))*BLOCK_SIZE), BLOCK_SIZE-1, BLOCK_SIZE-1);
+			g.drawImage(manager.getHoverTransparency(), (hoverX)*BLOCK_SIZE, 1+((hoverY)*BLOCK_SIZE), null, null);
 			
 			if(!(myPlayer.getX() + hoverX - MAP_WIDTH/2 < 0 || myPlayer.getY() + hoverY - MAP_HEIGHT/2 < 0 
 					|| myPlayer.getX() + hoverX - MAP_WIDTH/2 >= myCells.size() || myPlayer.getY() + hoverY - MAP_HEIGHT/2 >= myCells.get(0).size())){
@@ -254,6 +255,10 @@ public class Stage extends GameObject{
 
 	public int getWidth() {
 		return myCells.size();
+	}
+
+	public DeciduousTileManager getManager() {
+		return manager;
 	}
 
 }

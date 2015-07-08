@@ -31,11 +31,13 @@ public class MapCell extends GameObject{
 	private Enemy myEnemy;
 	private Player myPlayer;
 	private Action myAction;
+	private Stage myStage;
 	
-	public MapCell(int x, int y){
+	public MapCell(int x, int y, Stage s){
 		myX = x;
 		myY = y;
 		myID = GRASS;
+		myStage = s;
 		myCostType = "";
 	}
 	public String getID(){
@@ -85,27 +87,16 @@ public class MapCell extends GameObject{
 	}
 	
 	public void draw(Graphics g, DeciduousTileManager manager, int x, int y){
-		if(isPassable){
-			if(myCollectible!=null){
-				g.setColor(Color.MAGENTA);
-				g.fillRect(x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE, Stage.BLOCK_SIZE);
-				g.setColor(Color.GRAY);
-				g.drawRect(x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE-1, Stage.BLOCK_SIZE-1);
-				return;
-			}
-			if(myEnemy!=null){
-				myEnemy.draw(g, x, y);
-				return;
-			} else{
-				g.drawImage(manager.getImage(this),x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), null);
-				return;
-			}
+		if(myCollectible!=null){
+			g.drawImage(myStage.getManager().getImage(myCollectible),x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), null);
+			return;
 		}
-		else{
-			g.setColor(Color.BLACK);
-			g.fillRect(x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE, Stage.BLOCK_SIZE);
-			g.setColor(Color.GRAY);
-			g.drawRect(x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE-1, Stage.BLOCK_SIZE-1);
+		if(myEnemy!=null){
+			myEnemy.draw(g, x, y);
+			return;
+		} else{
+			g.drawImage(manager.getImage(this),x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), null);
+			return;
 		}
 	}
 	public void removeCollectible() {
