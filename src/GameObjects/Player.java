@@ -3,6 +3,7 @@ package GameObjects;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 import UtilityObjects.Action;
@@ -28,6 +29,7 @@ public class Player extends GameObject{
 	private List<List<MapCell>> myCells;
 	
 	private boolean tookAction;
+	private Action myAction;
 	
 	private Inventory myInventory;
 	
@@ -35,7 +37,9 @@ public class Player extends GameObject{
 		myX = 2;
 		myY = 2;
 		
-		myHealth = 12;
+		myHealth = 32;
+		
+		myAction = new Action(0, "wait", 0);
 		
 		myStage = stage;
 		myCells = myStage.getCells();
@@ -118,6 +122,11 @@ public class Player extends GameObject{
 		if(k==null){
 			return;
 		}
+		if(k.getKeyCode()==KeyEvent.VK_W || k.getKeyCode()==KeyEvent.VK_S || 
+				k.getKeyCode()==KeyEvent.VK_A || k.getKeyCode()==KeyEvent.VK_D){
+			myAction = new Action(0, "earth", 0);
+		}
+		
 		if(k.getKeyCode()==KeyEvent.VK_W)
 			myCommand = "Up";
 		if(k.getKeyCode()==KeyEvent.VK_S)
@@ -132,6 +141,7 @@ public class Player extends GameObject{
 		preparedMove = false;
 		preparedAttack = false;
 		damageTaken = 0;
+		myAction = new Action(0, "wait", 0);
 	}
 	public boolean actionPrepared() {
 		return preparedMove || preparedAttack;
@@ -157,12 +167,12 @@ public class Player extends GameObject{
 		myY += targetY;
 		targetX = 0;
 		targetY = 0;
-		stopAction();
 		tookAction = true;
 		MapCell cell = myCells.get(myX).get(myY);
 		chargeForAction(cell);
 		getCollectible(cell);
 		cell.addPlayer(this);
+		stopAction();
 	}
 	
 	public void attack(Enemy enemy) {
@@ -170,19 +180,19 @@ public class Player extends GameObject{
 		tookAction = true;
 		MapCell cell = myCells.get(myX+targetX).get(myY+targetY);
 		Enemy e = cell.getEnemy();
-		e.doDamage(cell.getAction());
+		e.doDamage(myAction);
 		chargeForAction(cell);
 	}
 
 	public void chargeForAction(MapCell mapCell) {
-		if(mapCell.getAction().getType().equals("earth"))
-			myInventory.setEarth(myInventory.getEarth()-mapCell.getAction().getCost());
-		if(mapCell.getAction().getType().equals("air"))
-			myInventory.setAir(myInventory.getAir()-mapCell.getAction().getCost());
-		if(mapCell.getAction().getType().equals("water"))
-			myInventory.setWater(myInventory.getWater()-mapCell.getAction().getCost());
-		if(mapCell.getAction().getType().equals("fire"))
-			myInventory.setFire(myInventory.getFire()-mapCell.getAction().getCost());
+		if(myAction.getType().equals("earth"))
+			myInventory.setEarth(myInventory.getEarth()-myAction.getCost());
+		if(myAction.getType().equals("air"))
+			myInventory.setAir(myInventory.getAir()-myAction.getCost());
+		if(myAction.getType().equals("water"))
+			myInventory.setWater(myInventory.getWater()-myAction.getCost());
+		if(myAction.getType().equals("fire"))
+			myInventory.setFire(myInventory.getFire()-myAction.getCost());
 	}
 
 	public void getCollectible(MapCell mapCell) {
@@ -211,5 +221,13 @@ public class Player extends GameObject{
 
 	public int getHealth() {
 		return myHealth;
+	}
+
+	public Action getAction() {
+		return myAction;
+	}
+
+	public void setAction(Action a) {
+		myAction = a;
 	}
 }

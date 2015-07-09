@@ -51,38 +51,31 @@ public class MoveDrawer {
 					myPlayer.getY() - yScale*i <= myCells.get(0).size() &&
 					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).isPassable()){
 				if((xScale==0 || yScale==0) && i==1){
-					Action a = new Action(0, "earth", 0);
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAction(a);
+					
 				}
 				else if((xScale==0 || yScale==0)){
 					if(myPlayer.getInventory().getEarth()<Math.pow(i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6))
 						break;
-					Action a = new Action((int) Math.pow(i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6), "earth", 0);
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAction(a);
+					Action a = new Action((int) Math.pow(i*(Math.abs(xScale) + Math.abs(yScale)), 6), "earth", 0);
 				}
 				else{
 					if(Math.abs(xScale)==Math.abs(yScale)){
-						if(myPlayer.getInventory().getAir()<Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6))
+						if(myPlayer.getInventory().getAir()<Math.pow(i*(Math.abs(xScale) + Math.abs(yScale)), 6))
 							break;
-						Action a = new Action((int) Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6), "air", 0);
-						myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAction(a);
 					}
 					else if(Math.abs(xScale)==2*Math.abs(yScale) || 2*Math.abs(xScale)==Math.abs(yScale)){
-						if(myPlayer.getInventory().getWater()<Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6))
+						if(myPlayer.getInventory().getWater()<Math.pow(i*(Math.abs(xScale) + Math.abs(yScale)), 6))
 							break;
-						Action a = new Action((int) Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6), "water", 0);
-						myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAction(a);
 					}
 					else{
-						if(myPlayer.getInventory().getFire()<Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6))
+						if(myPlayer.getInventory().getFire()<Math.pow(i*(Math.abs(xScale) + Math.abs(yScale)), 6))
 							break;
-						Action a = new Action((int) Math.pow(1+i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6), "fire", 0);
-						myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAction(a);
 					}
 				}
 				
 				g.setColor(c);
 				g.fillRect((MAP_WIDTH/2 + xScale*i)*BLOCK_SIZE, ((MAP_HEIGHT/2) - yScale*i)*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove();
 				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAvailable(true);
 			}
 			else{

@@ -14,8 +14,8 @@ public class AttackDrawer {
 			List<List<MapCell>> myMap, Player myPlayer, Graphics g) {
 		if(myPlayer.getCommand()!=null){
 			if(myPlayer.getCommand().equals("boulderfall")){
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 0, 1, new Color(.6f, .4f, .3f), 1, 1, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 1, 0, new Color(.6f, .4f, .3f), 1, 1, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 0, 1, new Color(.6f, .4f, .3f, .6f), 1, 1, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 1, 0, new Color(.6f, .4f, .3f, .6f), 1, 1, true);
 			}
 		}
 	}
@@ -37,7 +37,8 @@ public class AttackDrawer {
 					if(myPlayer.getInventory().getEarth()<2000)
 						break;
 					Action a = new Action(2000, "earth", 5);
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAction(a);
+					myPlayer.setAction(a);
+					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove();
 				}
 					
 				g.setColor(c);

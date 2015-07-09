@@ -114,10 +114,6 @@ public class Stage extends GameObject{
 
 	@Override
 	public void step() {
-		if(myPlayer.isDead()){
-			
-		}
-		
 		if(!wasInput){
 			hoverX = -1;
 			hoverY = -1;
@@ -229,7 +225,6 @@ public class Stage extends GameObject{
 		for(int i=0; i<myCells.size(); i++){
 			for(int j=0; j<myCells.get(0).size(); j++){
 				myCells.get(i).get(j).setAvailable(false);
-				myCells.get(i).get(j).setAction(new Action(0, "null", 0));
 			}
 		}
 	}

@@ -30,7 +30,8 @@ public class MapCell extends GameObject{
 	private Collectible myCollectible;
 	private Enemy myEnemy;
 	private Player myPlayer;
-	private Action myAction;
+//	private Action myAction;
+	private boolean validMove;
 	private Stage myStage;
 	
 	public MapCell(int x, int y, Stage s){
@@ -60,12 +61,20 @@ public class MapCell extends GameObject{
 		return isAvailable;
 	}
 	
-	public void setAction(Action a){
-		myAction = a;
+//	public void setAction(Action a){
+//		myAction = a;
+//	}
+//	public Action getAction(){
+//		return myAction;
+//	}
+	
+	public void setValidMove(){
+		validMove = true;
 	}
-	public Action getAction(){
-		return myAction;
+	public boolean isValidMove(){
+		return validMove;
 	}
+	
 	
 	public void setCollectible(Collectible c){
 		myCollectible = c;

@@ -8,6 +8,7 @@ import Utilities.State;
 public class AttackMenu extends SubMenu{
 
 	private Text mySelectionDialog;
+	private Text myNameDialog;
 	private Text noSelectionDialog;
 	private Text emptySelectionDialog;
 	private Text myCostDialog;
@@ -26,13 +27,17 @@ public class AttackMenu extends SubMenu{
 	private State myAttack;
 	
 	private StateChangeButton boulderFall;
+	private StateChangeButton skyToss;
+	
+	private Action myAction;
 	public AttackMenu(Stage stage, State state) {
 		super(stage, state);
 		myAttackType = new State("main");
 		myAttack = new State("main");
 		
-		noSelectionDialog = new Text(886, 20, "SELECT A VALID ATTACK", 2, myFont);
-		emptySelectionDialog = new Text(886, 20, "NO ENEMY ON THIS TILE", 2, myFont);
+		noSelectionDialog = new Text(886, 140, "SELECT A VALID TARGET", 2, myFont);
+		emptySelectionDialog = new Text(886, 140, "NO ENEMY ON THIS TILE", 2, myFont);
+		myNameDialog = new Text(886, 20, " ", 2, myFont);
 		emptyDialog = new Text(900, 20, " ", 2, myFont);
 		mySelectionDialog = emptyDialog;
 		myCostDialog = emptyDialog;
@@ -46,6 +51,7 @@ public class AttackMenu extends SubMenu{
 		subBack = new StateChangeButton(984, 600, "BACK", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "main");
 		cancel = new StateChangeButton(964, 600, "CANCEL", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "main");
 		boulderFall = new StateChangeButton(912, 20, "BOULDERFALL", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "boulderfall");
+		skyToss = new StateChangeButton(942, 20, "SKYTOSS", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "skytoss");
 		
 		myObjects.add(back);
 		myObjects.add(earth);
@@ -58,6 +64,7 @@ public class AttackMenu extends SubMenu{
 		if(!myAttack.getState().equals("main")){
 			myPlayer.setCommand(myAttack.getState());
 			myObjects.add(cancel);
+			myObjects.add(myNameDialog);
 			myObjects.add(mySelectionDialog);
 			myObjects.add(myCostDialog);
 			myObjects.add(myPowerDialog);
@@ -65,27 +72,24 @@ public class AttackMenu extends SubMenu{
 			int xLoc = myPlayer.getX() + myPlayer.getTargetX();
 			int yLoc = myPlayer.getY() + myPlayer.getTargetY();
 			
+			myNameDialog = new Text(900, 20, myAttack.getState().toUpperCase() + ":", 2, myFont);
+//			mySelectionDialog = new Text(900, 20, myAttack.getState().toUpperCase() + ":", 2, myFont);
+			myCostDialog = new Text(900, 60, 
+					myPlayer.getAction().getCost() + " " + myPlayer.getAction().getType().toUpperCase() + " ENERGY", 2, myFont);
+			myPowerDialog = new Text(900, 100, 
+					myPlayer.getAction().getPower() +  " POWER", 2, myFont);
+			
 			if(myPlayer.getTargetX()==Integer.MIN_VALUE || myPlayer.getTargetY()==Integer.MIN_VALUE){
 				mySelectionDialog = noSelectionDialog;
-					myCostDialog = emptyDialog;
-					myPowerDialog = emptyDialog;
 			}
 			else if(!myCells.get(xLoc).get(yLoc).isAvailable()){
 				mySelectionDialog = noSelectionDialog;
-					myCostDialog = emptyDialog;
-					myPowerDialog = emptyDialog;
 			}
 			else if(myCells.get(xLoc).get(yLoc).getEnemy()==null){
 				mySelectionDialog = emptySelectionDialog;
-					myCostDialog = emptyDialog;
-					myPowerDialog = emptyDialog;
 			}
-			else if(myCells.get(xLoc).get(yLoc).getAction().getCost()!=0){
-				mySelectionDialog = new Text(900, 20, myAttack.getState().toUpperCase() + ":", 2, myFont);
-				myCostDialog = new Text(900, 60, 
-						myCells.get(xLoc).get(yLoc).getAction().getCost() + " " + myCells.get(xLoc).get(yLoc).getAction().getType().toUpperCase() + " ENERGY", 2, myFont);
-				myPowerDialog = new Text(900, 100, 
-						myCells.get(xLoc).get(yLoc).getAction().getPower() +  " POWER", 2, myFont);
+			else if(myPlayer.getAction().getCost()!=0){
+				mySelectionDialog = new Text(900, 140, " ", 2, myFont);
 			}
 			else{
 				mySelectionDialog = noSelectionDialog;
