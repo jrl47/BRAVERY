@@ -99,51 +99,7 @@ public class Stage extends GameObject{
 					movePlayer();
 				}
 				if(myPlayer.attackPrepared()){
-					boolean enemyInRange = false;
-					int lim = myPlayer.getAction().getRange();
-					if(myPlayer.getAction().isRoundSplash()){
-						for(int x=-lim; x<=lim; x++){
-							for(int y=-lim; y<=lim; y++){
-								if(Math.abs(x) + Math.abs(y) < lim && myCells.get(locX+x).get(locY+y).getEnemy()!=null)
-									enemyInRange = true;
-							}
-						}
-					}
-					else{
-						int xDif = -(myPlayer.getX() - locX);
-						int yDif = -(myPlayer.getY() - locY);
-						if(xDif > yDif){
-							for(int x = Integer.signum(xDif); Math.abs(x) < lim; x+=Integer.signum(xDif)){
-								if(myCells.get(locX+x).get(locY).getEnemy()!=null)
-									enemyInRange = true;
-							}
-						}
-						else if(yDif > xDif){
-							for(int x = Integer.signum(yDif); Math.abs(x) < lim; x+=Integer.signum(yDif)){
-								if(myCells.get(locX).get(locY+x).getEnemy()!=null)
-									enemyInRange = true;
-							}
-						}
-						else if(yDif==0 && xDif ==0){
-							
-						}
-						else if(xDif==yDif){
-							for(int x = Integer.signum(xDif); Math.abs(x) < lim; x+=Integer.signum(xDif)){
-								if(myCells.get(locX+x).get(locY+x).getEnemy()!=null)
-									enemyInRange = true;
-							}
-						}
-						else{
-							for(int x = Integer.signum(xDif); Math.abs(x) < lim; x+=Integer.signum(xDif)){
-								if(myCells.get(locX+x).get(locY-x).getEnemy()!=null)
-									enemyInRange = true;
-							}
-						}
-					}
-					if(enemyInRange){
-						doPlayerAttack();
-						myPlayer.clearCommand();
-					}
+					ValidAttackChecker.detectAttackTargets(locX, locY, myPlayer, myCells);
 				}
 			}
 		}
@@ -151,51 +107,6 @@ public class Stage extends GameObject{
 
 	private void movePlayer() {
 		myPlayer.move();
-	}
-	
-	private void doPlayerAttack() {
-		int locX = myPlayer.getX()+myPlayer.getTargetX();
-		int locY = myPlayer.getY()+myPlayer.getTargetY();
-		int lim = myPlayer.getAction().getRange();
-		if(myPlayer.getAction().isRoundSplash()){
-			for(int i=-lim; i<=lim; i++){
-				for(int j=-lim; j<=lim; j++){
-					if(Math.abs(i) + Math.abs(j) < lim && myCells.get(locX+i).get(locY+j).getEnemy()!=null)
-						myPlayer.attack(myCells.get(locX+i).get(locY+j).getEnemy());
-				}
-			}
-		}
-		else{
-			int xDif = -(myPlayer.getX() - locX);
-			int yDif = -(myPlayer.getY() - locY);
-			if(xDif > yDif){
-				for(int i = Integer.signum(xDif); Math.abs(i) < lim; i+=Integer.signum(xDif)){
-					if(myCells.get(locX+i).get(locY).getEnemy()!=null)
-						myPlayer.attack(myCells.get(locX+i).get(locY).getEnemy());
-				}
-			}
-			else if(yDif > xDif){
-				for(int i = Integer.signum(yDif); Math.abs(i) < lim; i+=Integer.signum(yDif)){
-					if(myCells.get(locX).get(locY+i).getEnemy()!=null)
-						myPlayer.attack(myCells.get(locX).get(locY+i).getEnemy());
-				}
-			}
-			else if(yDif==0 && xDif ==0){
-				
-			}
-			else if(xDif==yDif){
-				for(int i = Integer.signum(xDif); Math.abs(i) < lim; i+=Integer.signum(xDif)){
-					if(myCells.get(locX+i).get(locY+i).getEnemy()!=null)
-						myPlayer.attack(myCells.get(locX+i).get(locY+i).getEnemy());
-				}
-			}
-			else{
-				for(int i = Integer.signum(xDif); Math.abs(i) < lim; i+=Integer.signum(xDif)){
-					if(myCells.get(locX+i).get(locY-i).getEnemy()!=null)
-						myPlayer.attack(myCells.get(locX+i).get(locY-i).getEnemy());
-				}
-			}
-		}
 	}
 
 	@Override

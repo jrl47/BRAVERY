@@ -73,14 +73,14 @@ public class AttackDrawer {
 				if(myPlayer.getCommand().equals("skytoss")){
 					if(myPlayer.getInventory().getAir()<2000)
 						break;
-					Action a = new Action(2000, "air", 5, 3, true);
+					Action a = new Action(2000, "air", 5, 4, true);
 					myPlayer.setAction(a);
 					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove(true);
 				}
 				if(myPlayer.getCommand().equals("cascade")){
 					if(myPlayer.getInventory().getWater()<2000)
 						break;
-					Action a = new Action(2000, "water", 5, 5, false);
+					Action a = new Action(2000, "water", 5, 6, false);
 					myPlayer.setAction(a);
 					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove(true);
 				}

@@ -129,5 +129,8 @@ public class MapCell extends GameObject{
 	public int getY() {
 		return myY;
 	}
+	public Player getPlayer() {
+		return myPlayer;
+	}
 
 }
