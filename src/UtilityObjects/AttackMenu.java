@@ -51,7 +51,7 @@ public class AttackMenu extends SubMenu{
 		subBack = new StateChangeButton(984, 600, "BACK", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "main");
 		cancel = new StateChangeButton(964, 600, "CANCEL", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "main");
 		boulderFall = new StateChangeButton(912, 20, "BOULDERFALL", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "boulderfall");
-		skyToss = new StateChangeButton(942, 20, "SKYTOSS", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "skytoss");
+		skyToss = new StateChangeButton(952, 20, "SKYTOSS", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "skytoss");
 		
 		myObjects.add(back);
 		myObjects.add(earth);
@@ -73,7 +73,6 @@ public class AttackMenu extends SubMenu{
 			int yLoc = myPlayer.getY() + myPlayer.getTargetY();
 			
 			myNameDialog = new Text(900, 20, myAttack.getState().toUpperCase() + ":", 2, myFont);
-//			mySelectionDialog = new Text(900, 20, myAttack.getState().toUpperCase() + ":", 2, myFont);
 			myCostDialog = new Text(900, 60, 
 					myPlayer.getAction().getCost() + " " + myPlayer.getAction().getType().toUpperCase() + " ENERGY", 2, myFont);
 			myPowerDialog = new Text(900, 100, 
@@ -113,6 +112,9 @@ public class AttackMenu extends SubMenu{
 			myObjects.add(subBack);
 			if(myAttackType.getState().equals("earth")){
 				myObjects.add(boulderFall);
+			}
+			if(myAttackType.getState().equals("air")){
+				myObjects.add(skyToss);
 			}
 		}
 	}

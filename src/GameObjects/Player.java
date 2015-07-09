@@ -176,12 +176,12 @@ public class Player extends GameObject{
 	}
 	
 	public void attack(Enemy enemy) {
-		stopAction();
 		tookAction = true;
 		MapCell cell = myCells.get(myX+targetX).get(myY+targetY);
 		Enemy e = cell.getEnemy();
 		e.doDamage(myAction);
 		chargeForAction(cell);
+		stopAction();
 	}
 
 	public void chargeForAction(MapCell mapCell) {
