@@ -56,7 +56,7 @@ public class MoveDrawer {
 				else if((xScale==0 || yScale==0)){
 					if(myPlayer.getInventory().getEarth()<Math.pow(i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6))
 						break;
-					Action a = new Action((int) Math.pow(i*(Math.abs(xScale) + Math.abs(yScale)), 6), "earth", 0);
+					Action a = new Action((int) Math.pow(i*(Math.abs(xScale) + Math.abs(yScale)), 6), "earth", 0, 0);
 				}
 				else{
 					if(Math.abs(xScale)==Math.abs(yScale)){
@@ -75,7 +75,7 @@ public class MoveDrawer {
 				
 				g.setColor(c);
 				g.fillRect((MAP_WIDTH/2 + xScale*i)*BLOCK_SIZE, ((MAP_HEIGHT/2) - yScale*i)*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove();
+				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove(true);
 				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAvailable(true);
 			}
 			else{

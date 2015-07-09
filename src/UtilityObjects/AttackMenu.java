@@ -36,7 +36,7 @@ public class AttackMenu extends SubMenu{
 		myAttack = new State("main");
 		
 		noSelectionDialog = new Text(886, 140, "SELECT A VALID TARGET", 2, myFont);
-		emptySelectionDialog = new Text(886, 140, "NO ENEMY ON THIS TILE", 2, myFont);
+		emptySelectionDialog = new Text(886, 140, "NO ENEMIES TARGETED", 2, myFont);
 		myNameDialog = new Text(886, 20, " ", 2, myFont);
 		emptyDialog = new Text(900, 20, " ", 2, myFont);
 		mySelectionDialog = emptyDialog;

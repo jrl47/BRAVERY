@@ -53,23 +53,23 @@ public class MoveMenu extends SubMenu{
 			
 		}
 		else if((xDif==0 && yDif==1) || (yDif==0 && xDif==1)){
-			Action a = new Action(0, "earth", 0);
+			Action a = new Action(0, "earth", 0, 0);
 			myPlayer.setAction(a);
 		}
 		else if(xDif==0 || yDif==0){
-			Action a = new Action((int) Math.pow(xDif + yDif, 6), "earth", 0);
+			Action a = new Action((int) Math.pow(xDif + yDif, 6), "earth", 0, 0);
 			myPlayer.setAction(a);
 		}
 		else if(xDif==yDif){
-			Action a = new Action((int) Math.pow(xDif + yDif, 6), "air", 0);
+			Action a = new Action((int) Math.pow(xDif + yDif, 6), "air", 0, 0);
 			myPlayer.setAction(a);
 		}
 		else if(xDif==2*yDif || 2*xDif==yDif){
-			Action a = new Action((int) Math.pow(xDif + yDif, 6), "water", 0);
+			Action a = new Action((int) Math.pow(xDif + yDif, 6), "water", 0, 0);
 			myPlayer.setAction(a);
 		}
 		else if(xDif==3*yDif || 3*xDif==yDif || 2*xDif==3*yDif || 3*xDif==2*yDif){
-			Action a = new Action((int) Math.pow(xDif + yDif, 6), "fire", 0);
+			Action a = new Action((int) Math.pow(xDif + yDif, 6), "fire", 0, 0);
 			myPlayer.setAction(a);
 		}
 		else{

@@ -91,13 +91,26 @@ public class Stage extends GameObject{
 
 		int locX = myPlayer.getX()+myPlayer.getTargetX();
 		int locY = myPlayer.getY()+myPlayer.getTargetY();
+		
 		if(myPlayer.getTargetX()!=Integer.MIN_VALUE && myPlayer.getTargetY()!=Integer.MIN_VALUE){
-			if(b && myPlayer.movePrepared() && myCells.get(locX).get(locY).isAvailable()){
-				movePlayer();
-			}
-			if(b && myPlayer.attackPrepared() && myCells.get(locX).get(locY).getEnemy()!=null){
-				doPlayerAttack();
-				myPlayer.clearCommand();
+			if(b){
+				if(myPlayer.movePrepared() && myCells.get(locX).get(locY).isAvailable()){
+					movePlayer();
+				}
+				if(myPlayer.attackPrepared()){
+					boolean enemyInRange = false;
+					int lim = myPlayer.getAction().getRange();
+					for(int x=-lim; x<=lim; x++){
+						for(int y=-lim; y<=lim; y++){
+							if(Math.abs(x) + Math.abs(y) < lim && myCells.get(locX+x).get(locY+y).getEnemy()!=null)
+								enemyInRange = true;
+						}
+					}
+					if(enemyInRange){
+						doPlayerAttack();
+						myPlayer.clearCommand();
+					}
+				}
 			}
 		}
 	}
@@ -109,7 +122,13 @@ public class Stage extends GameObject{
 	private void doPlayerAttack() {
 		int locX = myPlayer.getX()+myPlayer.getTargetX();
 		int locY = myPlayer.getY()+myPlayer.getTargetY();
-		myPlayer.attack(myCells.get(locX).get(locY).getEnemy());
+		int lim = myPlayer.getAction().getRange();
+		for(int i=-lim; i<=lim; i++){
+			for(int j=-lim; j<=lim; j++){
+				if(Math.abs(i) + Math.abs(j) < lim && myCells.get(locX+i).get(locY+j).getEnemy()!=null)
+					myPlayer.attack(myCells.get(locX+i).get(locY+j).getEnemy());
+			}
+		}
 	}
 
 	@Override
@@ -205,7 +224,7 @@ public class Stage extends GameObject{
 		myPlayer.draw(g);
 		
 		if(hoverX!=-1 || hoverY!=-1){
-			g.drawImage(manager.getHoverTransparency(), (hoverX)*BLOCK_SIZE, 1+((hoverY)*BLOCK_SIZE), null, null);
+			drawHoverInfo(g);
 			
 			if(!(myPlayer.getX() + hoverX - MAP_WIDTH/2 < 0 || myPlayer.getY() + hoverY - MAP_HEIGHT/2 < 0 
 					|| myPlayer.getX() + hoverX - MAP_WIDTH/2 >= myCells.size() || myPlayer.getY() + hoverY - MAP_HEIGHT/2 >= myCells.get(0).size())){
@@ -219,6 +238,38 @@ public class Stage extends GameObject{
 		}
 		
 		wasInput = false;
+	}
+
+	private void drawHoverInfo(Graphics g) {
+		int x = getCellFromHoverX(hoverX);
+		int y = getCellFromHoverY(hoverY);
+		if(myPlayer.getAction().getPower()!=0&&
+				!(x < 0 || y < 0 || x >= myCells.size() || y >=myCells.get(0).size()) &&
+				myCells.get(x).get(y).isValidMove()){
+			Color c = new Color(1f, .2f, .2f, .6f);
+			g.setColor(c);
+			g.fillRect((hoverX)*BLOCK_SIZE, 1+((hoverY)*BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE);
+			int lim = myPlayer.getAction().getRange();
+			for(int i=-lim; i<=lim; i++){
+				for(int j=-lim; j<=lim; j++){
+					if(Math.abs(i) + Math.abs(j) < lim)
+						g.fillRect((hoverX + i)*BLOCK_SIZE, 1+((hoverY + j)*BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE);
+				}
+			}
+		}
+		else{
+			g.drawImage(manager.getHoverTransparency(), (hoverX)*BLOCK_SIZE, 1+((hoverY)*BLOCK_SIZE), null, null);
+		} 
+	}
+	
+	private int getCellFromHoverX(int hoverx){
+		int shift = hoverx-(MAP_WIDTH/2);
+		return myPlayer.getX() + shift;
+		
+	}
+	private int getCellFromHoverY(int hovery){
+		int shift = hovery-(MAP_HEIGHT/2);
+		return myPlayer.getY() + shift;
 	}
 
 	private void clearAvailability(List<List<MapCell>> myCells) {

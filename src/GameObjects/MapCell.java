@@ -68,8 +68,8 @@ public class MapCell extends GameObject{
 //		return myAction;
 //	}
 	
-	public void setValidMove(){
-		validMove = true;
+	public void setValidMove(boolean b){
+		validMove = b;
 	}
 	public boolean isValidMove(){
 		return validMove;

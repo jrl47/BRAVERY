@@ -39,7 +39,7 @@ public class Player extends GameObject{
 		
 		myHealth = 32;
 		
-		myAction = new Action(0, "wait", 0);
+		myAction = new Action(0, "wait", 0, 0);
 		
 		myStage = stage;
 		myCells = myStage.getCells();
@@ -109,9 +109,12 @@ public class Player extends GameObject{
 	}
 	public void setCommand(String s){
 		myCommand = s;
+		if(s==null){
+			myCommand = "";
+		}
 	}
 	public void clearCommand(){
-		myCommand = null;
+		myCommand = "";
 	}
 	
 	public Inventory getInventory(){
@@ -124,7 +127,7 @@ public class Player extends GameObject{
 		}
 		if(k.getKeyCode()==KeyEvent.VK_W || k.getKeyCode()==KeyEvent.VK_S || 
 				k.getKeyCode()==KeyEvent.VK_A || k.getKeyCode()==KeyEvent.VK_D){
-			myAction = new Action(0, "earth", 0);
+			myAction = new Action(0, "earth", 0, 0);
 		}
 		
 		if(k.getKeyCode()==KeyEvent.VK_W)
@@ -141,7 +144,7 @@ public class Player extends GameObject{
 		preparedMove = false;
 		preparedAttack = false;
 		damageTaken = 0;
-		myAction = new Action(0, "wait", 0);
+		myAction = new Action(0, "wait", 0, 0);
 	}
 	public boolean actionPrepared() {
 		return preparedMove || preparedAttack;
@@ -169,7 +172,7 @@ public class Player extends GameObject{
 		targetY = 0;
 		tookAction = true;
 		MapCell cell = myCells.get(myX).get(myY);
-		chargeForAction(cell);
+		chargeForAction();
 		getCollectible(cell);
 		cell.addPlayer(this);
 		stopAction();
@@ -177,14 +180,12 @@ public class Player extends GameObject{
 	
 	public void attack(Enemy enemy) {
 		tookAction = true;
-		MapCell cell = myCells.get(myX+targetX).get(myY+targetY);
-		Enemy e = cell.getEnemy();
-		e.doDamage(myAction);
-		chargeForAction(cell);
+		enemy.doDamage(myAction);
+		chargeForAction();
 		stopAction();
 	}
 
-	public void chargeForAction(MapCell mapCell) {
+	public void chargeForAction() {
 		if(myAction.getType().equals("earth"))
 			myInventory.setEarth(myInventory.getEarth()-myAction.getCost());
 		if(myAction.getType().equals("air"))

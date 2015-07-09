@@ -12,6 +12,11 @@ public class AttackDrawer {
 
 	public static void drawAttacks(int MAP_WIDTH, int MAP_HEIGHT, int BLOCK_SIZE,
 			List<List<MapCell>> myMap, Player myPlayer, Graphics g) {
+		for(int i=0; i<myMap.size(); i++){
+			for(int j=0; j<myMap.size(); j++){
+				myMap.get(i).get(j).setValidMove(false);
+			}
+		}
 		if(myPlayer.getCommand()!=null){
 			if(myPlayer.getCommand().equals("boulderfall")){
 				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 0, 1, new Color(.6f, .4f, .3f, .6f), 1, 1, true);
@@ -40,16 +45,16 @@ public class AttackDrawer {
 				if(myPlayer.getCommand().equals("boulderfall")){
 					if(myPlayer.getInventory().getEarth()<2000)
 						break;
-					Action a = new Action(2000, "earth", 5);
+					Action a = new Action(2000, "earth", 5, 1);
 					myPlayer.setAction(a);
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove();
+					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove(true);
 				}
 				if(myPlayer.getCommand().equals("skytoss")){
 					if(myPlayer.getInventory().getAir()<2000)
 						break;
-					Action a = new Action(2000, "air", 5);
+					Action a = new Action(2000, "air", 5, 3);
 					myPlayer.setAction(a);
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove();
+					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove(true);
 				}
 					
 				g.setColor(c);
