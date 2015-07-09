@@ -6,12 +6,14 @@ public class Action {
 	private String myType;
 	private int myPower;
 	private int myRange;
+	private boolean roundSplash;
 	
-	public Action(int cost, String type, int power, int range){
+	public Action(int cost, String type, int power, int range, boolean roundsplash){
 		myCost = cost;
 		myType = type;
 		myPower = power;
 		myRange = range;
+		roundSplash = roundsplash;
 	}
 	
 	public int getCost(){
@@ -25,6 +27,9 @@ public class Action {
 	}
 	public int getRange(){
 		return myRange;
+	}
+	public boolean isRoundSplash(){
+		return roundSplash;
 	}
 	
 }

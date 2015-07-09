@@ -14,6 +14,7 @@ import Main.World;
 import Utilities.AttackDrawer;
 import Utilities.DeciduousTileManager;
 import Utilities.MoveDrawer;
+import Utilities.ValidAttackChecker;
 import UtilityObjects.Action;
 
 public class Stage extends GameObject{
@@ -100,10 +101,43 @@ public class Stage extends GameObject{
 				if(myPlayer.attackPrepared()){
 					boolean enemyInRange = false;
 					int lim = myPlayer.getAction().getRange();
-					for(int x=-lim; x<=lim; x++){
-						for(int y=-lim; y<=lim; y++){
-							if(Math.abs(x) + Math.abs(y) < lim && myCells.get(locX+x).get(locY+y).getEnemy()!=null)
-								enemyInRange = true;
+					if(myPlayer.getAction().isRoundSplash()){
+						for(int x=-lim; x<=lim; x++){
+							for(int y=-lim; y<=lim; y++){
+								if(Math.abs(x) + Math.abs(y) < lim && myCells.get(locX+x).get(locY+y).getEnemy()!=null)
+									enemyInRange = true;
+							}
+						}
+					}
+					else{
+						int xDif = -(myPlayer.getX() - locX);
+						int yDif = -(myPlayer.getY() - locY);
+						if(xDif > yDif){
+							for(int x = Integer.signum(xDif); Math.abs(x) < lim; x+=Integer.signum(xDif)){
+								if(myCells.get(locX+x).get(locY).getEnemy()!=null)
+									enemyInRange = true;
+							}
+						}
+						else if(yDif > xDif){
+							for(int x = Integer.signum(yDif); Math.abs(x) < lim; x+=Integer.signum(yDif)){
+								if(myCells.get(locX).get(locY+x).getEnemy()!=null)
+									enemyInRange = true;
+							}
+						}
+						else if(yDif==0 && xDif ==0){
+							
+						}
+						else if(xDif==yDif){
+							for(int x = Integer.signum(xDif); Math.abs(x) < lim; x+=Integer.signum(xDif)){
+								if(myCells.get(locX+x).get(locY+x).getEnemy()!=null)
+									enemyInRange = true;
+							}
+						}
+						else{
+							for(int x = Integer.signum(xDif); Math.abs(x) < lim; x+=Integer.signum(xDif)){
+								if(myCells.get(locX+x).get(locY-x).getEnemy()!=null)
+									enemyInRange = true;
+							}
 						}
 					}
 					if(enemyInRange){
@@ -123,10 +157,43 @@ public class Stage extends GameObject{
 		int locX = myPlayer.getX()+myPlayer.getTargetX();
 		int locY = myPlayer.getY()+myPlayer.getTargetY();
 		int lim = myPlayer.getAction().getRange();
-		for(int i=-lim; i<=lim; i++){
-			for(int j=-lim; j<=lim; j++){
-				if(Math.abs(i) + Math.abs(j) < lim && myCells.get(locX+i).get(locY+j).getEnemy()!=null)
-					myPlayer.attack(myCells.get(locX+i).get(locY+j).getEnemy());
+		if(myPlayer.getAction().isRoundSplash()){
+			for(int i=-lim; i<=lim; i++){
+				for(int j=-lim; j<=lim; j++){
+					if(Math.abs(i) + Math.abs(j) < lim && myCells.get(locX+i).get(locY+j).getEnemy()!=null)
+						myPlayer.attack(myCells.get(locX+i).get(locY+j).getEnemy());
+				}
+			}
+		}
+		else{
+			int xDif = -(myPlayer.getX() - locX);
+			int yDif = -(myPlayer.getY() - locY);
+			if(xDif > yDif){
+				for(int i = Integer.signum(xDif); Math.abs(i) < lim; i+=Integer.signum(xDif)){
+					if(myCells.get(locX+i).get(locY).getEnemy()!=null)
+						myPlayer.attack(myCells.get(locX+i).get(locY).getEnemy());
+				}
+			}
+			else if(yDif > xDif){
+				for(int i = Integer.signum(yDif); Math.abs(i) < lim; i+=Integer.signum(yDif)){
+					if(myCells.get(locX).get(locY+i).getEnemy()!=null)
+						myPlayer.attack(myCells.get(locX).get(locY+i).getEnemy());
+				}
+			}
+			else if(yDif==0 && xDif ==0){
+				
+			}
+			else if(xDif==yDif){
+				for(int i = Integer.signum(xDif); Math.abs(i) < lim; i+=Integer.signum(xDif)){
+					if(myCells.get(locX+i).get(locY+i).getEnemy()!=null)
+						myPlayer.attack(myCells.get(locX+i).get(locY+i).getEnemy());
+				}
+			}
+			else{
+				for(int i = Integer.signum(xDif); Math.abs(i) < lim; i+=Integer.signum(xDif)){
+					if(myCells.get(locX+i).get(locY-i).getEnemy()!=null)
+						myPlayer.attack(myCells.get(locX+i).get(locY-i).getEnemy());
+				}
 			}
 		}
 	}
@@ -224,7 +291,7 @@ public class Stage extends GameObject{
 		myPlayer.draw(g);
 		
 		if(hoverX!=-1 || hoverY!=-1){
-			drawHoverInfo(g);
+			ValidAttackChecker.drawHoverInfo(g, myPlayer, myCells, hoverX, hoverY, manager);
 			
 			if(!(myPlayer.getX() + hoverX - MAP_WIDTH/2 < 0 || myPlayer.getY() + hoverY - MAP_HEIGHT/2 < 0 
 					|| myPlayer.getX() + hoverX - MAP_WIDTH/2 >= myCells.size() || myPlayer.getY() + hoverY - MAP_HEIGHT/2 >= myCells.get(0).size())){
@@ -238,38 +305,6 @@ public class Stage extends GameObject{
 		}
 		
 		wasInput = false;
-	}
-
-	private void drawHoverInfo(Graphics g) {
-		int x = getCellFromHoverX(hoverX);
-		int y = getCellFromHoverY(hoverY);
-		if(myPlayer.getAction().getPower()!=0&&
-				!(x < 0 || y < 0 || x >= myCells.size() || y >=myCells.get(0).size()) &&
-				myCells.get(x).get(y).isValidMove()){
-			Color c = new Color(1f, .2f, .2f, .6f);
-			g.setColor(c);
-			g.fillRect((hoverX)*BLOCK_SIZE, 1+((hoverY)*BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE);
-			int lim = myPlayer.getAction().getRange();
-			for(int i=-lim; i<=lim; i++){
-				for(int j=-lim; j<=lim; j++){
-					if(Math.abs(i) + Math.abs(j) < lim)
-						g.fillRect((hoverX + i)*BLOCK_SIZE, 1+((hoverY + j)*BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE);
-				}
-			}
-		}
-		else{
-			g.drawImage(manager.getHoverTransparency(), (hoverX)*BLOCK_SIZE, 1+((hoverY)*BLOCK_SIZE), null, null);
-		} 
-	}
-	
-	private int getCellFromHoverX(int hoverx){
-		int shift = hoverx-(MAP_WIDTH/2);
-		return myPlayer.getX() + shift;
-		
-	}
-	private int getCellFromHoverY(int hovery){
-		int shift = hovery-(MAP_HEIGHT/2);
-		return myPlayer.getY() + shift;
 	}
 
 	private void clearAvailability(List<List<MapCell>> myCells) {

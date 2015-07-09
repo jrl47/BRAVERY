@@ -39,7 +39,7 @@ public class Player extends GameObject{
 		
 		myHealth = 32;
 		
-		myAction = new Action(0, "wait", 0, 0);
+		myAction = new Action(0, "wait", 0, 0, true);
 		
 		myStage = stage;
 		myCells = myStage.getCells();
@@ -127,7 +127,7 @@ public class Player extends GameObject{
 		}
 		if(k.getKeyCode()==KeyEvent.VK_W || k.getKeyCode()==KeyEvent.VK_S || 
 				k.getKeyCode()==KeyEvent.VK_A || k.getKeyCode()==KeyEvent.VK_D){
-			myAction = new Action(0, "earth", 0, 0);
+			myAction = new Action(0, "earth", 0, 0, true);
 		}
 		
 		if(k.getKeyCode()==KeyEvent.VK_W)
@@ -144,7 +144,7 @@ public class Player extends GameObject{
 		preparedMove = false;
 		preparedAttack = false;
 		damageTaken = 0;
-		myAction = new Action(0, "wait", 0, 0);
+		myAction = new Action(0, "wait", 0, 0, true);
 	}
 	public boolean actionPrepared() {
 		return preparedMove || preparedAttack;

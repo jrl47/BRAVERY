@@ -28,6 +28,8 @@ public class AttackMenu extends SubMenu{
 	
 	private StateChangeButton boulderFall;
 	private StateChangeButton skyToss;
+	private StateChangeButton cascade;
+	private StateChangeButton detonate;
 	
 	private Action myAction;
 	public AttackMenu(Stage stage, State state) {
@@ -52,6 +54,8 @@ public class AttackMenu extends SubMenu{
 		cancel = new StateChangeButton(964, 600, "CANCEL", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "main");
 		boulderFall = new StateChangeButton(912, 20, "BOULDERFALL", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "boulderfall");
 		skyToss = new StateChangeButton(952, 20, "SKYTOSS", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "skytoss");
+		cascade = new StateChangeButton(952, 20, "CASCADE", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "cascade");
+		detonate = new StateChangeButton(942, 20, "DETONATE", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "detonate");
 		
 		myObjects.add(back);
 		myObjects.add(earth);
@@ -115,6 +119,12 @@ public class AttackMenu extends SubMenu{
 			}
 			if(myAttackType.getState().equals("air")){
 				myObjects.add(skyToss);
+			}
+			if(myAttackType.getState().equals("water")){
+				myObjects.add(cascade);
+			}
+			if(myAttackType.getState().equals("fire")){
+				myObjects.add(detonate);
 			}
 		}
 	}

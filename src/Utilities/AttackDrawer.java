@@ -27,6 +27,27 @@ public class AttackDrawer {
 				c = new Color(c.getRed(), c.getGreen(), c.getBlue(), 153);
 				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 0, 0, c, 0, 0, false);
 			}
+			if(myPlayer.getCommand().equals("cascade")){
+				Color c = Color.BLUE;
+				c = new Color(c.getRed(), c.getGreen(), c.getBlue(), 153);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 0, 1, c, 1, 1, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 1, 0, c, 1, 1, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 1, 1, c, 1, 1, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 1, -1, c, 1, 1, true);
+			}
+			if(myPlayer.getCommand().equals("detonate")){
+				Color c = Color.RED;
+				c = new Color(c.getRed(), c.getGreen(), c.getBlue(), 153);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 0, 1, c, 1, 3, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 1, 0, c, 1, 3, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 1, 1, c, 1, 3, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 1, -1, c, 1, 3, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 1, 2, c, 1, 3, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 1, -2, c, 1, 3, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 2, 1, c, 1, 3, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myMap, myPlayer, g, 2, -1, c, 1, 3, true);
+			}
+			
 		}
 	}
 	
@@ -45,14 +66,28 @@ public class AttackDrawer {
 				if(myPlayer.getCommand().equals("boulderfall")){
 					if(myPlayer.getInventory().getEarth()<2000)
 						break;
-					Action a = new Action(2000, "earth", 5, 1);
+					Action a = new Action(2000, "earth", 5, 1, true);
 					myPlayer.setAction(a);
 					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove(true);
 				}
 				if(myPlayer.getCommand().equals("skytoss")){
 					if(myPlayer.getInventory().getAir()<2000)
 						break;
-					Action a = new Action(2000, "air", 5, 3);
+					Action a = new Action(2000, "air", 5, 3, true);
+					myPlayer.setAction(a);
+					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove(true);
+				}
+				if(myPlayer.getCommand().equals("cascade")){
+					if(myPlayer.getInventory().getWater()<2000)
+						break;
+					Action a = new Action(2000, "water", 5, 5, false);
+					myPlayer.setAction(a);
+					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove(true);
+				}
+				if(myPlayer.getCommand().equals("detonate")){
+					if(myPlayer.getInventory().getFire()<2000)
+						break;
+					Action a = new Action(2000, "fire", 5, 2, true);
 					myPlayer.setAction(a);
 					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove(true);
 				}

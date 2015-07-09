@@ -61,7 +61,7 @@ public class Enemy extends GameObject{
 	}
 	
 	public void attack(Player p){
-		p.doDamage(new Action(0, "earth", myPower, 0));
+		p.doDamage(new Action(0, "earth", myPower, 0, true));
 	}
 	
 	public void move(Player p){

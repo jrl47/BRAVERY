@@ -56,7 +56,7 @@ public class MoveDrawer {
 				else if((xScale==0 || yScale==0)){
 					if(myPlayer.getInventory().getEarth()<Math.pow(i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6))
 						break;
-					Action a = new Action((int) Math.pow(i*(Math.abs(xScale) + Math.abs(yScale)), 6), "earth", 0, 0);
+					Action a = new Action((int) Math.pow(i*(Math.abs(xScale) + Math.abs(yScale)), 6), "earth", 0, 0, true);
 				}
 				else{
 					if(Math.abs(xScale)==Math.abs(yScale)){
