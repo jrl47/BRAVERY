@@ -109,7 +109,7 @@ public class ValidAttackChecker {
 		}
 	}
 	
-	public static void detectAttackTargets(int locX, int locY, Player myPlayer, List<List<MapCell>> myCells) {
+	public static boolean detectAttackTargets(int locX, int locY, Player myPlayer, List<List<MapCell>> myCells) {
 		boolean enemyInRange = false;
 		int lim = myPlayer.getAction().getRange();
 		if(myPlayer.getAction().isRoundSplash()){
@@ -153,10 +153,7 @@ public class ValidAttackChecker {
 				}
 			}
 		}
-		if(enemyInRange){
-			ValidAttackChecker.doPlayerAttack(myPlayer, myCells);
-			myPlayer.clearCommand();
-		}
+		return enemyInRange;
 	}
 
 	private static boolean checkCellForEnemy(int x, int y,

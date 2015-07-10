@@ -99,14 +99,13 @@ public class Stage extends GameObject{
 					movePlayer();
 				}
 				if(myPlayer.attackPrepared()){
-					ValidAttackChecker.detectAttackTargets(locX, locY, myPlayer, myCells);
+					if(ValidAttackChecker.detectAttackTargets(locX, locY, myPlayer, myCells)){
+						ValidAttackChecker.doPlayerAttack(myPlayer, myCells);
+						myPlayer.clearCommand();
+					}
 				}
 			}
 		}
-	}
-
-	private void movePlayer() {
-		myPlayer.move();
 	}
 
 	@Override
@@ -125,6 +124,52 @@ public class Stage extends GameObject{
 		if(myPlayer.getCommand()==null)
 			return;
 		
+		handleKeyInput();
+		setPlayerTarget();
+	}
+	
+	@Override
+	public void draw(Graphics g) {
+		drawCells(g);
+		drawMovesAndAttacks(g);
+		wasInput = false;
+	}
+
+	private void drawCells(Graphics g) {
+		int xcounter = 0;
+		int ycounter = 0;
+		for(int i=myPlayer.getX() - (MAP_WIDTH/2); i<=(MAP_WIDTH/2) + myPlayer.getX(); i++){
+			for(int j=myPlayer.getY() - (MAP_HEIGHT/2); j<(MAP_HEIGHT/2) + 1 + myPlayer.getY(); j++){
+				if(i < 0 || j < 0 || i >= myCells.size() || j >=myCells.get(0).size()){
+					g.drawImage(manager.getImage(outsideBorder), xcounter*Stage.BLOCK_SIZE, 1+(ycounter*Stage.BLOCK_SIZE), null);
+				}
+				else{
+					myCells.get(i).get(j).draw(g, manager, xcounter,ycounter);
+				}
+				ycounter++;
+			}
+			xcounter++;
+			ycounter=0;
+		}
+		myPlayer.draw(g);
+	}
+	
+	private void drawMovesAndAttacks(Graphics g) {
+		if(myPlayer.movePrepared()){
+			MoveDrawer.drawMoves(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myCells, myPlayer, g);
+		} else if(myPlayer.actionPrepared()){
+			AttackDrawer.drawAttacks(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myCells, myPlayer, g);
+		}
+		else{
+			clearAvailability(myCells);
+		}
+		
+		if(hoverX!=-1 || hoverY!=-1){
+			ValidAttackChecker.drawHoverInfo(g, myPlayer, myCells, hoverX, hoverY, manager);
+		}
+	}
+	
+	private void handleKeyInput() {
 		if(myPlayer.getCommand().equals("Up")){
 			if(myCells.get(myPlayer.getX()).get(myPlayer.getY()-1).isPassable()){
 				myPlayer.setTargetX(0);
@@ -158,6 +203,18 @@ public class Stage extends GameObject{
 			}
 		}
 	}
+	
+	private void setPlayerTarget() {
+		if(!(myPlayer.getX() + hoverX - MAP_WIDTH/2 < 0 || myPlayer.getY() + hoverY - MAP_HEIGHT/2 < 0 
+				|| myPlayer.getX() + hoverX - MAP_WIDTH/2 >= myCells.size() || myPlayer.getY() + hoverY - MAP_HEIGHT/2 >= myCells.get(0).size())){
+			myPlayer.setTargetX(hoverX - MAP_WIDTH/2);
+			myPlayer.setTargetY(hoverY - MAP_HEIGHT/2);
+		}
+		else{
+			myPlayer.setTargetX(Integer.MIN_VALUE);
+			myPlayer.setTargetY(Integer.MIN_VALUE);
+		}
+	}
 
 	private void executeEnemyTurns() {
 		for(int i=0; i<myEnemies.size(); i++){
@@ -170,52 +227,6 @@ public class Stage extends GameObject{
 		for(Enemy e: myEnemies){
 			e.doTurn(myPlayer);
 		}
-	}
-
-	@Override
-	public void draw(Graphics g) {
-		int xcounter = 0;
-		int ycounter = 0;
-		for(int i=myPlayer.getX() - (MAP_WIDTH/2); i<=(MAP_WIDTH/2) + myPlayer.getX(); i++){
-			for(int j=myPlayer.getY() - (MAP_HEIGHT/2); j<(MAP_HEIGHT/2) + 1 + myPlayer.getY(); j++){
-				if(i < 0 || j < 0 || i >= myCells.size() || j >=myCells.get(0).size()){
-					g.drawImage(manager.getImage(outsideBorder), xcounter*Stage.BLOCK_SIZE, 1+(ycounter*Stage.BLOCK_SIZE), null);
-				}
-				else{
-					myCells.get(i).get(j).draw(g, manager, xcounter,ycounter);
-				}
-				ycounter++;
-			}
-			xcounter++;
-			ycounter=0;
-		}
-		
-		if(myPlayer.movePrepared()){
-			MoveDrawer.drawMoves(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myCells, myPlayer, g);
-		} else if(myPlayer.actionPrepared()){
-			AttackDrawer.drawAttacks(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myCells, myPlayer, g);
-		}
-		else{
-			clearAvailability(myCells);
-		}
-		
-		myPlayer.draw(g);
-		
-		if(hoverX!=-1 || hoverY!=-1){
-			ValidAttackChecker.drawHoverInfo(g, myPlayer, myCells, hoverX, hoverY, manager);
-			
-			if(!(myPlayer.getX() + hoverX - MAP_WIDTH/2 < 0 || myPlayer.getY() + hoverY - MAP_HEIGHT/2 < 0 
-					|| myPlayer.getX() + hoverX - MAP_WIDTH/2 >= myCells.size() || myPlayer.getY() + hoverY - MAP_HEIGHT/2 >= myCells.get(0).size())){
-				myPlayer.setTargetX(hoverX - MAP_WIDTH/2);
-				myPlayer.setTargetY(hoverY - MAP_HEIGHT/2);
-			}
-			else{
-				myPlayer.setTargetX(Integer.MIN_VALUE);
-				myPlayer.setTargetY(Integer.MIN_VALUE);
-			}
-		}
-		
-		wasInput = false;
 	}
 
 	private void clearAvailability(List<List<MapCell>> myCells) {
@@ -251,6 +262,10 @@ public class Stage extends GameObject{
 
 	public DeciduousTileManager getManager() {
 		return manager;
+	}
+	
+	private void movePlayer() {
+		myPlayer.move();
 	}
 
 }

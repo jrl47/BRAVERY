@@ -4,6 +4,7 @@ import GameObjects.Stage;
 import GameObjects.StateChangeButton;
 import GameObjects.Text;
 import Utilities.State;
+import Utilities.ValidAttackChecker;
 
 public class AttackMenu extends SubMenu{
 
@@ -88,7 +89,7 @@ public class AttackMenu extends SubMenu{
 			else if(!myCells.get(xLoc).get(yLoc).isAvailable()){
 				mySelectionDialog = noSelectionDialog;
 			}
-			else if(myCells.get(xLoc).get(yLoc).getEnemy()==null){
+			else if(!ValidAttackChecker.detectAttackTargets(xLoc, yLoc, myPlayer, myCells)){
 				mySelectionDialog = emptySelectionDialog;
 			}
 			else if(myPlayer.getAction().getCost()!=0){
