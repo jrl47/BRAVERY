@@ -69,7 +69,7 @@ public class ValidAttackChecker {
 		if(myPlayer.getAction().isRoundSplash()){
 			for(int i=-lim; i<=lim; i++){
 				for(int j=-lim; j<=lim; j++){
-					if(!(i < 0 || j < 0 || i >= myCells.size() || j >=myCells.get(0).size())){
+					if(!(locX+i < 0 || locY+j < 0 || locX+i >= myCells.size() || locY+j >=myCells.get(0).size())){
 						if(Math.abs(i) + Math.abs(j) < lim && myCells.get(locX+i).get(locY+j).getEnemy()!=null)
 							myPlayer.attack(myCells.get(locX+i).get(locY+j).getEnemy());
 					}
@@ -115,7 +115,7 @@ public class ValidAttackChecker {
 		if(myPlayer.getAction().isRoundSplash()){
 			for(int x=-lim; x<=lim; x++){
 				for(int y=-lim; y<=lim; y++){
-					if(!(x < 0 || y < 0 || x >= myCells.size() || y >=myCells.get(0).size())){
+					if(!(locX+x < 0 || locY+y < 0 || locX+x >= myCells.size() || locY+y >=myCells.get(0).size())){
 						if(Math.abs(x) + Math.abs(y) < lim && myCells.get(locX+x).get(locY+y).getEnemy()!=null)
 							enemyInRange = true;
 					}

@@ -13,6 +13,10 @@ public class Enemy extends GameObject{
 	private int myX;
 	private int myY;
 	
+	private int oldX;
+	private int oldY;
+	private boolean attacked;
+	
 	private int myHealth;
 	private int myPower;
 	
@@ -25,8 +29,10 @@ public class Enemy extends GameObject{
 	public Enemy(int x, int y, int sightrange, int attackrange, int health, int power, Stage stage){
 		myStage = stage;
 		myCells = myStage.getCells();
-		myX = 3;
-		myY = 9;
+		myX = x;
+		myY = y;
+		oldX = myX;
+		oldY = myY;
 		sightRange = sightrange;
 		attackRange = attackrange;
 		myPower = power;
@@ -57,14 +63,39 @@ public class Enemy extends GameObject{
 	}
 
 	public void draw(Graphics g){
-		g.drawImage(myStage.getManager().getImage(this),myStage.getRelativeX(myX)*Stage.BLOCK_SIZE, 1+(myStage.getRelativeY(myY)*Stage.BLOCK_SIZE), null);
+		g.drawImage(myStage.getManager().getImage(this),myStage.getRelativeX(myX)*Stage.BLOCK_SIZE,
+				1+(myStage.getRelativeY(myY)*Stage.BLOCK_SIZE), null);
+	}
+	
+	public void drawOld(Graphics g) {
+		g.drawImage(myStage.getManager().getImage(this),myStage.getRelativeX(oldX)*Stage.BLOCK_SIZE,
+				1+(myStage.getRelativeY(oldY)*Stage.BLOCK_SIZE), null);
+	}
+	
+	public void drawHover(Graphics g) {
+		Color c = new Color(1f, .5f, .3f, .6f);
+		g.setColor(c);
+		if(!attacked){
+		g.fillRect((myStage.getRelativeX(myX))*Stage.BLOCK_SIZE,
+				1+((myStage.getRelativeY(myY))*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE, Stage.BLOCK_SIZE);
+		}
+		else{
+			g.fillRect(((Stage.MAP_WIDTH/2))*Stage.BLOCK_SIZE,
+					1+(((Stage.MAP_HEIGHT/2))*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE, Stage.BLOCK_SIZE);
+		}
 	}
 	
 	public void attack(Player p){
+		oldX = myX;
+		oldY = myY;
+		attacked = true;
 		p.doDamage(new Action(0, "earth", myPower, 0, true));
 	}
 	
 	public void move(Player p){
+		attacked = false;
+		oldX = myX;
+		oldY = myY;
 		int dist = Math.abs(p.getX() - myX) + Math.abs(p.getY() - myY);
 		List<String> availableMoves = new ArrayList<String>();
 		availableMoves.add("u");

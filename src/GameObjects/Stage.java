@@ -34,9 +34,7 @@ public class Stage extends GameObject{
 	private int hoverY = -1;
 	
 	private int enemyAnimationCounter;
-	private Enemy animatedEnemy;
-	private List<Enemy> alreadyAnimatedEnemies;
-	private static final int ENEMY_ANIMATION_START = 30;
+	private static final int ENEMY_ANIMATION_START = 10;
 	
 	private MapCell outsideBorder;
 	
@@ -69,6 +67,11 @@ public class Stage extends GameObject{
 					}
 					if(i==3 && j == 9){
 						Enemy e = new Enemy(3,9, 6, 3, 10, 5, this);
+						myEnemies.add(e);
+						myCells.get(i).get(j).setEnemy(e);
+					}
+					if(i==12 && j == 3){
+						Enemy e = new Enemy(12,3, 6, 3, 10, 5, this);
 						myEnemies.add(e);
 						myCells.get(i).get(j).setEnemy(e);
 					}
@@ -125,12 +128,16 @@ public class Stage extends GameObject{
 		removeDeadEnemies();
 		
 		if(myPlayer.checkForEnemyTurn()){
-			enemyAnimationCounter = 1;
-			alreadyAnimatedEnemies = new ArrayList<Enemy>();
+			myPlayer.pause();
+			executeEnemyTurns();
+			enemyAnimationCounter = ENEMY_ANIMATION_START;
 		}
 		
 		if(enemyAnimationCounter>0){
-			executeEnemyTurns();
+			enemyAnimationCounter--;
+		}
+		else{
+			myPlayer.unpause();
 		}
 		
 		if(myPlayer.getCommand()==null)
@@ -168,21 +175,14 @@ public class Stage extends GameObject{
 	
 	private void drawEnemies(Graphics g) {
 		for(Enemy e: myEnemies){
+			if(enemyAnimationCounter > 0){
+				e.drawOld(g);
+				e.drawHover(g);
+			}
+			else{
 			e.draw(g);
+			}
 		}
-		
-//		if(myPlayer.movePrepared()){
-//			MoveDrawer.drawMoves(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myCells, myPlayer, g);
-//		} else if(myPlayer.actionPrepared()){
-//			AttackDrawer.drawAttacks(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myCells, myPlayer, g);
-//		}
-//		else{
-//			clearAvailability(myCells);
-//		}
-//		
-//		if(hoverX!=-1 || hoverY!=-1){
-//			ValidAttackChecker.drawHoverInfo(g, myPlayer, myCells, hoverX, hoverY, manager);
-//		}
 	}
 	
 	private void drawPlayer(Graphics g) {
@@ -249,27 +249,8 @@ public class Stage extends GameObject{
 	}
 
 	private void executeEnemyTurns() {
-//		myPlayer.pause();
-		enemyAnimationCounter--;
-		if(enemyAnimationCounter==0){
-			animatedEnemy= null;
-			
-			for(Enemy e: myEnemies){
-				if(!alreadyAnimatedEnemies.contains(e)){
-					alreadyAnimatedEnemies.add(e);
-					animatedEnemy = e;
-					break;
-				}
-			}
-			
-			if(animatedEnemy == null){
-				myPlayer.unpause();
-				return;
-			}
-			
-			enemyAnimationCounter = ENEMY_ANIMATION_START;
-
-			animatedEnemy.doTurn(myPlayer);
+		for(Enemy e: myEnemies){
+			e.doTurn(myPlayer);
 		}
 	}
 
