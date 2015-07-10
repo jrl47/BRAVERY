@@ -61,13 +61,6 @@ public class MapCell extends GameObject{
 		return isAvailable;
 	}
 	
-//	public void setAction(Action a){
-//		myAction = a;
-//	}
-//	public Action getAction(){
-//		return myAction;
-//	}
-	
 	public void setValidMove(boolean b){
 		validMove = b;
 	}
@@ -100,10 +93,10 @@ public class MapCell extends GameObject{
 		if(myCollectible!=null){
 			g.drawImage(myStage.getManager().getImage(myCollectible),x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), null);
 		}
-		if(myEnemy!=null){
-			myEnemy.draw(g, x, y);
-			return;
-		}
+//		if(myEnemy!=null){
+//			myEnemy.draw(g, x, y);
+//			return;
+//		}
 	}
 	public void removeCollectible() {
 		myCollectible = null;

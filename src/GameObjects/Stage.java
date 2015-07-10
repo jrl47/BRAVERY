@@ -33,6 +33,11 @@ public class Stage extends GameObject{
 	private int hoverX = -1;
 	private int hoverY = -1;
 	
+	private int enemyAnimationCounter;
+	private Enemy animatedEnemy;
+	private List<Enemy> alreadyAnimatedEnemies;
+	private static final int ENEMY_ANIMATION_START = 30;
+	
 	private MapCell outsideBorder;
 	
 	public Stage() {
@@ -117,7 +122,14 @@ public class Stage extends GameObject{
 			myPlayer.setTargetY(Integer.MIN_VALUE);
 		}
 		
+		removeDeadEnemies();
+		
 		if(myPlayer.checkForEnemyTurn()){
+			enemyAnimationCounter = 1;
+			alreadyAnimatedEnemies = new ArrayList<Enemy>();
+		}
+		
+		if(enemyAnimationCounter>0){
 			executeEnemyTurns();
 		}
 		
@@ -131,7 +143,8 @@ public class Stage extends GameObject{
 	@Override
 	public void draw(Graphics g) {
 		drawCells(g);
-		drawMovesAndAttacks(g);
+		drawPlayer(g);
+		drawEnemies(g);
 		wasInput = false;
 	}
 
@@ -151,10 +164,29 @@ public class Stage extends GameObject{
 			xcounter++;
 			ycounter=0;
 		}
-		myPlayer.draw(g);
 	}
 	
-	private void drawMovesAndAttacks(Graphics g) {
+	private void drawEnemies(Graphics g) {
+		for(Enemy e: myEnemies){
+			e.draw(g);
+		}
+		
+//		if(myPlayer.movePrepared()){
+//			MoveDrawer.drawMoves(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myCells, myPlayer, g);
+//		} else if(myPlayer.actionPrepared()){
+//			AttackDrawer.drawAttacks(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myCells, myPlayer, g);
+//		}
+//		else{
+//			clearAvailability(myCells);
+//		}
+//		
+//		if(hoverX!=-1 || hoverY!=-1){
+//			ValidAttackChecker.drawHoverInfo(g, myPlayer, myCells, hoverX, hoverY, manager);
+//		}
+	}
+	
+	private void drawPlayer(Graphics g) {
+		myPlayer.draw(g);
 		if(myPlayer.movePrepared()){
 			MoveDrawer.drawMoves(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myCells, myPlayer, g);
 		} else if(myPlayer.actionPrepared()){
@@ -217,15 +249,27 @@ public class Stage extends GameObject{
 	}
 
 	private void executeEnemyTurns() {
-		for(int i=0; i<myEnemies.size(); i++){
-			Enemy e = myEnemies.get(i);
-			if(e.isDead()){
-				myEnemies.remove(e);
-				i--;
+//		myPlayer.pause();
+		enemyAnimationCounter--;
+		if(enemyAnimationCounter==0){
+			animatedEnemy= null;
+			
+			for(Enemy e: myEnemies){
+				if(!alreadyAnimatedEnemies.contains(e)){
+					alreadyAnimatedEnemies.add(e);
+					animatedEnemy = e;
+					break;
+				}
 			}
-		}
-		for(Enemy e: myEnemies){
-			e.doTurn(myPlayer);
+			
+			if(animatedEnemy == null){
+				myPlayer.unpause();
+				return;
+			}
+			
+			enemyAnimationCounter = ENEMY_ANIMATION_START;
+
+			animatedEnemy.doTurn(myPlayer);
 		}
 	}
 
@@ -268,4 +312,24 @@ public class Stage extends GameObject{
 		myPlayer.move();
 	}
 
+	private void removeDeadEnemies() {
+		for(int i=0; i<myEnemies.size(); i++){
+			Enemy e = myEnemies.get(i);
+			if(e.isDead()){
+				myEnemies.remove(e);
+				i--;
+			}
+		}
+	}
+
+	public int getRelativeX(int myX) {
+		if(Stage.MAP_WIDTH/2 + (myX - myPlayer.getX()) < 0 || Stage.MAP_WIDTH/2 + (myX - myPlayer.getX()) >= MAP_WIDTH)
+			return -1;
+		return Stage.MAP_WIDTH/2 + (myX - myPlayer.getX());
+	}
+	public int getRelativeY(int myY) {
+		if(Stage.MAP_HEIGHT/2 + (myY - myPlayer.getY()) < 0 || Stage.MAP_HEIGHT/2 + (myY - myPlayer.getY()) >= MAP_HEIGHT)
+			return -1;
+		return Stage.MAP_HEIGHT/2 + (myY - myPlayer.getY());
+	}
 }

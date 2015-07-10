@@ -56,8 +56,8 @@ public class Enemy extends GameObject{
 		}
 	}
 
-	public void draw(Graphics g, int x, int y){
-		g.drawImage(myStage.getManager().getImage(this),x*Stage.BLOCK_SIZE, 1+(y*Stage.BLOCK_SIZE), null);
+	public void draw(Graphics g){
+		g.drawImage(myStage.getManager().getImage(this),myStage.getRelativeX(myX)*Stage.BLOCK_SIZE, 1+(myStage.getRelativeY(myY)*Stage.BLOCK_SIZE), null);
 	}
 	
 	public void attack(Player p){

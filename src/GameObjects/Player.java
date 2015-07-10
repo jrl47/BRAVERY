@@ -27,6 +27,7 @@ public class Player extends GameObject{
 	
 	private Stage myStage;
 	private List<List<MapCell>> myCells;
+	private boolean isPaused;
 	
 	private boolean tookAction;
 	private Action myAction;
@@ -165,24 +166,28 @@ public class Player extends GameObject{
 	}
 	
 	public void move(){
-		myCells.get(myX).get(myY).removePlayer();
-		myX += targetX;
-		myY += targetY;
-		targetX = 0;
-		targetY = 0;
-		tookAction = true;
-		MapCell cell = myCells.get(myX).get(myY);
-		chargeForAction();
-		getCollectible(cell);
-		cell.addPlayer(this);
-		stopAction();
+		if(!isPaused){
+			myCells.get(myX).get(myY).removePlayer();
+			myX += targetX;
+			myY += targetY;
+			targetX = 0;
+			targetY = 0;
+			tookAction = true;
+			MapCell cell = myCells.get(myX).get(myY);
+			chargeForAction();
+			getCollectible(cell);
+			cell.addPlayer(this);
+			stopAction();
+		}
 	}
 	
 	public void attack(Enemy enemy) {
-		tookAction = true;
-		enemy.doDamage(myAction);
-		chargeForAction();
-		stopAction();
+		if(!isPaused){
+			tookAction = true;
+			enemy.doDamage(myAction);
+			chargeForAction();
+			stopAction();
+		}
 	}
 
 	public void chargeForAction() {
@@ -230,5 +235,15 @@ public class Player extends GameObject{
 
 	public void setAction(Action a) {
 		myAction = a;
+	}
+	
+	public void pause(){
+		isPaused = true;
+	}
+	public void unpause(){
+		isPaused = false;
+	}
+	public boolean isPaused(){
+		return isPaused;
 	}
 }
