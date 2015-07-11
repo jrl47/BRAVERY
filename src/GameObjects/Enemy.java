@@ -80,8 +80,8 @@ public class Enemy extends GameObject{
 				1+((myStage.getRelativeY(myY))*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE, Stage.BLOCK_SIZE);
 		}
 		else{
-			g.fillRect(((Stage.MAP_WIDTH/2))*Stage.BLOCK_SIZE,
-					1+(((Stage.MAP_HEIGHT/2))*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE, Stage.BLOCK_SIZE);
+			g.fillRect(myStage.getRelativeX(myStage.getPlayer().getX())*Stage.BLOCK_SIZE,
+					1+((myStage.getRelativeY(myStage.getPlayer().getY()))*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE, Stage.BLOCK_SIZE);
 		}
 	}
 	

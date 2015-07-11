@@ -211,16 +211,16 @@ public class Stage extends GameObject{
 	private void drawPlayer(Graphics g) {
 		myPlayer.draw(g);
 		if(myPlayer.movePrepared()){
-			MoveDrawer.drawMoves(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myCells, myPlayer, g);
+			MoveDrawer.drawMoves(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, this, g);
 		} else if(myPlayer.actionPrepared()){
-			AttackDrawer.drawAttacks(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myCells, myPlayer, g);
+			AttackDrawer.drawAttacks(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, this, g);
 		}
 		else{
 			clearAvailability(myCells);
 		}
 		
 		if(hoverX!=-1 || hoverY!=-1){
-			ValidAttackChecker.drawHoverInfo(g, myPlayer, myCells, hoverX, hoverY, manager);
+			ValidAttackChecker.drawHoverInfo(g, this, hoverX, hoverY, manager);
 		}
 	}
 	
@@ -263,8 +263,11 @@ public class Stage extends GameObject{
 		int targetX = myCamera.getX() - myPlayer.getX() + hoverX - MAP_WIDTH/2;
 		int targetY = myCamera.getY() - myPlayer.getY() + hoverY - MAP_HEIGHT/2;
 		
-		if(!(targetX < 0 || targetY < 0 
-				|| targetX >= myCells.size() || targetY >= myCells.get(0).size())){
+		int destX = myPlayer.getX() + targetX;
+		int destY = myPlayer.getY() + targetY;
+		
+		if(!(destX < 0 || destY < 0 
+				|| destX >= myCells.size() || destY >= myCells.get(0).size())){
 			myPlayer.setTargetX(targetX);
 			myPlayer.setTargetY(targetY);
 		}
@@ -339,5 +342,9 @@ public class Stage extends GameObject{
 		if(Stage.MAP_HEIGHT/2 + (myY - myCamera.getY()) < 0 || Stage.MAP_HEIGHT/2 + (myY - myCamera.getY()) >= MAP_HEIGHT)
 			return -1;
 		return Stage.MAP_HEIGHT/2 + (myY - myCamera.getY());
+	}
+
+	public Camera getCamera() {
+		return myCamera;
 	}
 }

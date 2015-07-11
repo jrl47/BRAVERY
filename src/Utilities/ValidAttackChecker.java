@@ -10,10 +10,14 @@ import GameObjects.Stage;
 
 public class ValidAttackChecker {
 
-	public static void drawHoverInfo(Graphics g, Player myPlayer, List<List<MapCell>> myCells, int hoverX, int hoverY,
+	public static void drawHoverInfo(Graphics g, Stage myStage, int hoverX, int hoverY,
 			DeciduousTileManager manager) {
-		int x = getCellFromHoverX(hoverX, myPlayer);
-		int y = getCellFromHoverY(hoverY, myPlayer);
+		
+		Player myPlayer = myStage.getPlayer();
+		List<List<MapCell>> myCells = myStage.getCells();
+		Camera myCamera = myStage.getCamera();
+		int x = getCellFromHoverX(hoverX, myPlayer, myCamera);
+		int y = getCellFromHoverY(hoverY, myPlayer, myCamera);
 		if(myPlayer.getAction().getPower()!=0&&
 				!(x < 0 || y < 0 || x >= myCells.size() || y >=myCells.get(0).size()) &&
 				myCells.get(x).get(y).isValidMove()){
@@ -164,13 +168,13 @@ public class ValidAttackChecker {
 		return myCells.get(x).get(y).getEnemy()!=null;
 	}
 	
-	private static int getCellFromHoverX(int hoverx, Player myPlayer){
-		int shift = hoverx-(Stage.MAP_WIDTH/2);
+	private static int getCellFromHoverX(int hoverx, Player myPlayer, Camera myCamera){
+		int shift = myCamera.getX() - myPlayer.getX() + hoverx-(Stage.MAP_WIDTH/2);
 		return myPlayer.getX() + shift;
 		
 	}
-	private static int getCellFromHoverY(int hovery, Player myPlayer){
-		int shift = hovery-(Stage.MAP_HEIGHT/2);
+	private static int getCellFromHoverY(int hovery, Player myPlayer, Camera myCamera){
+		int shift = myCamera.getY() - myPlayer.getY() + hovery-(Stage.MAP_HEIGHT/2);
 		return myPlayer.getY() + shift;
 	}
 	
