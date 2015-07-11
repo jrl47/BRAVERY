@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import Main.World;
 import Utilities.AttackDrawer;
+import Utilities.Camera;
 import Utilities.DeciduousTileManager;
 import Utilities.MoveDrawer;
 import Utilities.ValidAttackChecker;
@@ -32,6 +33,7 @@ public class Stage extends GameObject{
 	private boolean wasInput;
 	private int hoverX = -1;
 	private int hoverY = -1;
+	private Camera myCamera;
 	
 	private int enemyAnimationCounter;
 	private static final int ENEMY_ANIMATION_START = 10;
@@ -40,6 +42,7 @@ public class Stage extends GameObject{
 	
 	public Stage() {
 		super();
+		myCamera = new Camera();
 		myBounds = new Rectangle(0, 0, MAP_WIDTH * 32, 675);
 		myEnemies = new ArrayList<Enemy>();
 		myCells = new ArrayList<List<MapCell>>();
@@ -83,7 +86,6 @@ public class Stage extends GameObject{
 		}
 		outsideBorder = new MapCell(-1, -1, this);
 		outsideBorder.setID(MapCell.WATER);
-		
 	}
 	
 	@Override
@@ -145,6 +147,27 @@ public class Stage extends GameObject{
 		
 		handleKeyInput();
 		setPlayerTarget();
+		setCamera();
+		
+	}
+
+	private void setCamera() {
+		int camX = myPlayer.getX();
+		int camY = myPlayer.getY();
+		if(camX - MAP_WIDTH/2 < 0){
+			camX = MAP_WIDTH/2;
+		}
+		if(camY - MAP_HEIGHT/2 < 0){
+			camY = MAP_HEIGHT/2;
+		}
+		if(camX + MAP_WIDTH/2 >= myCells.size()){
+			camX = myCells.size() - MAP_WIDTH/2 - 1;
+		}
+		if(camY + MAP_HEIGHT/2 >= myCells.get(0).size()){
+			camY = myCells.get(0).size() - MAP_HEIGHT/2 - 1;
+		}
+		myCamera.setX(camX);
+		myCamera.setY(camY);
 	}
 	
 	@Override
@@ -158,8 +181,8 @@ public class Stage extends GameObject{
 	private void drawCells(Graphics g) {
 		int xcounter = 0;
 		int ycounter = 0;
-		for(int i=myPlayer.getX() - (MAP_WIDTH/2); i<=(MAP_WIDTH/2) + myPlayer.getX(); i++){
-			for(int j=myPlayer.getY() - (MAP_HEIGHT/2); j<(MAP_HEIGHT/2) + 1 + myPlayer.getY(); j++){
+		for(int i=myCamera.getX() - (MAP_WIDTH/2); i<=(MAP_WIDTH/2) + myCamera.getX(); i++){
+			for(int j=myCamera.getY() - (MAP_HEIGHT/2); j<(MAP_HEIGHT/2) + 1 + myCamera.getY(); j++){
 				if(i < 0 || j < 0 || i >= myCells.size() || j >=myCells.get(0).size()){
 					g.drawImage(manager.getImage(outsideBorder), xcounter*Stage.BLOCK_SIZE, 1+(ycounter*Stage.BLOCK_SIZE), null);
 				}
@@ -237,10 +260,13 @@ public class Stage extends GameObject{
 	}
 	
 	private void setPlayerTarget() {
-		if(!(myPlayer.getX() + hoverX - MAP_WIDTH/2 < 0 || myPlayer.getY() + hoverY - MAP_HEIGHT/2 < 0 
-				|| myPlayer.getX() + hoverX - MAP_WIDTH/2 >= myCells.size() || myPlayer.getY() + hoverY - MAP_HEIGHT/2 >= myCells.get(0).size())){
-			myPlayer.setTargetX(hoverX - MAP_WIDTH/2);
-			myPlayer.setTargetY(hoverY - MAP_HEIGHT/2);
+		int targetX = myCamera.getX() - myPlayer.getX() + hoverX - MAP_WIDTH/2;
+		int targetY = myCamera.getY() - myPlayer.getY() + hoverY - MAP_HEIGHT/2;
+		
+		if(!(targetX < 0 || targetY < 0 
+				|| targetX >= myCells.size() || targetY >= myCells.get(0).size())){
+			myPlayer.setTargetX(targetX);
+			myPlayer.setTargetY(targetY);
 		}
 		else{
 			myPlayer.setTargetX(Integer.MIN_VALUE);
@@ -271,6 +297,7 @@ public class Stage extends GameObject{
 
 	public void addPlayer(Player player) {
 		myPlayer = player;
+		setCamera();
 	}
 
 	public boolean isGameOver() {
@@ -304,13 +331,13 @@ public class Stage extends GameObject{
 	}
 
 	public int getRelativeX(int myX) {
-		if(Stage.MAP_WIDTH/2 + (myX - myPlayer.getX()) < 0 || Stage.MAP_WIDTH/2 + (myX - myPlayer.getX()) >= MAP_WIDTH)
+		if(Stage.MAP_WIDTH/2 + (myX - myCamera.getX()) < 0 || Stage.MAP_WIDTH/2 + (myX - myCamera.getX()) >= MAP_WIDTH)
 			return -1;
-		return Stage.MAP_WIDTH/2 + (myX - myPlayer.getX());
+		return Stage.MAP_WIDTH/2 + (myX - myCamera.getX());
 	}
 	public int getRelativeY(int myY) {
-		if(Stage.MAP_HEIGHT/2 + (myY - myPlayer.getY()) < 0 || Stage.MAP_HEIGHT/2 + (myY - myPlayer.getY()) >= MAP_HEIGHT)
+		if(Stage.MAP_HEIGHT/2 + (myY - myCamera.getY()) < 0 || Stage.MAP_HEIGHT/2 + (myY - myCamera.getY()) >= MAP_HEIGHT)
 			return -1;
-		return Stage.MAP_HEIGHT/2 + (myY - myPlayer.getY());
+		return Stage.MAP_HEIGHT/2 + (myY - myCamera.getY());
 	}
 }

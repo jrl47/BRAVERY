@@ -81,7 +81,7 @@ public class Player extends GameObject{
 	
 	@Override
 	public void draw(Graphics g){
-		g.drawImage(myStage.getManager().getImage(this),((Stage.MAP_WIDTH/2))*Stage.BLOCK_SIZE, 1+(((Stage.MAP_HEIGHT/2))*Stage.BLOCK_SIZE), null);
+		g.drawImage(myStage.getManager().getImage(this),(myStage.getRelativeX(myX))*Stage.BLOCK_SIZE, 1+((myStage.getRelativeY(myY))*Stage.BLOCK_SIZE), null);
 	}
 
 	public int getX() {
