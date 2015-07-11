@@ -23,10 +23,17 @@ public class Stage extends GameObject{
 	public static final int BLOCK_SIZE = 32;
 	public static final int MAP_WIDTH = 27;
 	public static final int MAP_HEIGHT = 21;
+	public static final int WORLD_WIDTH = 10;
+	public static final int WORLD_HEIGHT = 10;
 	private Player myPlayer;
 	private BufferedImage myMap;
 	
+	private int roomX;
+	private int roomY;
+	
 	private List<List<MapCell>> myCells;
+	private List<List<BufferedImage>> myRooms;
+	private List<List<Integer>> myRoomSizes;
 	private List<Enemy> myEnemies;
 	private DeciduousTileManager manager;
 	
@@ -37,11 +44,14 @@ public class Stage extends GameObject{
 	
 	private int enemyAnimationCounter;
 	private static final int ENEMY_ANIMATION_START = 10;
+	private boolean quickMove;
 	
 	private MapCell outsideBorder;
 	
 	public Stage() {
 		super();
+		roomX = 0;
+		roomY = 1;
 		myCamera = new Camera();
 		myBounds = new Rectangle(0, 0, MAP_WIDTH * 32, 675);
 		myEnemies = new ArrayList<Enemy>();
@@ -51,8 +61,31 @@ public class Stage extends GameObject{
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+//		for(int i=0; i<WORLD_WIDTH; i++){
+//			for(int j=0; j<WORLD_HEIGHT; j++){
+//				myRooms.get(i).get(j) = null;
+//			}
+//		}
+//		for(int i=0; i<WORLD_WIDTH; i++){
+//			for(int j=0; j<WORLD_HEIGHT; j++){
+//				BufferedImage room = null;
+//				try {
+//					room = ImageIO.read(World.class.getResource("/mapData-" + roomX + "-" + roomY + "-.png"));
+//				} catch (IOException e) { }
+//				if(room!=null){
+//					for(int x=0; i<room.getWidth(); i+=32){
+//						for(int y=0; j<room.getHeight(); j+=32){
+//							myRooms.get(i + (x/32)).get(j + (y/32)) = room;
+//			
+//						}
+//					}
+//				}
+//			}
+//		}
+		BufferedImage myMap = null;
 		try {
-			myMap = ImageIO.read(World.class.getResource("/mapData.png"));
+			System.out.println("/mapData-" + roomX + "-" + roomY + "-.png");
+			myMap = ImageIO.read(World.class.getResource("/mapData-" + roomX + "-" + roomY + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -132,7 +165,13 @@ public class Stage extends GameObject{
 		if(myPlayer.checkForEnemyTurn()){
 			myPlayer.pause();
 			executeEnemyTurns();
+			if(!quickMove){
 			enemyAnimationCounter = ENEMY_ANIMATION_START;
+			}
+			else{
+				quickMove = false;
+				enemyAnimationCounter = 2;
+			}
 		}
 		
 		if(enemyAnimationCounter>0){
@@ -230,6 +269,7 @@ public class Stage extends GameObject{
 				myPlayer.setTargetX(0);
 				myPlayer.setTargetY(-1);
 				movePlayer();
+				quickMove = true;
 				myPlayer.clearCommand();
 			}
 		}
@@ -238,6 +278,7 @@ public class Stage extends GameObject{
 				myPlayer.setTargetX(0);
 				myPlayer.setTargetY(1);
 				movePlayer();
+				quickMove = true;
 				myPlayer.clearCommand();
 			}
 		}
@@ -246,6 +287,7 @@ public class Stage extends GameObject{
 				myPlayer.setTargetX(-1);
 				myPlayer.setTargetY(0);
 				movePlayer();
+				quickMove = true;
 				myPlayer.clearCommand();
 			}
 		}
@@ -254,6 +296,7 @@ public class Stage extends GameObject{
 				myPlayer.setTargetX(1);
 				myPlayer.setTargetY(0);
 				movePlayer();
+				quickMove = true;
 				myPlayer.clearCommand();
 			}
 		}
