@@ -1,0 +1,105 @@
+package Utilities;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+
+import GameObjects.Collectible;
+import GameObjects.Enemy;
+import GameObjects.MapCell;
+import GameObjects.Stage;
+import Main.World;
+
+public class RoomNetwork {
+	public static final int WORLD_WIDTH = 10;
+	public static final int WORLD_HEIGHT = 10;
+	private List<List<BufferedImage>> myRooms;
+	private List<List<Integer>> myRoomWidths;
+	private List<List<Integer>> myRoomHeights;
+	private List<List<Integer>> myRoomXs;
+	private List<List<Integer>> myRoomYs;
+	
+	private Stage myStage;
+	
+	public RoomNetwork(Stage stage){
+		myStage = stage;
+		
+		myRooms = new ArrayList<List<BufferedImage>>();
+		myRoomWidths = new ArrayList<List<Integer>>();
+		myRoomHeights = new ArrayList<List<Integer>>();
+		myRoomXs = new ArrayList<List<Integer>>();
+		myRoomYs = new ArrayList<List<Integer>>();
+		
+		for(int i=0; i<WORLD_WIDTH; i++){
+			myRooms.add(new ArrayList<BufferedImage>());
+			myRoomWidths.add(new ArrayList<Integer>());
+			myRoomHeights.add(new ArrayList<Integer>());
+			myRoomXs.add(new ArrayList<Integer>());
+			myRoomYs.add(new ArrayList<Integer>());
+			for(int j=0; j<WORLD_HEIGHT; j++){
+				myRooms.get(i).add(null);
+				myRoomWidths.get(i).add(null);
+				myRoomHeights.get(i).add(null);
+				myRoomXs.get(i).add(null);
+				myRoomYs.get(i).add(null);
+			}
+		}
+		for(int i=0; i<WORLD_WIDTH; i++){
+			for(int j=0; j<WORLD_HEIGHT; j++){
+				BufferedImage room = null;
+				if(RoomNetwork.class.getResource("/mapData-" + i + "-" + j + ".png")!=null){
+					try {
+						room = ImageIO.read(RoomNetwork.class.getResource("/mapData-" + i + "-" + j + ".png"));
+					} catch (IOException e) { }
+				}
+				if(room!=null){
+					for(int x=0; x<room.getWidth(); x+=32){
+						for(int y=0; y<room.getHeight(); y+=32){
+							myRooms.get(i + (x/32)).set(j + (y/32), room);
+							myRoomWidths.get(i + (x/32)).set(j + (y/32), room.getWidth()/32);
+							myRoomHeights.get(i + (x/32)).set(j + (y/32), room.getHeight()/32);
+							myRoomXs.get(i + (x/32)).set(j + (y/32), i);
+							myRoomYs.get(i + (x/32)).set(j + (y/32), j);
+						}
+					}
+				}
+				
+			}
+		}
+	}
+	public void buildRoom(List<List<MapCell>> myCells, int roomX, int roomY) {
+		BufferedImage myMap = myRooms.get(roomX).get(roomY);
+		
+		for(int i=0; i<myMap.getWidth(); i++){
+			myCells.add(new ArrayList<MapCell>());
+		}
+		
+		for(int i=0; i<myMap.getWidth(); i++){
+			for(int j=0; j<myMap.getHeight(); j++){
+				myCells.get(i).add(new MapCell(i, j, myStage));
+				if(myMap.getRGB(i,j)!=-16777216){
+					myCells.get(i).get(j).setPassable(true);
+					if(i==4 && j == 3){
+						myCells.get(i).get(j).setCollectible(new Collectible(2000, "earth"));
+					}
+					if(i==3 && j == 9){
+						Enemy e = new Enemy(3,9, 6, 3, 10, 5, myStage);
+						myStage.getEnemies().add(e);
+						myCells.get(i).get(j).setEnemy(e);
+					}
+					if(i==10 && j == 3){
+						Enemy e = new Enemy(10,3, 6, 3, 10, 5, myStage);
+						myStage.getEnemies().add(e);
+						myCells.get(i).get(j).setEnemy(e);
+					}
+				}
+				else{
+					myCells.get(i).get(j).setID(MapCell.WATER);
+				}
+			}
+		}
+	}
+}

@@ -49,10 +49,10 @@ public class MoveDrawer {
 		
 		for(int i=1; i<=MAP_WIDTH/(2*max); i++){
 			c = new Color(Math.min((int)(c.getRed()+10*max), 255), Math.min((int)(c.getGreen()+10*max), 255), Math.min((int)(c.getBlue()+10*max), 255), c.getAlpha());
-			if(myPlayer.getX() + xScale*i > 0 &&
-					myPlayer.getX() + xScale*i <= myCells.size() &&
-					myPlayer.getY() - yScale*i > 0 &&
-					myPlayer.getY() - yScale*i <= myCells.get(0).size() &&
+			if(myPlayer.getX() + xScale*i >= 0 &&
+					myPlayer.getX() + xScale*i < myCells.size() &&
+					myPlayer.getY() - yScale*i >= 0 &&
+					myPlayer.getY() - yScale*i < myCells.get(0).size() &&
 					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).isPassable()){
 				if((xScale==0 || yScale==0) && i==1){
 					

@@ -15,6 +15,7 @@ import Utilities.AttackDrawer;
 import Utilities.Camera;
 import Utilities.DeciduousTileManager;
 import Utilities.MoveDrawer;
+import Utilities.RoomNetwork;
 import Utilities.ValidAttackChecker;
 import UtilityObjects.Action;
 
@@ -23,17 +24,13 @@ public class Stage extends GameObject{
 	public static final int BLOCK_SIZE = 32;
 	public static final int MAP_WIDTH = 27;
 	public static final int MAP_HEIGHT = 21;
-	public static final int WORLD_WIDTH = 10;
-	public static final int WORLD_HEIGHT = 10;
 	private Player myPlayer;
-	private BufferedImage myMap;
 	
 	private int roomX;
 	private int roomY;
+	private RoomNetwork myRooms;
 	
 	private List<List<MapCell>> myCells;
-	private List<List<BufferedImage>> myRooms;
-	private List<List<Integer>> myRoomSizes;
 	private List<Enemy> myEnemies;
 	private DeciduousTileManager manager;
 	
@@ -56,69 +53,14 @@ public class Stage extends GameObject{
 		myBounds = new Rectangle(0, 0, MAP_WIDTH * 32, 675);
 		myEnemies = new ArrayList<Enemy>();
 		myCells = new ArrayList<List<MapCell>>();
+		myRooms = new RoomNetwork(this);
 		try {
 			manager = new DeciduousTileManager(this);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-//		for(int i=0; i<WORLD_WIDTH; i++){
-//			for(int j=0; j<WORLD_HEIGHT; j++){
-//				myRooms.get(i).get(j) = null;
-//			}
-//		}
-//		for(int i=0; i<WORLD_WIDTH; i++){
-//			for(int j=0; j<WORLD_HEIGHT; j++){
-//				BufferedImage room = null;
-//				try {
-//					room = ImageIO.read(World.class.getResource("/mapData-" + roomX + "-" + roomY + "-.png"));
-//				} catch (IOException e) { }
-//				if(room!=null){
-//					for(int x=0; i<room.getWidth(); i+=32){
-//						for(int y=0; j<room.getHeight(); j+=32){
-//							myRooms.get(i + (x/32)).get(j + (y/32)) = room;
-//			
-//						}
-//					}
-//				}
-//			}
-//		}
-		BufferedImage myMap = null;
-		try {
-			System.out.println("/mapData-" + roomX + "-" + roomY + "-.png");
-			myMap = ImageIO.read(World.class.getResource("/mapData-" + roomX + "-" + roomY + ".png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		for(int i=0; i<myMap.getWidth(); i++){
-			myCells.add(new ArrayList<MapCell>());
-		}
 		
-		for(int i=0; i<myMap.getWidth(); i++){
-			for(int j=0; j<myMap.getHeight(); j++){
-				myCells.get(i).add(new MapCell(i, j, this));
-				if(myMap.getRGB(i,j)!=-16777216){
-					myCells.get(i).get(j).setPassable(true);
-					if(i==4 && j == 3){
-						myCells.get(i).get(j).setCollectible(new Collectible(2000, "earth"));
-					}
-					if(i==3 && j == 9){
-						Enemy e = new Enemy(3,9, 6, 3, 10, 5, this);
-						myEnemies.add(e);
-						myCells.get(i).get(j).setEnemy(e);
-					}
-					if(i==12 && j == 3){
-						Enemy e = new Enemy(12,3, 6, 3, 10, 5, this);
-						myEnemies.add(e);
-						myCells.get(i).get(j).setEnemy(e);
-					}
-				}
-				else{
-					myCells.get(i).get(j).setID(MapCell.WATER);
-				}
-			}
-		}
-		outsideBorder = new MapCell(-1, -1, this);
-		outsideBorder.setID(MapCell.WATER);
+		myRooms.buildRoom(myCells, roomX, roomY);
 	}
 	
 	@Override
@@ -389,5 +331,9 @@ public class Stage extends GameObject{
 
 	public Camera getCamera() {
 		return myCamera;
+	}
+
+	public List<Enemy> getEnemies() {
+		return myEnemies;
 	}
 }
