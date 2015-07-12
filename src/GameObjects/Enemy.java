@@ -136,13 +136,13 @@ public class Enemy extends GameObject{
 			}
 		}
 
-		if(!myCells.get(myX).get(myY-1).isPassable())
+		if(myY - 1 < 0 || !myCells.get(myX).get(myY-1).isPassable())
 			preferredMoves.remove("u");
-		if(!myCells.get(myX).get(myY+1).isPassable())
+		if(myY + 1 >= myCells.get(myX).size() || !myCells.get(myX).get(myY+1).isPassable())
 			preferredMoves.remove("d");
-		if(!myCells.get(myX-1).get(myY).isPassable())
+		if(myX - 1 < 0 || !myCells.get(myX-1).get(myY).isPassable())
 			preferredMoves.remove("l");
-		if(!myCells.get(myX+1).get(myY).isPassable())
+		if(myX + 1 >= myCells.size() || !myCells.get(myX+1).get(myY).isPassable())
 			preferredMoves.remove("r");
 		
 		if(preferredMoves.size()>0){

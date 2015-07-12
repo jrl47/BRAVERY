@@ -39,6 +39,7 @@ public class Stage extends GameObject{
 	private int enemyAnimationCounter;
 	private static final int ENEMY_ANIMATION_START = 6;
 	private boolean quickMove;
+//	private MapCell outsideBorder;
 	
 	public Stage() {
 		super();
@@ -405,5 +406,16 @@ public class Stage extends GameObject{
 
 	public List<Enemy> getEnemies() {
 		return myEnemies;
+	}
+
+	public RoomNetwork getRooms() {
+		return myRooms;
+	}
+
+	public int getRoomX() {
+		return roomX;
+	}
+	public int getRoomY() {
+		return roomY;
 	}
 }

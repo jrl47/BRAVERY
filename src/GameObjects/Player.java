@@ -218,8 +218,9 @@ public class Player extends GameObject{
 	}
 
 	public void getCollectible(MapCell mapCell) {
-		if(mapCell.getCollectible()==null)
+		if(mapCell.getCollectible()==null){
 			return;
+		}
 		
 		if(mapCell.getCollectible().getType().equals("earth"))
 			myInventory.setEarth(myInventory.getEarth()+mapCell.getCollectible().getAmount());

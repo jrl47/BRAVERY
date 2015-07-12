@@ -41,10 +41,10 @@ public class RoomNetwork {
 			myRoomYs.add(new ArrayList<Integer>());
 			for(int j=0; j<WORLD_HEIGHT; j++){
 				myRooms.get(i).add(null);
-				myRoomWidths.get(i).add(null);
-				myRoomHeights.get(i).add(null);
-				myRoomXs.get(i).add(null);
-				myRoomYs.get(i).add(null);
+				myRoomWidths.get(i).add(-1);
+				myRoomHeights.get(i).add(-1);
+				myRoomXs.get(i).add(-1);
+				myRoomYs.get(i).add(-1);
 			}
 		}
 		for(int i=0; i<WORLD_WIDTH; i++){
