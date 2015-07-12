@@ -29,6 +29,7 @@ public class Stage extends GameObject{
 	
 	private List<List<MapCell>> myCells;
 	private List<Enemy> myEnemies;
+	private List<Collectible> myCollectibles;
 	private DeciduousTileManager manager;
 	
 	private boolean wasInput;
@@ -48,6 +49,7 @@ public class Stage extends GameObject{
 		myCamera = new Camera();
 		myBounds = new Rectangle(0, 0, MAP_WIDTH * 32, 675);
 		myEnemies = new ArrayList<Enemy>();
+		myCollectibles = new ArrayList<Collectible>();
 		myCells = new ArrayList<List<MapCell>>();
 		myRooms = new RoomNetwork(this);
 		try {
@@ -104,6 +106,7 @@ public class Stage extends GameObject{
 		}
 		
 		removeDeadEnemies();
+		removeDeadCollectibles();
 		
 		if(myPlayer.checkForEnemyTurn()){
 			myPlayer.pause();
@@ -157,7 +160,14 @@ public class Stage extends GameObject{
 		drawCells(g);
 		drawPlayer(g);
 		drawEnemies(g);
+		drawCollectibles(g);
 		wasInput = false;
+	}
+
+	private void drawCollectibles(Graphics g) {
+		for(Collectible c: myCollectibles){
+			c.draw(g);
+		}
 	}
 
 	private void drawCells(Graphics g) {
@@ -285,10 +295,12 @@ public class Stage extends GameObject{
 				myCells.get(i).get(j).draw(g, manager, i, j);
 			}
 		}
+		g.dispose();
 	}
 
 	private void setEnemiesAndCollectibles() {
 		myEnemies.clear();
+		myCollectibles.clear();
 		Random r = new Random();
 		for(int i=0; i<myCells.size(); i++){
 			for(int j=0; j<myCells.get(0).size(); j++){
@@ -301,14 +313,18 @@ public class Stage extends GameObject{
 					}
 					if(rand == 6 || rand==7){
 						int type = r.nextInt(4);
+						Collectible c = null;
 						if(type==0)
-							myCells.get(i).get(j).setCollectible(new Collectible(2000, "earth"));
+							c = new Collectible(2000, "earth", i, j, this);
 						if(type==1)
-							myCells.get(i).get(j).setCollectible(new Collectible(2000, "air"));
+							c = new Collectible(2000, "air", i, j, this);
 						if(type==2)
-							myCells.get(i).get(j).setCollectible(new Collectible(2000, "water"));
+							c = new Collectible(2000, "water", i, j, this);
 						if(type==3)
-							myCells.get(i).get(j).setCollectible(new Collectible(2000, "fire"));
+							c = new Collectible(2000, "fire", i, j, this);
+						
+						myCollectibles.add(c);
+						myCells.get(i).get(j).setCollectible(c);
 					}
 				}
 			}
@@ -384,6 +400,16 @@ public class Stage extends GameObject{
 			Enemy e = myEnemies.get(i);
 			if(e.isDead()){
 				myEnemies.remove(e);
+				i--;
+			}
+		}
+	}
+	
+	private void removeDeadCollectibles() {
+		for(int i=0; i<myCollectibles.size(); i++){
+			Collectible c = myCollectibles.get(i);
+			if(c.isDestroyed()){
+				myCollectibles.remove(c);
 				i--;
 			}
 		}
