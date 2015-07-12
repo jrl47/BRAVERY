@@ -98,4 +98,10 @@ public class RoomNetwork {
 	public int getY(int x, int y){
 		return myRoomYs.get(x).get(y);
 	}
+	public int getWidth(int roomX, int roomY) {
+		return myRoomWidths.get(roomX).get(roomY);
+	}
+	public int getHeight(int roomX, int roomY) {
+		return myRoomHeights.get(roomX).get(roomY);
+	}
 }

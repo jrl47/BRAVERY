@@ -76,7 +76,7 @@ public class World extends GameObject{
 		}
 		
 		if(myState.getState().equals("map") && !oldState.equals("map")){
-			oldState = "game";
+			oldState = "map";
 			myActiveObjects.clear();
 			
 			Background b = null;
@@ -87,7 +87,7 @@ public class World extends GameObject{
 			}
 			if(!mapLoaded){
 				myMap = new Map(myStage);
-				mapLoaded = true;
+				mapLoaded = true;	
 			}
 			myActiveObjects.add(b);
 			myActiveObjects.add(myMap);

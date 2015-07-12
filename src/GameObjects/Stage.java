@@ -1,6 +1,5 @@
 package GameObjects;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -9,16 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.imageio.ImageIO;
-
-import Main.World;
 import Utilities.AttackDrawer;
 import Utilities.Camera;
 import Utilities.DeciduousTileManager;
 import Utilities.MoveDrawer;
 import Utilities.RoomNetwork;
 import Utilities.ValidAttackChecker;
-import UtilityObjects.Action;
 
 public class Stage extends GameObject{
 
@@ -29,6 +24,7 @@ public class Stage extends GameObject{
 	
 	private int roomX;
 	private int roomY;
+	private BufferedImage myRoom;
 	private RoomNetwork myRooms;
 	
 	private List<List<MapCell>> myCells;
@@ -43,8 +39,6 @@ public class Stage extends GameObject{
 	private int enemyAnimationCounter;
 	private static final int ENEMY_ANIMATION_START = 6;
 	private boolean quickMove;
-	
-	private MapCell outsideBorder;
 	
 	public Stage() {
 		super();
@@ -64,17 +58,9 @@ public class Stage extends GameObject{
 		myRooms.buildRoom(myCells, roomX, roomY);
 		
 		setEnemiesAndCollectibles();
-		
-//		myCells.get(4).get(3).setCollectible(new Collectible(2000, "earth"));
-//		Enemy e = new Enemy(3,9, 6, 3, 10, 5, this);
-//		myEnemies.add(e);
-//		myCells.get(3).get(9).setEnemy(e);
-//		e = new Enemy(26,7, 6, 3, 10, 5, this);
-//		myEnemies.add(e);
-//		myCells.get(10).get(3).setEnemy(e);
-		
-		outsideBorder = new MapCell(-1, -1, this);
-		outsideBorder.setID(MapCell.WATER);
+		drawRoom();
+//		outsideBorder = new MapCell(-1, -1, this);
+//		outsideBorder.setID(MapCell.WATER);
 	}
 	
 	@Override
@@ -174,21 +160,8 @@ public class Stage extends GameObject{
 	}
 
 	private void drawCells(Graphics g) {
-		int xcounter = 0;
-		int ycounter = 0;
-		for(int i=myCamera.getX() - (MAP_WIDTH/2); i<=(MAP_WIDTH/2) + myCamera.getX(); i++){
-			for(int j=myCamera.getY() - (MAP_HEIGHT/2); j<(MAP_HEIGHT/2) + 1 + myCamera.getY(); j++){
-				if(i < 0 || j < 0 || i >= myCells.size() || j >=myCells.get(0).size()){
-					g.drawImage(manager.getImage(outsideBorder), xcounter*Stage.BLOCK_SIZE, 1+(ycounter*Stage.BLOCK_SIZE), null);
-				}
-				else{
-					myCells.get(i).get(j).draw(g, manager, xcounter,ycounter);
-				}
-				ycounter++;
-			}
-			xcounter++;
-			ycounter=0;
-		}
+		g.drawImage(myRoom.getSubimage(32*(myCamera.getX() - MAP_WIDTH/2), 32*(myCamera.getY() - MAP_HEIGHT/2), 32*MAP_WIDTH, 32*MAP_HEIGHT),
+				0, 0, null);
 	}
 	
 	private void drawEnemies(Graphics g) {
@@ -297,7 +270,20 @@ public class Stage extends GameObject{
 		newY += 32*(specificRoomY - roomY);
 		myPlayer.resetLocation(newX, newY);
 		
-		setEnemiesAndCollectibles();		
+		setEnemiesAndCollectibles();
+		drawRoom();
+	}
+
+	private void drawRoom() {
+		int roomWidth = myRooms.getWidth(roomX, roomY);
+		int roomHeight = myRooms.getHeight(roomX, roomY);
+		myRoom = new BufferedImage(32*32*roomWidth, 32*32*roomHeight, BufferedImage.TYPE_INT_ARGB);
+		Graphics g = myRoom.getGraphics();
+		for(int i=0; i<roomWidth*32; i++){
+			for(int j=0; j<roomHeight*32; j++){
+				myCells.get(i).get(j).draw(g, manager, i, j);
+			}
+		}
 	}
 
 	private void setEnemiesAndCollectibles() {

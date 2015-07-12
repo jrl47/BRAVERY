@@ -37,8 +37,8 @@ public class Menu extends GameObject{
 	
 	private BufferedImage myFont;
 	
-	public Menu(Stage stage, State state){
-		gameState = state;
+	public Menu(Stage stage, State gamestate){
+		gameState = gamestate;
 		myBounds = new Rectangle(928, 0, 272, 675);
 		myStage = stage;
 		myCells = myStage.getCells();
@@ -89,14 +89,16 @@ public class Menu extends GameObject{
 	private void manageActiveObjects() {
 		myActiveObjects = new ArrayList<GameObject>();
 		myActiveObjects.addAll(mySubMenus.get(myState.getState()).getObjects());
-		if(myState.getState().equals("main")){
-			myActiveObjects.addAll(myTileHandler.getObjects());
-			myActiveObjects.addAll(myInfoHandler.getObjects());
-			myActiveObjects.addAll(myActionHandler.getObjects());
-			myActiveObjects.addAll(myInventoryHandler.getObjects());
-		}
-		if(myState.getState().equals("move") || myState.getState().equals("attack")){
-			myActiveObjects.addAll(myInventoryHandler.getObjects());
+		if(gameState.getState().equals("game")){
+			if(myState.getState().equals("main")){
+				myActiveObjects.addAll(myTileHandler.getObjects());
+				myActiveObjects.addAll(myInfoHandler.getObjects());
+				myActiveObjects.addAll(myActionHandler.getObjects());
+				myActiveObjects.addAll(myInventoryHandler.getObjects());
+			}
+			if(myState.getState().equals("move") || myState.getState().equals("attack")){
+				myActiveObjects.addAll(myInventoryHandler.getObjects());
+			}
 		}
 	}
 
