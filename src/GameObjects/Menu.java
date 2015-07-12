@@ -26,6 +26,7 @@ public class Menu extends GameObject{
 	private Player myPlayer;
 	private Stage myStage;
 	private List<List<MapCell>> myCells;
+	private State gameState;
 	
 	private HashMap<String, SubMenu> mySubMenus;
 	
@@ -36,9 +37,10 @@ public class Menu extends GameObject{
 	
 	private BufferedImage myFont;
 	
-	public Menu(Stage s){
+	public Menu(Stage stage, State state){
+		gameState = state;
 		myBounds = new Rectangle(928, 0, 272, 675);
-		myStage = s;
+		myStage = stage;
 		myCells = myStage.getCells();
 		myPlayer = myStage.getPlayer();
 		myState = new State("main");
@@ -53,7 +55,7 @@ public class Menu extends GameObject{
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		mySubMenus.put("main", new MainMenu(myStage, myState, myTileHandler));
+		mySubMenus.put("main", new MainMenu(myStage, myState, myTileHandler, gameState));
 		mySubMenus.put("move", new MoveMenu(myStage, myState));
 		mySubMenus.put("attack", new AttackMenu(myStage, myState));
 	}
@@ -72,6 +74,9 @@ public class Menu extends GameObject{
 		myInventoryHandler.manageInfo();
 		myInfoHandler.manageInfo();
 		myActionHandler.manageInfo();
+		if(myState.getState().equals("main")){
+			((MainMenu)mySubMenus.get("main")).manageInfo();
+		}
 		if(myState.getState().equals("move")){
 			((MoveMenu)mySubMenus.get("move")).manageInfo();
 		}

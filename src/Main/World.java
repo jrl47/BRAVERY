@@ -8,6 +8,7 @@ import Utilities.State;
 import GameObjects.Background;
 import GameObjects.BorderedButton;
 import GameObjects.GameObject;
+import GameObjects.Map;
 import GameObjects.Menu;
 import GameObjects.Player;
 import GameObjects.Stage;
@@ -22,6 +23,9 @@ public class World extends GameObject{
 	private Stage myStage;
 	private Player myPlayer;
 	private Menu myMenu;
+	private Map myMap;
+	private boolean gameLoaded;
+	private boolean mapLoaded;
 	
 	public World() {
 		myState = new State("main");
@@ -57,17 +61,39 @@ public class World extends GameObject{
 			myActiveObjects.clear();
 			
 			Background b = null;
-			StateChangeButton moveMenuOpen = null;
 			try {
 				b = new Background(ImageIO.read(World.class.getResource("/mapBackground.png")));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			myMenu = new Menu(myStage);
+			if(!gameLoaded){
+				myMenu = new Menu(myStage, myState);
+				gameLoaded = true;
+			}
 			myActiveObjects.add(b);
 			myActiveObjects.add(myStage);
 			myActiveObjects.add(myMenu);
 		}
+		
+		if(myState.getState().equals("map") && !oldState.equals("map")){
+			oldState = "game";
+			myActiveObjects.clear();
+			
+			Background b = null;
+			try {
+				b = new Background(ImageIO.read(World.class.getResource("/mapBackground.png")));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			if(!mapLoaded){
+				myMap = new Map(myStage);
+				mapLoaded = true;
+			}
+			myActiveObjects.add(b);
+			myActiveObjects.add(myMap);
+			myActiveObjects.add(myMenu);
+		}
+		
 		if(myState.getState().equals("end") && !oldState.equals("end")){
 			oldState = "end";
 			myActiveObjects.clear();
