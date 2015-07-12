@@ -35,7 +35,7 @@ public class Player extends GameObject{
 	private Inventory myInventory;
 	
 	public Player(Stage stage){
-		myX = 2;
+		myX = 23;
 		myY = 2;
 		
 		myHealth = 32;
@@ -170,6 +170,22 @@ public class Player extends GameObject{
 			myCells.get(myX).get(myY).removePlayer();
 			myX += targetX;
 			myY += targetY;
+			targetX = 0;
+			targetY = 0;
+			tookAction = true;
+			MapCell cell = myCells.get(myX).get(myY);
+			chargeForAction();
+			getCollectible(cell);
+			cell.addPlayer(this);
+			stopAction();
+		}
+	}
+	
+	public void resetLocation(int x, int y){
+		if(!isPaused){
+			myCells.get(myX).get(myY).removePlayer();
+			myX = x;
+			myY = y;
 			targetX = 0;
 			targetY = 0;
 			tookAction = true;

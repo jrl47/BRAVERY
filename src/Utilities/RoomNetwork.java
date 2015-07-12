@@ -71,6 +71,8 @@ public class RoomNetwork {
 		}
 	}
 	public void buildRoom(List<List<MapCell>> myCells, int roomX, int roomY) {
+		myCells.clear();
+		
 		BufferedImage myMap = myRooms.get(roomX).get(roomY);
 		
 		for(int i=0; i<myMap.getWidth(); i++){
@@ -91,7 +93,7 @@ public class RoomNetwork {
 						myCells.get(i).get(j).setEnemy(e);
 					}
 					if(i==10 && j == 3){
-						Enemy e = new Enemy(10,3, 6, 3, 10, 5, myStage);
+						Enemy e = new Enemy(26,7, 6, 3, 10, 5, myStage);
 						myStage.getEnemies().add(e);
 						myCells.get(i).get(j).setEnemy(e);
 					}
@@ -101,5 +103,12 @@ public class RoomNetwork {
 				}
 			}
 		}
+	}
+	
+	public int getX(int x, int y){
+		return myRoomXs.get(x).get(y);
+	}
+	public int getY(int x, int y){
+		return myRoomYs.get(x).get(y);
 	}
 }

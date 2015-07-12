@@ -61,6 +61,9 @@ public class Stage extends GameObject{
 		}
 		
 		myRooms.buildRoom(myCells, roomX, roomY);
+		
+		outsideBorder = new MapCell(-1, -1, this);
+		outsideBorder.setID(MapCell.WATER);
 	}
 	
 	@Override
@@ -206,42 +209,83 @@ public class Stage extends GameObject{
 	}
 	
 	private void handleKeyInput() {
+		if(myPlayer.isPaused())
+			return;
 		if(myPlayer.getCommand().equals("Up")){
+			myPlayer.clearCommand();
+			if(myPlayer.getY()-1 < 0){
+				roomY -= 1;
+				myPlayer.resetLocation(myPlayer.getX(), 31);
+				changeRoom();
+				return;
+			}
 			if(myCells.get(myPlayer.getX()).get(myPlayer.getY()-1).isPassable()){
 				myPlayer.setTargetX(0);
 				myPlayer.setTargetY(-1);
 				movePlayer();
 				quickMove = true;
-				myPlayer.clearCommand();
 			}
 		}
 		else if(myPlayer.getCommand().equals("Down")){
+			myPlayer.clearCommand();
+			if(myPlayer.getY()+1 >= myCells.get(0).size()){
+				roomY += 1;
+				myPlayer.resetLocation(myPlayer.getX(), 0);
+				changeRoom();
+				return;
+			}
 			if(myCells.get(myPlayer.getX()).get(myPlayer.getY()+1).isPassable()){
 				myPlayer.setTargetX(0);
 				myPlayer.setTargetY(1);
 				movePlayer();
 				quickMove = true;
-				myPlayer.clearCommand();
 			}
 		}
 		else if(myPlayer.getCommand().equals("Left")){
+			myPlayer.clearCommand();
+			if(myPlayer.getX()-1 < 0){
+				roomX -= 1;
+				myPlayer.resetLocation(31, myPlayer.getY());
+				changeRoom();
+				return;
+			}
 			if(myCells.get(myPlayer.getX()-1).get(myPlayer.getY()).isPassable()){
 				myPlayer.setTargetX(-1);
 				myPlayer.setTargetY(0);
 				movePlayer();
 				quickMove = true;
-				myPlayer.clearCommand();
 			}
 		}
 		else if(myPlayer.getCommand().equals("Right")){
+			myPlayer.clearCommand();
+			if(myPlayer.getX()+1 >= myCells.size()){
+				roomX += 1;
+				myPlayer.resetLocation(0, myPlayer.getY());
+				changeRoom();
+				return;
+			}
 			if(myCells.get(myPlayer.getX()+1).get(myPlayer.getY()).isPassable()){
 				myPlayer.setTargetX(1);
 				myPlayer.setTargetY(0);
 				movePlayer();
 				quickMove = true;
-				myPlayer.clearCommand();
 			}
 		}
+	}
+
+	private void changeRoom() {
+		int specificRoomX = roomX;
+		int specificRoomY = roomY;
+		roomX = myRooms.getX(specificRoomX, specificRoomY);
+		roomY = myRooms.getY(specificRoomX, specificRoomY);
+		myRooms.buildRoom(myCells, roomX, roomY);
+		
+		int newX = myPlayer.getX() % 32;
+		int newY = myPlayer.getY() % 32;
+		newX += 32*(specificRoomX - roomX);
+		newY += 32*(specificRoomY - roomY);
+		myPlayer.resetLocation(newX, newY);
+		
 	}
 	
 	private void setPlayerTarget() {
