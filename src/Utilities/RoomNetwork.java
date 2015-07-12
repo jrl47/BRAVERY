@@ -84,19 +84,6 @@ public class RoomNetwork {
 				myCells.get(i).add(new MapCell(i, j, myStage));
 				if(myMap.getRGB(i,j)!=-16777216){
 					myCells.get(i).get(j).setPassable(true);
-					if(i==4 && j == 3){
-						myCells.get(i).get(j).setCollectible(new Collectible(2000, "earth"));
-					}
-					if(i==3 && j == 9){
-						Enemy e = new Enemy(3,9, 6, 3, 10, 5, myStage);
-						myStage.getEnemies().add(e);
-						myCells.get(i).get(j).setEnemy(e);
-					}
-					if(i==10 && j == 3){
-						Enemy e = new Enemy(26,7, 6, 3, 10, 5, myStage);
-						myStage.getEnemies().add(e);
-						myCells.get(i).get(j).setEnemy(e);
-					}
 				}
 				else{
 					myCells.get(i).get(j).setID(MapCell.WATER);

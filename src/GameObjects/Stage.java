@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -40,7 +41,7 @@ public class Stage extends GameObject{
 	private Camera myCamera;
 	
 	private int enemyAnimationCounter;
-	private static final int ENEMY_ANIMATION_START = 10;
+	private static final int ENEMY_ANIMATION_START = 6;
 	private boolean quickMove;
 	
 	private MapCell outsideBorder;
@@ -61,6 +62,16 @@ public class Stage extends GameObject{
 		}
 		
 		myRooms.buildRoom(myCells, roomX, roomY);
+		
+		setEnemiesAndCollectibles();
+		
+//		myCells.get(4).get(3).setCollectible(new Collectible(2000, "earth"));
+//		Enemy e = new Enemy(3,9, 6, 3, 10, 5, this);
+//		myEnemies.add(e);
+//		myCells.get(3).get(9).setEnemy(e);
+//		e = new Enemy(26,7, 6, 3, 10, 5, this);
+//		myEnemies.add(e);
+//		myCells.get(10).get(3).setEnemy(e);
 		
 		outsideBorder = new MapCell(-1, -1, this);
 		outsideBorder.setID(MapCell.WATER);
@@ -286,6 +297,35 @@ public class Stage extends GameObject{
 		newY += 32*(specificRoomY - roomY);
 		myPlayer.resetLocation(newX, newY);
 		
+		setEnemiesAndCollectibles();		
+	}
+
+	private void setEnemiesAndCollectibles() {
+		myEnemies.clear();
+		Random r = new Random();
+		for(int i=0; i<myCells.size(); i++){
+			for(int j=0; j<myCells.get(0).size(); j++){
+				if(myCells.get(i).get(j).isPassable()){
+					int rand = r.nextInt(500);
+					if(rand < 5){
+						Enemy e = new Enemy(i,j, 6, 3, 10, 5, this);
+						myEnemies.add(e);
+						myCells.get(i).get(j).setEnemy(e);
+					}
+					if(rand == 6 || rand==7){
+						int type = r.nextInt(4);
+						if(type==0)
+							myCells.get(i).get(j).setCollectible(new Collectible(2000, "earth"));
+						if(type==1)
+							myCells.get(i).get(j).setCollectible(new Collectible(2000, "air"));
+						if(type==2)
+							myCells.get(i).get(j).setCollectible(new Collectible(2000, "water"));
+						if(type==3)
+							myCells.get(i).get(j).setCollectible(new Collectible(2000, "fire"));
+					}
+				}
+			}
+		}
 	}
 	
 	private void setPlayerTarget() {

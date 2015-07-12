@@ -78,8 +78,14 @@ public class AttackMenu extends SubMenu{
 			int yLoc = myPlayer.getY() + myPlayer.getTargetY();
 			
 			myNameDialog = new Text(900, 20, myAttack.getState().toUpperCase() + ":", 2, myFont);
-			myCostDialog = new Text(900, 60, 
+			if(!myPlayer.getAction().getType().toUpperCase().equals("WAIT")){
+				myCostDialog = new Text(900, 60, 
 					myPlayer.getAction().getCost() + " " + myPlayer.getAction().getType().toUpperCase() + " ENERGY", 2, myFont);
+			}
+			else{
+				myCostDialog = new Text(900, 60, 
+						"NOT ENOUGH ENERGY", 2, myFont);
+			}
 			myPowerDialog = new Text(900, 100, 
 					myPlayer.getAction().getPower() +  " POWER", 2, myFont);
 			
