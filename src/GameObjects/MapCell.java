@@ -51,15 +51,21 @@ public class MapCell extends GameObject{
 	public void setPassable(int i){
 		passablePlane = i;
 	}
+	public boolean isSteppable(){
+		return passablePlane <= myStage.getPlane() && myEnemy==null;
+	}
 	public boolean isPassable(){
 		return passablePlane <= myStage.getPlane();
+	}
+	public boolean isPassable(int i){
+		return passablePlane <= i;
 	}
 	
 	public void setAvailable(boolean b){
 		isAvailable = b;
 	}
 	public boolean isAvailable(){
-		return isAvailable;
+		return isAvailable && isPassable() && myEnemy==null;
 	}
 	
 	public void setCollectible(Collectible c){

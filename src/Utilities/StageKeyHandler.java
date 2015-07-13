@@ -19,7 +19,7 @@ public class StageKeyHandler {
 				myStage.changeRoom();
 				return;
 			}
-			if(myCells.get(myPlayer.getX()).get(myPlayer.getY()-1).isPassable()){
+			if(myCells.get(myPlayer.getX()).get(myPlayer.getY()-1).isSteppable()){
 				myPlayer.setTargetX(0);
 				myPlayer.setTargetY(-1);
 				myStage.movePlayer();
@@ -34,7 +34,7 @@ public class StageKeyHandler {
 				myStage.changeRoom();
 				return;
 			}
-			if(myCells.get(myPlayer.getX()).get(myPlayer.getY()+1).isPassable()){
+			if(myCells.get(myPlayer.getX()).get(myPlayer.getY()+1).isSteppable()){
 				myPlayer.setTargetX(0);
 				myPlayer.setTargetY(1);
 				myStage.movePlayer();
@@ -49,7 +49,7 @@ public class StageKeyHandler {
 				myStage.changeRoom();
 				return;
 			}
-			if(myCells.get(myPlayer.getX()-1).get(myPlayer.getY()).isPassable()){
+			if(myCells.get(myPlayer.getX()-1).get(myPlayer.getY()).isSteppable()){
 				myPlayer.setTargetX(-1);
 				myPlayer.setTargetY(0);
 				myStage.movePlayer();
@@ -64,7 +64,7 @@ public class StageKeyHandler {
 				myStage.changeRoom();
 				return;
 			}
-			if(myCells.get(myPlayer.getX()+1).get(myPlayer.getY()).isPassable()){
+			if(myCells.get(myPlayer.getX()+1).get(myPlayer.getY()).isSteppable()){
 				myPlayer.setTargetX(1);
 				myPlayer.setTargetY(0);
 				myStage.movePlayer();

@@ -23,6 +23,7 @@ public class PlaneMenu extends SubMenu{
 	private Text myPlaneCounter;
 	private Text myCost;
 	private Text cantPay;
+	private Text cantWalk;
 	
 	private State myDesiredPlane;
 	private State myPurchasedPlane;
@@ -43,8 +44,9 @@ public class PlaneMenu extends SubMenu{
 		eight = new StateChangeButton(1034, 230, "EIGHT", 3, myFont, myBlueFont, myBackground, myHoverBackground, myDesiredPlane, "8");
 		shift = new StateChangeButton(964, 20, "SHIFT", 3, myFont, myBlueFont, myBackground, myHoverBackground, myPurchasedPlane, "main");
 		myPlaneCounter = new Text(886, 300, " ", 2, myFont);
-		myCost = new Text(886, 300, " ", 2, myFont);
+		myCost = new Text(886, 150, " ", 2, myFont);
 		cantPay = new Text(914, 30, "NOT ENOUGH ENERGY", 2, myFont);
+		cantWalk = new Text(880 , 90, "LOWER PLANE IMPASSABLE", 2, myFont);
 		
 		myObjects.add(back);
 		myObjects.add(one);
@@ -77,6 +79,9 @@ public class PlaneMenu extends SubMenu{
 			shift.setNewState(myDesiredPlane.getState());
 			int plane = Integer.parseInt(myDesiredPlane.getState());
 			boolean canPay = true;
+			boolean canWalk = true;
+			if(!myStage.getCell(myPlayer.getX(), myPlayer.getY()).isPassable(Integer.parseInt(myDesiredPlane.getState())))
+				canWalk = false;
 			int cost = 0;
 			if(!myDesiredPlane.getState().equals("1")){
 				cost = (int) Math.pow(10, plane - 1);
@@ -84,12 +89,15 @@ public class PlaneMenu extends SubMenu{
 					canPay = false;
 				}
 			}
-			myCost = new Text(874, 90,cost +  " OF EACH ENERGY", 2, myFont);
-			if(canPay){
+			myCost = new Text(874, 150,cost +  " OF EACH ENERGY", 2, myFont);
+			if(canPay && canWalk){
 				myObjects.add(shift);
 			}
-			else{
+			if(!canPay){
 				myObjects.add(cantPay);
+			}
+			if(!canWalk){
+				myObjects.add(cantWalk);
 			}
 			myObjects.add(myCost);
 			

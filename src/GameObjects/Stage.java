@@ -181,9 +181,9 @@ public class Stage extends GameObject{
 		int newY = myPlayer.getY() % 32;
 		newX += 32*(specificRoomX - roomX);
 		newY += 32*(specificRoomY - roomY);
-		myPlayer.resetLocation(newX, newY);
 		
 		setEnemiesAndCollectibles();
+		myPlayer.resetLocation(newX, newY);
 		drawRoom();
 	}
 	private void drawRoom() {
@@ -207,7 +207,7 @@ public class Stage extends GameObject{
 				if(myCells.get(i).get(j).isPassable()){
 					int rand = r.nextInt(500);
 					if(rand < 5){
-						Enemy e = new Enemy(i,j, 5, 2, 5, 4, this);
+						Enemy e = new Enemy(i,j, 5, 2, 5, 1, this);
 						myEnemies.add(e);
 						myCells.get(i).get(j).setEnemy(e);
 					}
