@@ -10,13 +10,13 @@ public class PlayerInfoHandler extends SubMenu{
 	
 	public PlayerInfoHandler(Stage stage, State state) {
 		super(stage, state);
-		myHealth = new Text(974, 160, "HP: " + myPlayer.getHealth(), 3, myFont);
+		myHealth = new Text(974, 230, "HP: " + myPlayer.getHealth(), 3, myFont);
 		
 		myObjects.add(myHealth);
 	}
 	public void manageInfo() {
 		myObjects.remove(myHealth);
-		myHealth = new Text(974, 160, "HP: " + myPlayer.getHealth(), 3, myFont);
+		myHealth = new Text(974, 230, "HP: " + myPlayer.getHealth(), 3, myFont);
 		myObjects.add(myHealth);
 	}
 }

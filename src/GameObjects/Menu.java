@@ -15,6 +15,7 @@ import UtilityObjects.AttackMenu;
 import UtilityObjects.InventoryHandler;
 import UtilityObjects.MainMenu;
 import UtilityObjects.MoveMenu;
+import UtilityObjects.PlaneMenu;
 import UtilityObjects.PlayerInfoHandler;
 import UtilityObjects.RecentActionHandler;
 import UtilityObjects.SubMenu;
@@ -58,6 +59,7 @@ public class Menu extends GameObject{
 		mySubMenus.put("main", new MainMenu(myStage, myState, myTileHandler, gameState));
 		mySubMenus.put("move", new MoveMenu(myStage, myState));
 		mySubMenus.put("attack", new AttackMenu(myStage, myState));
+		mySubMenus.put("plane", new PlaneMenu(myStage, myState));
 	}
 	
 	@Override
@@ -114,6 +116,10 @@ public class Menu extends GameObject{
 			if(myState.getState().equals("attack")){
 				myPlayer.prepareAttack();
 				myPlayer.setCommand("attack");
+			}
+			if(myState.getState().equals("plane")){
+				myPlayer.preparePlane();
+				myPlayer.setCommand("plane");
 			}
 			oldState = new State(myState.getState());
 			return;

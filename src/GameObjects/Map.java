@@ -19,14 +19,20 @@ public class Map extends GameObject{
 	
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(Color.BLACK);
 		for(int i=0; i<RoomNetwork.WORLD_WIDTH; i++){
 			for(int j=0; j<RoomNetwork.WORLD_HEIGHT; j++){
 				if(i==myNetwork.getX(i, j) && j==myNetwork.getY(i, j)){
+					g.setColor(Color.PINK);
+					g.fillRect(i*32, j*32, myNetwork.getWidth(i, j) * 32, myNetwork.getHeight(i, j) * 32);
+					g.setColor(Color.BLACK);
 					g.drawRect(i*32, j*32, myNetwork.getWidth(i, j) * 32, myNetwork.getHeight(i, j) * 32);
 				}
 			}
 		}
+		g.setColor(Color.GREEN);
+		g.fillRect((myStage.getRoomX() + myStage.getPlayer().getX()/32)*32 + 8,
+				(myStage.getRoomY() + myStage.getPlayer().getY()/32)*32 + 8, 16, 16);
+		g.setColor(Color.BLACK);
 		g.drawRect((myStage.getRoomX() + myStage.getPlayer().getX()/32)*32 + 8,
 				(myStage.getRoomY() + myStage.getPlayer().getY()/32)*32 + 8, 16, 16);
 	}

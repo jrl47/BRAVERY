@@ -17,6 +17,7 @@ public class Player extends GameObject{
 	private String myCommand;
 	private boolean preparedMove;
 	private boolean preparedAttack;
+	private boolean preparedPlane;
 	
 	private int targetX;
 	private int targetY;
@@ -148,7 +149,7 @@ public class Player extends GameObject{
 		myAction = new Action(0, "wait", 0, 0, true);
 	}
 	public boolean actionPrepared() {
-		return preparedMove || preparedAttack;
+		return preparedMove || preparedAttack || preparedPlane;
 	}
 	
 	public void prepareMove(){
@@ -163,6 +164,13 @@ public class Player extends GameObject{
 	}
 	public boolean attackPrepared(){
 		return preparedAttack;
+	}
+	
+	public void preparePlane() {
+		preparedPlane = true;
+	}
+	public boolean planePrepared(){
+		return preparedPlane;
 	}
 	
 	public void move(){

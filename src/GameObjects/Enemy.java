@@ -63,11 +63,21 @@ public class Enemy extends GameObject{
 	}
 
 	public void draw(Graphics g){
+		if(myStage.getRelativeX(myX)*Stage.BLOCK_SIZE <0 || 
+				1+(myStage.getRelativeY(myY)*Stage.BLOCK_SIZE) < 0 ||
+				myStage.getRelativeX(myX)*Stage.BLOCK_SIZE >= myStage.getWidth()*Stage.BLOCK_SIZE ||
+				1+(myStage.getRelativeY(myY)*Stage.BLOCK_SIZE) >= myStage.getHeight()*Stage.BLOCK_SIZE)
+			return;
 		g.drawImage(myStage.getManager().getImage(this),myStage.getRelativeX(myX)*Stage.BLOCK_SIZE,
 				1+(myStage.getRelativeY(myY)*Stage.BLOCK_SIZE), null);
 	}
 	
 	public void drawOld(Graphics g) {
+		if(myStage.getRelativeX(myX)*Stage.BLOCK_SIZE <0 || 
+				1+(myStage.getRelativeY(myY)*Stage.BLOCK_SIZE) < 0 ||
+				myStage.getRelativeX(myX)*Stage.BLOCK_SIZE >= myStage.getWidth()*Stage.BLOCK_SIZE ||
+				1+(myStage.getRelativeY(myY)*Stage.BLOCK_SIZE) >= myStage.getHeight()*Stage.BLOCK_SIZE)
+			return;
 		g.drawImage(myStage.getManager().getImage(this),myStage.getRelativeX(oldX)*Stage.BLOCK_SIZE,
 				1+(myStage.getRelativeY(oldY)*Stage.BLOCK_SIZE), null);
 	}
