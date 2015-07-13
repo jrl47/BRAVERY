@@ -27,6 +27,13 @@ public class DeciduousTileManager extends TileManager{
 	
 	
 	public BufferedImage doBackground(MapCell m){
+//		if(m.isPassable()){
+//			return generateGrass();
+//		}
+//		else{
+//			return generateWater(m);
+//		}
+//		
 		if(m.getID().equals(MapCell.GRASS))
 			return generateGrass();
 		if(m.getID().equals(MapCell.DIRT))

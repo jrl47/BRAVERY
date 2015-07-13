@@ -120,7 +120,7 @@ public class Stage extends GameObject{
 			myPlayer.unpause();
 		}
 		
-		StageKeyHandler.handleKeyInput(myPlayer, myCells, roomX, roomY, this);
+		StageKeyHandler.handleKeyInput(myPlayer, myCells, this);
 		setPlayerTarget();
 		setCamera();
 		
@@ -193,7 +193,7 @@ public class Stage extends GameObject{
 		Graphics g = myRoom.getGraphics();
 		for(int i=0; i<roomWidth*32; i++){
 			for(int j=0; j<roomHeight*32; j++){
-				myCells.get(i).get(j).draw(g, manager, i, j);
+				((MapCell)myCells.get(i).get(j)).draw(g, manager, i, j);
 			}
 		}
 		g.dispose();
@@ -207,7 +207,7 @@ public class Stage extends GameObject{
 				if(myCells.get(i).get(j).isPassable()){
 					int rand = r.nextInt(500);
 					if(rand < 5){
-						Enemy e = new Enemy(i,j, 5, 1, 5, 4, this);
+						Enemy e = new Enemy(i,j, 5, 2, 5, 4, this);
 						myEnemies.add(e);
 						myCells.get(i).get(j).setEnemy(e);
 					}
@@ -300,6 +300,7 @@ public class Stage extends GameObject{
 	}
 	public void planeShift(String name) {
 		myPlane.setState(name);
+		drawRoom();
 	}
 	public void setQuickMove(boolean quick){
 		quickMove = quick;
@@ -354,7 +355,13 @@ public class Stage extends GameObject{
 	public int getRoomY() {
 		return roomY;
 	}
-	public State getPlane() {
-		return myPlane;
+	public int getPlane() {
+		return Integer.parseInt(myPlane.getState());
+	}
+	public void setRoomX(int x){
+		roomX = x;
+	}
+	public void setRoomY(int y) {
+		roomY = y;
 	}
 }

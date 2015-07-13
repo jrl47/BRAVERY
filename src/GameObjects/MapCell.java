@@ -1,10 +1,9 @@
 package GameObjects;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import Utilities.DeciduousTileManager;
-import UtilityObjects.Action;
+import Utilities.State;
 
 public class MapCell extends GameObject{
 
@@ -17,8 +16,8 @@ public class MapCell extends GameObject{
 	public static final String BRICKS = "bricks";
 	public static final String SHOALS = "shoals";
 	public static final String FOREST = "forest";
-	
-	private boolean isPassable;
+
+	private int passablePlane;
 	private boolean isAvailable; // referring to immediate access for movement, attack, etc. "highlightability"
 	private int myX;
 	private int myY;
@@ -27,24 +26,33 @@ public class MapCell extends GameObject{
 	
 	private Collectible myCollectible;
 	private Enemy myEnemy;
+	private Stage myStage;
 	private Player myPlayer;
 	
-	public MapCell(int x, int y){
+	public MapCell(int x, int y, Stage stage){
+		myStage = stage;
 		myX = x;
 		myY = y;
 		myID = GRASS;
+		passablePlane = 9;
 	}
 	public String getID(){
+		if(isPassable()){
+			myID = GRASS;
+		}else{
+			myID = WATER;
+		}
 		return myID;
 	}
 	public void setID(String s){
 		myID = s;
 	}
-	public void setPassable(boolean b){
-		isPassable = b;
+	
+	public void setPassable(int i){
+		passablePlane = i;
 	}
 	public boolean isPassable(){
-		return isPassable && myPlayer==null && myEnemy==null;
+		return passablePlane <= myStage.getPlane();
 	}
 	
 	public void setAvailable(boolean b){

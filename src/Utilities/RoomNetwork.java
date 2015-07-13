@@ -7,11 +7,8 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import GameObjects.Collectible;
-import GameObjects.Enemy;
 import GameObjects.MapCell;
 import GameObjects.Stage;
-import Main.World;
 
 public class RoomNetwork {
 	public static final int WORLD_WIDTH = 10;
@@ -21,12 +18,10 @@ public class RoomNetwork {
 	private List<List<Integer>> myRoomHeights;
 	private List<List<Integer>> myRoomXs;
 	private List<List<Integer>> myRoomYs;
-	
 	private Stage myStage;
 	
 	public RoomNetwork(Stage stage){
 		myStage = stage;
-		
 		myRooms = new ArrayList<List<BufferedImage>>();
 		myRoomWidths = new ArrayList<List<Integer>>();
 		myRoomHeights = new ArrayList<List<Integer>>();
@@ -81,9 +76,12 @@ public class RoomNetwork {
 		
 		for(int i=0; i<myMap.getWidth(); i++){
 			for(int j=0; j<myMap.getHeight(); j++){
-				myCells.get(i).add(new MapCell(i, j));
-				if(myMap.getRGB(i,j)!=-16777216){
-					myCells.get(i).get(j).setPassable(true);
+				myCells.get(i).add(new MapCell(i, j, myStage));
+				if(myMap.getRGB(i,j)==-1){
+					myCells.get(i).get(j).setPassable(1);
+				}
+				else if(myMap.getRGB(i,j)==-8421505){
+					myCells.get(i).get(j).setPassable(2);
 				}
 				else{
 					myCells.get(i).get(j).setID(MapCell.WATER);
