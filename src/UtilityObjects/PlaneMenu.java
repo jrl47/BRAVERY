@@ -95,8 +95,12 @@ public class PlaneMenu extends SubMenu{
 			
 			if(!myPurchasedPlane.getState().equals("main") && canPay){
 				Action a = new Action(myPurchasedPlane.getState());
+				a.setType("all");
 				a.setCost(cost);
 				myPlayer.setAction(a);
+				myPlayer.planeShift();
+				myPurchasedPlane.setState("main");
+				myDesiredPlane.setState("main");
 			}
 		}
 		

@@ -13,6 +13,7 @@ import Utilities.Camera;
 import Utilities.DeciduousTileManager;
 import Utilities.MoveDrawer;
 import Utilities.RoomNetwork;
+import Utilities.StageKeyHandler;
 import Utilities.State;
 import Utilities.ValidAttackChecker;
 
@@ -22,22 +23,18 @@ public class Stage extends GameObject{
 	public static final int MAP_WIDTH = 27;
 	public static final int MAP_HEIGHT = 21;
 	private Player myPlayer;
-	
 	private int roomX;
 	private int roomY;
 	private BufferedImage myRoom;
 	private RoomNetwork myRooms;
-	
 	private List<List<MapCell>> myCells;
 	private List<Enemy> myEnemies;
 	private List<Collectible> myCollectibles;
 	private DeciduousTileManager manager;
-	
 	private boolean wasInput;
 	private int hoverX = -1;
 	private int hoverY = -1;
 	private Camera myCamera;
-	
 	private int enemyAnimationCounter;
 	private static final int ENEMY_ANIMATION_START = 6;
 	private boolean quickMove;
@@ -49,7 +46,7 @@ public class Stage extends GameObject{
 		roomY = 1;
 		myCamera = new Camera();
 		myBounds = new Rectangle(0, 0, MAP_WIDTH * 32, 675);
-		myPlane = new State("one");
+		myPlane = new State("1");
 		myEnemies = new ArrayList<Enemy>();
 		myCollectibles = new ArrayList<Collectible>();
 		myCells = new ArrayList<List<MapCell>>();
@@ -65,7 +62,6 @@ public class Stage extends GameObject{
 		setEnemiesAndCollectibles();
 		drawRoom();
 	}
-	
 	@Override
 	public void useInput(int i, int j, boolean b) {
 		if(!(j>0 && j < 674 && i < MAP_WIDTH * 32))
@@ -93,7 +89,6 @@ public class Stage extends GameObject{
 			}
 		}
 	}
-
 	@Override
 	public void step() {
 		if(!wasInput){
@@ -125,31 +120,11 @@ public class Stage extends GameObject{
 			myPlayer.unpause();
 		}
 		
-		handleKeyInput();
+		StageKeyHandler.handleKeyInput(myPlayer, myCells, roomX, roomY, this);
 		setPlayerTarget();
 		setCamera();
 		
 	}
-
-	private void setCamera() {
-		int camX = myPlayer.getX();
-		int camY = myPlayer.getY();
-		if(camX - MAP_WIDTH/2 < 0){
-			camX = MAP_WIDTH/2;
-		}
-		if(camY - MAP_HEIGHT/2 < 0){
-			camY = MAP_HEIGHT/2;
-		}
-		if(camX + MAP_WIDTH/2 >= myCells.size()){
-			camX = myCells.size() - MAP_WIDTH/2 - 1;
-		}
-		if(camY + MAP_HEIGHT/2 >= myCells.get(0).size()){
-			camY = myCells.get(0).size() - MAP_HEIGHT/2 - 1;
-		}
-		myCamera.setX(camX);
-		myCamera.setY(camY);
-	}
-	
 	@Override
 	public void draw(Graphics g) {
 		drawCells(g);
@@ -158,18 +133,15 @@ public class Stage extends GameObject{
 		drawCollectibles(g);
 		wasInput = false;
 	}
-
+	private void drawCells(Graphics g) {
+		g.drawImage(myRoom.getSubimage(32*(myCamera.getX() - MAP_WIDTH/2), 32*(myCamera.getY() - MAP_HEIGHT/2), 32*MAP_WIDTH, 32*MAP_HEIGHT),
+				0, 0, null);
+	}
 	private void drawCollectibles(Graphics g) {
 		for(Collectible c: myCollectibles){
 			c.draw(g);
 		}
 	}
-
-	private void drawCells(Graphics g) {
-		g.drawImage(myRoom.getSubimage(32*(myCamera.getX() - MAP_WIDTH/2), 32*(myCamera.getY() - MAP_HEIGHT/2), 32*MAP_WIDTH, 32*MAP_HEIGHT),
-				0, 0, null);
-	}
-	
 	private void drawEnemies(Graphics g) {
 		for(Enemy e: myEnemies){
 			if(enemyAnimationCounter > 0){
@@ -181,7 +153,6 @@ public class Stage extends GameObject{
 			}
 		}
 	}
-	
 	private void drawPlayer(Graphics g) {
 		myPlayer.draw(g);
 		if(myPlayer.movePrepared()){
@@ -199,77 +170,7 @@ public class Stage extends GameObject{
 			ValidAttackChecker.drawHoverInfo(g, this, hoverX, hoverY, manager);
 		}
 	}
-	
-	private void handleKeyInput() {
-		if(myPlayer.isPaused() || myPlayer.getAction().getName().equals("wait"))
-			return;
-		if(myPlayer.getAction().getName().equals("up")){
-//			myPlayer.clearCommand();
-			myPlayer.clearAction();
-			if(myPlayer.getY()-1 < 0){
-				roomY -= 1;
-				myPlayer.resetLocation(myPlayer.getX(), 31);
-				changeRoom();
-				return;
-			}
-			if(myCells.get(myPlayer.getX()).get(myPlayer.getY()-1).isPassable()){
-				myPlayer.setTargetX(0);
-				myPlayer.setTargetY(-1);
-				movePlayer();
-				quickMove = true;
-			}
-		}
-		else if(myPlayer.getAction().getName().equals("down")){
-//			myPlayer.clearCommand();
-			myPlayer.clearAction();
-			if(myPlayer.getY()+1 >= myCells.get(0).size()){
-				roomY += 1;
-				myPlayer.resetLocation(myPlayer.getX(), 0);
-				changeRoom();
-				return;
-			}
-			if(myCells.get(myPlayer.getX()).get(myPlayer.getY()+1).isPassable()){
-				myPlayer.setTargetX(0);
-				myPlayer.setTargetY(1);
-				movePlayer();
-				quickMove = true;
-			}
-		}
-		else if(myPlayer.getAction().getName().equals("left")){
-//			myPlayer.clearCommand();
-			myPlayer.clearAction();
-			if(myPlayer.getX()-1 < 0){
-				roomX -= 1;
-				myPlayer.resetLocation(31, myPlayer.getY());
-				changeRoom();
-				return;
-			}
-			if(myCells.get(myPlayer.getX()-1).get(myPlayer.getY()).isPassable()){
-				myPlayer.setTargetX(-1);
-				myPlayer.setTargetY(0);
-				movePlayer();
-				quickMove = true;
-			}
-		}
-		else if(myPlayer.getAction().getName().equals("right")){
-//			myPlayer.clearCommand();
-			myPlayer.clearAction();
-			if(myPlayer.getX()+1 >= myCells.size()){
-				roomX += 1;
-				myPlayer.resetLocation(0, myPlayer.getY());
-				changeRoom();
-				return;
-			}
-			if(myCells.get(myPlayer.getX()+1).get(myPlayer.getY()).isPassable()){
-				myPlayer.setTargetX(1);
-				myPlayer.setTargetY(0);
-				movePlayer();
-				quickMove = true;
-			}
-		}
-	}
-
-	private void changeRoom() {
+	public void changeRoom() {
 		int specificRoomX = roomX;
 		int specificRoomY = roomY;
 		roomX = myRooms.getX(specificRoomX, specificRoomY);
@@ -285,7 +186,6 @@ public class Stage extends GameObject{
 		setEnemiesAndCollectibles();
 		drawRoom();
 	}
-
 	private void drawRoom() {
 		int roomWidth = myRooms.getWidth(roomX, roomY);
 		int roomHeight = myRooms.getHeight(roomX, roomY);
@@ -298,7 +198,6 @@ public class Stage extends GameObject{
 		}
 		g.dispose();
 	}
-
 	private void setEnemiesAndCollectibles() {
 		myEnemies.clear();
 		myCollectibles.clear();
@@ -331,7 +230,6 @@ public class Stage extends GameObject{
 			}
 		}
 	}
-	
 	private void setPlayerTarget() {
 		int targetX = myCamera.getX() - myPlayer.getX() + hoverX - MAP_WIDTH/2;
 		int targetY = myCamera.getY() - myPlayer.getY() + hoverY - MAP_HEIGHT/2;
@@ -349,13 +247,11 @@ public class Stage extends GameObject{
 			myPlayer.setTargetY(Integer.MIN_VALUE);
 		}
 	}
-
 	private void executeEnemyTurns() {
 		for(Enemy e: myEnemies){
 			e.doTurn(myPlayer);
 		}
 	}
-
 	private void clearAvailability(List<List<MapCell>> myCells) {
 		for(int i=0; i<myCells.size(); i++){
 			for(int j=0; j<myCells.get(0).size(); j++){
@@ -363,42 +259,9 @@ public class Stage extends GameObject{
 			}
 		}
 	}
-
-	public Player getPlayer() {
-		return myPlayer;
-	}
-	public List<List<MapCell>> getCells(){
-		return myCells;
-	}
-
-	public void addPlayer(Player player) {
-		myPlayer = player;
-		setCamera();
-	}
-
-	public boolean isGameOver() {
-		return myPlayer.isDead();
-	}
-
-	public MapCell getCell(int x, int y) {
-		return myCells.get(x).get(y);
-	}
-
-	public int getWidth() {
-		return myCells.size();
-	}
-	public int getHeight() {
-		return myCells.get(0).size();
-	}
-
-	public DeciduousTileManager getManager() {
-		return manager;
-	}
-	
-	private void movePlayer() {
+	public void movePlayer() {
 		myPlayer.move();
 	}
-
 	private void removeDeadEnemies() {
 		for(int i=0; i<myEnemies.size(); i++){
 			Enemy e = myEnemies.get(i);
@@ -408,7 +271,6 @@ public class Stage extends GameObject{
 			}
 		}
 	}
-	
 	private void removeDeadCollectibles() {
 		for(int i=0; i<myCollectibles.size(); i++){
 			Collectible c = myCollectibles.get(i);
@@ -418,7 +280,55 @@ public class Stage extends GameObject{
 			}
 		}
 	}
-
+	private void setCamera() {
+		int camX = myPlayer.getX();
+		int camY = myPlayer.getY();
+		if(camX - MAP_WIDTH/2 < 0){
+			camX = MAP_WIDTH/2;
+		}
+		if(camY - MAP_HEIGHT/2 < 0){
+			camY = MAP_HEIGHT/2;
+		}
+		if(camX + MAP_WIDTH/2 >= myCells.size()){
+			camX = myCells.size() - MAP_WIDTH/2 - 1;
+		}
+		if(camY + MAP_HEIGHT/2 >= myCells.get(0).size()){
+			camY = myCells.get(0).size() - MAP_HEIGHT/2 - 1;
+		}
+		myCamera.setX(camX);
+		myCamera.setY(camY);
+	}
+	public void planeShift(String name) {
+		myPlane.setState(name);
+	}
+	public void setQuickMove(boolean quick){
+		quickMove = quick;
+	}
+	public void addPlayer(Player player) {
+		myPlayer = player;
+		setCamera();
+	}
+	public boolean isGameOver() {
+		return myPlayer.isDead();
+	}
+	public List<List<MapCell>> getCells(){
+		return myCells;
+	}
+	public Player getPlayer() {
+		return myPlayer;
+	}
+	public MapCell getCell(int x, int y) {
+		return myCells.get(x).get(y);
+	}
+	public int getWidth() {
+		return myCells.size();
+	}
+	public int getHeight() {
+		return myCells.get(0).size();
+	}
+	public DeciduousTileManager getManager() {
+		return manager;
+	}
 	public int getRelativeX(int myX) {
 		if(Stage.MAP_WIDTH/2 + (myX - myCamera.getX()) < 0 || Stage.MAP_WIDTH/2 + (myX - myCamera.getX()) >= MAP_WIDTH)
 			return -1;
@@ -429,26 +339,21 @@ public class Stage extends GameObject{
 			return -1;
 		return Stage.MAP_HEIGHT/2 + (myY - myCamera.getY());
 	}
-
 	public Camera getCamera() {
 		return myCamera;
 	}
-
 	public List<Enemy> getEnemies() {
 		return myEnemies;
 	}
-
 	public RoomNetwork getRooms() {
 		return myRooms;
 	}
-
 	public int getRoomX() {
 		return roomX;
 	}
 	public int getRoomY() {
 		return roomY;
 	}
-
 	public State getPlane() {
 		return myPlane;
 	}

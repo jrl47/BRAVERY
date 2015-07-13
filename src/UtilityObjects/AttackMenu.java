@@ -65,7 +65,6 @@ public class AttackMenu extends SubMenu{
 	public void manageInfo() {
 		myObjects.clear();
 		if(!myAttack.getState().equals("main")){
-//			myPlayer.setCommand(myAttack.getState());
 			myObjects.add(cancel);
 			myObjects.add(myNameDialog);
 			myObjects.add(mySelectionDialog);
@@ -146,8 +145,10 @@ public class AttackMenu extends SubMenu{
 					myPlayer.setAction(a);
 				}
 			}
-			
 			return;
+		}
+		else{
+			myPlayer.setAction(new Action("wait"));
 		}
 		
 		if(myAttackType.getState().equals("main")){

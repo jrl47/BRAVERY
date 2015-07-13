@@ -172,6 +172,24 @@ public class Player extends GameObject{
 		}
 	}
 	
+	public void attack(Enemy enemy) {
+		if(!isPaused){
+			tookAction = true;
+			enemy.doDamage(myAction);
+			chargeForAction();
+			stopAction();
+		}
+	}
+	
+	public void planeShift(){
+		if(!isPaused){
+			tookAction = true;
+			myStage.planeShift(myAction.getName());
+			chargeForAction();
+			stopAction();
+		}
+	}
+	
 	public void resetLocation(int x, int y){
 		if(!isPaused){
 			myCells.get(myX).get(myY).removePlayer();
@@ -187,15 +205,6 @@ public class Player extends GameObject{
 			stopAction();
 		}
 	}
-	
-	public void attack(Enemy enemy) {
-		if(!isPaused){
-			tookAction = true;
-			enemy.doDamage(myAction);
-			chargeForAction();
-			stopAction();
-		}
-	}
 
 	public void chargeForAction() {
 		if(myAction.getType().equals("earth"))
@@ -206,6 +215,12 @@ public class Player extends GameObject{
 			myInventory.setWater(myInventory.getWater()-myAction.getCost());
 		if(myAction.getType().equals("fire"))
 			myInventory.setFire(myInventory.getFire()-myAction.getCost());
+		if(myAction.getType().equals("all")){
+			myInventory.setEarth(myInventory.getEarth()-myAction.getCost());
+			myInventory.setAir(myInventory.getAir()-myAction.getCost());
+			myInventory.setWater(myInventory.getWater()-myAction.getCost());
+			myInventory.setFire(myInventory.getFire()-myAction.getCost());
+		}
 	}
 
 	public void getCollectible(MapCell mapCell) {
@@ -244,7 +259,7 @@ public class Player extends GameObject{
 		myAction = a;
 	}
 	public void clearAction() {
-		myAction = myAction = new Action("wait");
+		myAction = new Action("wait");
 	}
 	
 	public void pause(){

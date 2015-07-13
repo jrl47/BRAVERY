@@ -1,15 +1,9 @@
 package GameObjects;
 
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import javax.imageio.ImageIO;
-
-import Main.World;
 import Utilities.State;
 import UtilityObjects.AttackMenu;
 import UtilityObjects.InventoryHandler;
@@ -26,7 +20,6 @@ public class Menu extends GameObject{
 	private State oldState;
 	private Player myPlayer;
 	private Stage myStage;
-	private List<List<MapCell>> myCells;
 	private State gameState;
 	
 	private HashMap<String, SubMenu> mySubMenus;
@@ -36,13 +29,10 @@ public class Menu extends GameObject{
 	private PlayerInfoHandler myInfoHandler;
 	private RecentActionHandler myActionHandler;
 	
-	private BufferedImage myFont;
-	
 	public Menu(Stage stage, State gamestate){
 		gameState = gamestate;
 		myBounds = new Rectangle(928, 0, 272, 675);
 		myStage = stage;
-		myCells = myStage.getCells();
 		myPlayer = myStage.getPlayer();
 		myState = new State("main");
 		oldState = new State("main");
@@ -51,11 +41,6 @@ public class Menu extends GameObject{
 		myInfoHandler = new PlayerInfoHandler(myStage, myState);
 		myActionHandler = new RecentActionHandler(myStage, myState);
 		mySubMenus = new HashMap<String, SubMenu>();
-		try {
-			myFont = ImageIO.read(World.class.getResource("/fonts.png"));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
 		mySubMenus.put("main", new MainMenu(myStage, myState, myTileHandler, gameState));
 		mySubMenus.put("move", new MoveMenu(myStage, myState));
 		mySubMenus.put("attack", new AttackMenu(myStage, myState));
@@ -71,7 +56,6 @@ public class Menu extends GameObject{
 	@Override
 	public void step() {
 		manageState();
-		manageActiveObjects();
 		myTileHandler.manageInfo();
 		myInventoryHandler.manageInfo();
 		myInfoHandler.manageInfo();
@@ -89,6 +73,7 @@ public class Menu extends GameObject{
 			mySubMenus.get("plane").manageInfo();
 		}
 		((AttackMenu)mySubMenus.get("attack")).manageState();
+		manageActiveObjects();
 	}
 
 	private void manageActiveObjects() {
@@ -114,15 +99,12 @@ public class Menu extends GameObject{
 			}
 			if(myState.getState().equals("move")){
 				myPlayer.prepareMove();
-//				myPlayer.setCommand("move");
 			}
 			if(myState.getState().equals("attack")){
 				myPlayer.prepareAttack();
-//				myPlayer.setCommand("attack");
 			}
 			if(myState.getState().equals("plane")){
 				myPlayer.preparePlane();
-//				myPlayer.setCommand("plane");
 			}
 			oldState = new State(myState.getState());
 			return;
