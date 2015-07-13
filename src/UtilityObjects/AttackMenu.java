@@ -31,8 +31,6 @@ public class AttackMenu extends SubMenu{
 	private StateChangeButton skyToss;
 	private StateChangeButton cascade;
 	private StateChangeButton detonate;
-	
-	private Action myAction;
 	public AttackMenu(Stage stage, State state) {
 		super(stage, state);
 		myAttackType = new State("main");
@@ -106,6 +104,32 @@ public class AttackMenu extends SubMenu{
 				myCostDialog = emptyDialog;
 				myPowerDialog = emptyDialog;
 			}
+			
+			if(myPlayer.getCommand().equals("boulderfall")){
+				if(!(myPlayer.getInventory().getEarth()<5)){
+					Action a = new Action(5, "earth", 3, 1, true);
+					myPlayer.setAction(a);
+				}
+			}
+			if(myPlayer.getCommand().equals("skytoss")){
+				if(!(myPlayer.getInventory().getAir()<5)){
+					Action a = new Action(5, "air", 2, 2, true);
+					myPlayer.setAction(a);
+				}
+			}
+			if(myPlayer.getCommand().equals("cascade")){
+				if(!(myPlayer.getInventory().getWater()<5)){
+					Action a = new Action(5, "water", 1, 2, false);
+					myPlayer.setAction(a);
+				}
+			}
+			if(myPlayer.getCommand().equals("detonate")){
+				if(!(myPlayer.getInventory().getFire()<5)){
+					Action a = new Action(5, "fire", 1, 1, true);
+					myPlayer.setAction(a);
+				}
+			}
+			
 			return;
 		}
 		else{

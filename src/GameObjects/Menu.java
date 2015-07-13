@@ -59,7 +59,7 @@ public class Menu extends GameObject{
 		mySubMenus.put("main", new MainMenu(myStage, myState, myTileHandler, gameState));
 		mySubMenus.put("move", new MoveMenu(myStage, myState));
 		mySubMenus.put("attack", new AttackMenu(myStage, myState));
-		mySubMenus.put("plane", new PlaneMenu(myStage, myState, myStage.getPlane()));
+		mySubMenus.put("plane", new PlaneMenu(myStage, myState));
 	}
 	
 	@Override

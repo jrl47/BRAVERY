@@ -38,7 +38,7 @@ public class Player extends GameObject{
 		myX = 23;
 		myY = 2;
 		
-		myHealth = 32;
+		myHealth = 16;
 		
 		myAction = new Action(0, "wait", 0, 0, true);
 		

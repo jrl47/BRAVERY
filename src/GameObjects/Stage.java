@@ -125,9 +125,6 @@ public class Stage extends GameObject{
 			myPlayer.unpause();
 		}
 		
-//		if(myPlayer.getCommand()==null)
-//			return;
-		
 		handleKeyInput();
 		setPlayerTarget();
 		setCamera();
@@ -189,8 +186,10 @@ public class Stage extends GameObject{
 		myPlayer.draw(g);
 		if(myPlayer.movePrepared()){
 			MoveDrawer.drawMoves(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, this, g);
-		} else if(myPlayer.actionPrepared()){
+		} else if(myPlayer.attackPrepared()){
 			AttackDrawer.drawAttacks(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, this, g);
+		} else if(myPlayer.planePrepared()){
+			
 		}
 		else{
 			clearAvailability(myCells);
@@ -305,7 +304,7 @@ public class Stage extends GameObject{
 				if(myCells.get(i).get(j).isPassable()){
 					int rand = r.nextInt(500);
 					if(rand < 5){
-						Enemy e = new Enemy(i,j, 6, 3, 10, 5, this);
+						Enemy e = new Enemy(i,j, 5, 1, 5, 4, this);
 						myEnemies.add(e);
 						myCells.get(i).get(j).setEnemy(e);
 					}
@@ -313,13 +312,13 @@ public class Stage extends GameObject{
 						int type = r.nextInt(4);
 						Collectible c = null;
 						if(type==0)
-							c = new Collectible(2000, "earth", i, j, this);
+							c = new Collectible(2, "earth", i, j, this);
 						if(type==1)
-							c = new Collectible(2000, "air", i, j, this);
+							c = new Collectible(2, "air", i, j, this);
 						if(type==2)
-							c = new Collectible(2000, "water", i, j, this);
+							c = new Collectible(2, "water", i, j, this);
 						if(type==3)
-							c = new Collectible(2000, "fire", i, j, this);
+							c = new Collectible(2, "fire", i, j, this);
 						
 						myCollectibles.add(c);
 						myCells.get(i).get(j).setCollectible(c);

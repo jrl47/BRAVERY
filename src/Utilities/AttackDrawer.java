@@ -41,14 +41,10 @@ public class AttackDrawer {
 			if(myPlayer.getCommand().equals("detonate")){
 				Color c = Color.RED;
 				c = new Color(c.getRed(), c.getGreen(), c.getBlue(), 153);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 0, 1, c, 1, 3, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 0, c, 1, 3, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 1, c, 1, 2, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, -1, c, 1, 2, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 2, c, 1, 1, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, -2, c, 1, 1, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 2, 1, c, 1, 1, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 2, -1, c, 1, 1, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 0, 1, c, 1, 2, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 0, c, 1, 2, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 1, c, 1, 1, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, -1, c, 1, 1, true);
 			}
 			
 		}
@@ -69,34 +65,7 @@ public class AttackDrawer {
 				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).getEnemy()!=null ||
 				(xScale==0 && yScale==0))){
 
-				if(myPlayer.getCommand().equals("boulderfall")){
-					if(myPlayer.getInventory().getEarth()<2000)
-						break;
-					Action a = new Action(2000, "earth", 5, 1, true);
-					myPlayer.setAction(a);
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove(true);
-				}
-				if(myPlayer.getCommand().equals("skytoss")){
-					if(myPlayer.getInventory().getAir()<2000)
-						break;
-					Action a = new Action(2000, "air", 5, 4, true);
-					myPlayer.setAction(a);
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove(true);
-				}
-				if(myPlayer.getCommand().equals("cascade")){
-					if(myPlayer.getInventory().getWater()<2000)
-						break;
-					Action a = new Action(2000, "water", 5, 6, false);
-					myPlayer.setAction(a);
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove(true);
-				}
-				if(myPlayer.getCommand().equals("detonate")){
-					if(myPlayer.getInventory().getFire()<2000)
-						break;
-					Action a = new Action(2000, "fire", 5, 2, true);
-					myPlayer.setAction(a);
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove(true);
-				}
+				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove(true);
 					
 				g.setColor(c);
 				g.fillRect((myStage.getRelativeX(myPlayer.getX()) + xScale*i)*BLOCK_SIZE,
