@@ -16,7 +16,7 @@ public class AttackDrawer {
 		List<List<MapCell>> myMap = myStage.getCells();
 		Player myPlayer = myStage.getPlayer();
 		for(int i=0; i<myMap.size(); i++){
-			for(int j=0; j<myMap.size(); j++){
+			for(int j=0; j<myMap.get(0).size(); j++){
 				myMap.get(i).get(j).setValidMove(false);
 			}
 		}

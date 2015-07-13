@@ -386,6 +386,9 @@ public class Stage extends GameObject{
 	public int getWidth() {
 		return myCells.size();
 	}
+	public int getHeight() {
+		return myCells.get(0).size();
+	}
 
 	public DeciduousTileManager getManager() {
 		return manager;

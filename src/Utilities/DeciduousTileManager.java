@@ -118,7 +118,7 @@ public class DeciduousTileManager extends TileManager{
 		String right = "";
 		if(m.getY()-1 >= 0)
 			up = myMap.getCell(m.getX(), m.getY()-1).getID();
-		if(m.getY()+1 < myMap.getWidth())
+		if(m.getY()+1 < myMap.getHeight())
 			down = myMap.getCell(m.getX(), m.getY()+1).getID();
 		if(m.getX()-1 >= 0)
 			left = myMap.getCell(m.getX()-1, m.getY()).getID();

@@ -27,7 +27,8 @@ public class Map extends GameObject{
 				}
 			}
 		}
-		g.drawRect(myStage.getRoomX()*32 + 8, myStage.getRoomY()*32 + 8, 16, 16);
+		g.drawRect((myStage.getRoomX() + myStage.getPlayer().getX()/32)*32 + 8,
+				(myStage.getRoomY() + myStage.getPlayer().getY()/32)*32 + 8, 16, 16);
 	}
 	
 	@Override
