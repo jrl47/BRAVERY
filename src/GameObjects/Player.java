@@ -1,9 +1,7 @@
 package GameObjects;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.util.List;
 
 import UtilityObjects.Action;
@@ -47,10 +45,6 @@ public class Player extends GameObject{
 		myCells = myStage.getCells();
 		
 		myCells.get(myX).get(myY).addPlayer(this);
-		
-		targetX = Integer.MIN_VALUE;
-		targetY = Integer.MIN_VALUE;
-		
 		myInventory = new Inventory();
 	}
 	

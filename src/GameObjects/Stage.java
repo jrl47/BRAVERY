@@ -68,15 +68,13 @@ public class Stage extends GameObject{
 	
 	@Override
 	public void useInput(int i, int j, boolean b) {
+		if(!(j>0 && j < 674 && i < MAP_WIDTH * 32))
+			return;
+		
 		wasInput = true;
-		if(j>0 && j < 674 && i < MAP_WIDTH * 32){
-			hoverX = i/32;
-			hoverY = (j+1)/32;
-		}
-		else{
-			hoverX = -1;
-			hoverY = -1;
-		}
+
+		hoverX = i/32;
+		hoverY = (j+1)/32;
 
 		int locX = myPlayer.getX()+myPlayer.getTargetX();
 		int locY = myPlayer.getY()+myPlayer.getTargetY();
@@ -99,8 +97,8 @@ public class Stage extends GameObject{
 	@Override
 	public void step() {
 		if(!wasInput){
-			hoverX = -1;
-			hoverY = -1;
+			hoverX = -200;
+			hoverY = -200;
 			myPlayer.setTargetX(Integer.MIN_VALUE);
 			myPlayer.setTargetY(Integer.MIN_VALUE);
 		}
@@ -127,8 +125,8 @@ public class Stage extends GameObject{
 			myPlayer.unpause();
 		}
 		
-		if(myPlayer.getCommand()==null)
-			return;
+//		if(myPlayer.getCommand()==null)
+//			return;
 		
 		handleKeyInput();
 		setPlayerTarget();
@@ -204,7 +202,7 @@ public class Stage extends GameObject{
 	}
 	
 	private void handleKeyInput() {
-		if(myPlayer.isPaused())
+		if(myPlayer.isPaused() || myPlayer.getCommand()==null)
 			return;
 		if(myPlayer.getCommand().equals("Up")){
 			myPlayer.clearCommand();

@@ -11,6 +11,7 @@ import GameObjects.GameObject;
 import GameObjects.MapCell;
 import GameObjects.Player;
 import GameObjects.Stage;
+import GameObjects.StateChangeButton;
 import Main.World;
 import Utilities.State;
 

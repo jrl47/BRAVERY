@@ -10,7 +10,6 @@ public class MoveMenu extends SubMenu{
 	private Text noSelectionDialog;
 	private Text myCostDialog;
 	
-	
 	private StateChangeButton back;
 	
 	public MoveMenu(Stage stage, State state){
