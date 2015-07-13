@@ -27,6 +27,7 @@ public class Player extends GameObject{
 	private Stage myStage;
 	private List<List<MapCell>> myCells;
 	private boolean isPaused;
+	private int planeCounter;
 	
 	private boolean tookAction;
 	private Action myAction;
@@ -139,6 +140,7 @@ public class Player extends GameObject{
 	public void stopAction() {
 		preparedMove = false;
 		preparedAttack = false;
+		preparedPlane = false;
 		damageTaken = 0;
 		myAction = new Action(0, "wait", 0, 0, true);
 	}
@@ -264,5 +266,9 @@ public class Player extends GameObject{
 	}
 	public boolean isPaused(){
 		return isPaused;
+	}
+	
+	public int getPlaneCounter(){
+		return planeCounter;
 	}
 }

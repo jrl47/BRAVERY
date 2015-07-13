@@ -59,7 +59,7 @@ public class Menu extends GameObject{
 		mySubMenus.put("main", new MainMenu(myStage, myState, myTileHandler, gameState));
 		mySubMenus.put("move", new MoveMenu(myStage, myState));
 		mySubMenus.put("attack", new AttackMenu(myStage, myState));
-		mySubMenus.put("plane", new PlaneMenu(myStage, myState));
+		mySubMenus.put("plane", new PlaneMenu(myStage, myState, myStage.getPlane()));
 	}
 	
 	@Override
@@ -77,13 +77,16 @@ public class Menu extends GameObject{
 		myInfoHandler.manageInfo();
 		myActionHandler.manageInfo();
 		if(myState.getState().equals("main")){
-			((MainMenu)mySubMenus.get("main")).manageInfo();
+			mySubMenus.get("main").manageInfo();
 		}
 		if(myState.getState().equals("move")){
-			((MoveMenu)mySubMenus.get("move")).manageInfo();
+			mySubMenus.get("move").manageInfo();
 		}
 		if(myState.getState().equals("attack")){
-			((AttackMenu)mySubMenus.get("attack")).manageInfo();
+			mySubMenus.get("attack").manageInfo();
+		}
+		if(myState.getState().equals("plane")){
+			mySubMenus.get("plane").manageInfo();
 		}
 		((AttackMenu)mySubMenus.get("attack")).manageState();
 	}

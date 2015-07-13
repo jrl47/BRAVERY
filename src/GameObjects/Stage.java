@@ -13,6 +13,7 @@ import Utilities.Camera;
 import Utilities.DeciduousTileManager;
 import Utilities.MoveDrawer;
 import Utilities.RoomNetwork;
+import Utilities.State;
 import Utilities.ValidAttackChecker;
 
 public class Stage extends GameObject{
@@ -40,7 +41,7 @@ public class Stage extends GameObject{
 	private int enemyAnimationCounter;
 	private static final int ENEMY_ANIMATION_START = 6;
 	private boolean quickMove;
-//	private MapCell outsideBorder;
+	private State myPlane;
 	
 	public Stage() {
 		super();
@@ -48,6 +49,7 @@ public class Stage extends GameObject{
 		roomY = 1;
 		myCamera = new Camera();
 		myBounds = new Rectangle(0, 0, MAP_WIDTH * 32, 675);
+		myPlane = new State("one");
 		myEnemies = new ArrayList<Enemy>();
 		myCollectibles = new ArrayList<Collectible>();
 		myCells = new ArrayList<List<MapCell>>();
@@ -62,8 +64,6 @@ public class Stage extends GameObject{
 		
 		setEnemiesAndCollectibles();
 		drawRoom();
-//		outsideBorder = new MapCell(-1, -1, this);
-//		outsideBorder.setID(MapCell.WATER);
 	}
 	
 	@Override
@@ -444,5 +444,9 @@ public class Stage extends GameObject{
 	}
 	public int getRoomY() {
 		return roomY;
+	}
+
+	public State getPlane() {
+		return myPlane;
 	}
 }
