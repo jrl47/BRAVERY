@@ -11,8 +11,7 @@ public class Player extends GameObject{
 
 	private int myX;
 	private int myY;
-	
-	private String myCommand;
+
 	private boolean preparedMove;
 	private boolean preparedAttack;
 	private boolean preparedPlane;
@@ -40,7 +39,8 @@ public class Player extends GameObject{
 		
 		myHealth = 16;
 		
-		myAction = new Action(0, "wait", 0, 0, true);
+		
+		myAction = new Action("wait");
 		
 		myStage = stage;
 		myCells = myStage.getCells();
@@ -101,19 +101,6 @@ public class Player extends GameObject{
 		targetY = y;
 	}
 	
-	public String getCommand(){
-		return myCommand;
-	}
-	public void setCommand(String s){
-		myCommand = s;
-		if(s==null){
-			myCommand = "";
-		}
-	}
-	public void clearCommand(){
-		myCommand = "";
-	}
-	
 	public Inventory getInventory(){
 		return myInventory;
 	}
@@ -124,17 +111,17 @@ public class Player extends GameObject{
 		}
 		if(k.getKeyCode()==KeyEvent.VK_W || k.getKeyCode()==KeyEvent.VK_S || 
 				k.getKeyCode()==KeyEvent.VK_A || k.getKeyCode()==KeyEvent.VK_D){
-			myAction = new Action(0, "earth", 0, 0, true);
+			myAction = new Action("wait");
 		}
 		
 		if(k.getKeyCode()==KeyEvent.VK_W)
-			myCommand = "Up";
+			myAction = new Action("up");
 		if(k.getKeyCode()==KeyEvent.VK_S)
-			myCommand = "Down";
+			myAction = new Action("down");
 		if(k.getKeyCode()==KeyEvent.VK_A)
-			myCommand = "Left";
+			myAction = new Action("left");
 		if(k.getKeyCode()==KeyEvent.VK_D)
-			myCommand = "Right";
+			myAction = new Action("right");
 	}
 
 	public void stopAction() {
@@ -142,7 +129,7 @@ public class Player extends GameObject{
 		preparedAttack = false;
 		preparedPlane = false;
 		damageTaken = 0;
-		myAction = new Action(0, "wait", 0, 0, true);
+		myAction = new Action("wait");
 	}
 	public boolean actionPrepared() {
 		return preparedMove || preparedAttack || preparedPlane;
@@ -253,9 +240,11 @@ public class Player extends GameObject{
 	public Action getAction() {
 		return myAction;
 	}
-
 	public void setAction(Action a) {
 		myAction = a;
+	}
+	public void clearAction() {
+		myAction = myAction = new Action("wait");
 	}
 	
 	public void pause(){

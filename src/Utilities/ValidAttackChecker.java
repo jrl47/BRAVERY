@@ -20,7 +20,7 @@ public class ValidAttackChecker {
 		int y = getCellFromHoverY(hoverY, myPlayer, myCamera);
 		if(myPlayer.getAction().getPower()!=0&&
 				!(x < 0 || y < 0 || x >= myCells.size() || y >=myCells.get(0).size()) &&
-				myCells.get(x).get(y).isValidMove()){
+				myCells.get(x).get(y).isAvailable()){
 			Color c = new Color(1f, .5f, .3f, .6f);
 			g.setColor(c);
 			g.fillRect((hoverX)*Stage.BLOCK_SIZE, 1+((hoverY)*Stage.BLOCK_SIZE), Stage.BLOCK_SIZE, Stage.BLOCK_SIZE);

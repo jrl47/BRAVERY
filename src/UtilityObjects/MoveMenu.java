@@ -50,24 +50,28 @@ public class MoveMenu extends SubMenu{
 		else if(xDif==0 && yDif==0){
 			
 		}
-		else if((xDif==0 && yDif==1) || (yDif==0 && xDif==1)){
-			Action a = new Action(MovementCostCalculator.getCost(xDif, yDif), "earth", 0, 0, true);
-			myPlayer.setAction(a);
-		}
 		else if(xDif==0 || yDif==0){
-			Action a = new Action(MovementCostCalculator.getCost(xDif, yDif), "earth", 0, 0, true);
+			Action a = new Action("move");
+			a.setCost(MovementCostCalculator.getCost(xDif, yDif));
+			a.setType("earth");
 			myPlayer.setAction(a);
 		}
 		else if(xDif==yDif){
-			Action a = new Action(MovementCostCalculator.getCost(xDif, yDif), "air", 0, 0, true);
+			Action a = new Action("move");
+			a.setCost(MovementCostCalculator.getCost(xDif, yDif));
+			a.setType("air");
 			myPlayer.setAction(a);
 		}
 		else if(xDif==2*yDif || 2*xDif==yDif){
-			Action a = new Action(MovementCostCalculator.getCost(xDif, yDif), "water", 0, 0, true);
+			Action a = new Action("move");
+			a.setCost(MovementCostCalculator.getCost(xDif, yDif));
+			a.setType("water");
 			myPlayer.setAction(a);
 		}
 		else if(xDif==3*yDif || 3*xDif==yDif || 2*xDif==3*yDif || 3*xDif==2*yDif){
-			Action a = new Action(MovementCostCalculator.getCost(xDif, yDif), "fire", 0, 0, true);
+			Action a = new Action("move");
+			a.setCost(MovementCostCalculator.getCost(xDif, yDif));
+			a.setType("fire");
 			myPlayer.setAction(a);
 		}
 		else{

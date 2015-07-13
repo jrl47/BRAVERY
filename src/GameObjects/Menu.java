@@ -114,15 +114,15 @@ public class Menu extends GameObject{
 			}
 			if(myState.getState().equals("move")){
 				myPlayer.prepareMove();
-				myPlayer.setCommand("move");
+//				myPlayer.setCommand("move");
 			}
 			if(myState.getState().equals("attack")){
 				myPlayer.prepareAttack();
-				myPlayer.setCommand("attack");
+//				myPlayer.setCommand("attack");
 			}
 			if(myState.getState().equals("plane")){
 				myPlayer.preparePlane();
-				myPlayer.setCommand("plane");
+//				myPlayer.setCommand("plane");
 			}
 			oldState = new State(myState.getState());
 			return;

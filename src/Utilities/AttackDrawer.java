@@ -17,20 +17,20 @@ public class AttackDrawer {
 		Player myPlayer = myStage.getPlayer();
 		for(int i=0; i<myMap.size(); i++){
 			for(int j=0; j<myMap.get(0).size(); j++){
-				myMap.get(i).get(j).setValidMove(false);
+				myMap.get(i).get(j).setAvailable(false);
 			}
 		}
-		if(myPlayer.getCommand()!=null){
-			if(myPlayer.getCommand().equals("boulderfall")){
+		if(myPlayer.getAction()!=null){
+			if(myPlayer.getAction().getName().equals("boulderfall")){
 				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 0, 1, new Color(.6f, .4f, .3f, .6f), 1, 1, true);
 				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 0, new Color(.6f, .4f, .3f, .6f), 1, 1, true);
 			}
-			if(myPlayer.getCommand().equals("skytoss")){
+			if(myPlayer.getAction().getName().equals("skytoss")){
 				Color c = Color.lightGray;
 				c = new Color(c.getRed(), c.getGreen(), c.getBlue(), 153);
 				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 0, 0, c, 0, 0, false);
 			}
-			if(myPlayer.getCommand().equals("cascade")){
+			if(myPlayer.getAction().getName().equals("cascade")){
 				Color c = Color.BLUE;
 				c = new Color(c.getRed(), c.getGreen(), c.getBlue(), 153);
 				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 0, 1, c, 1, 1, true);
@@ -38,7 +38,7 @@ public class AttackDrawer {
 				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 1, c, 1, 1, true);
 				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, -1, c, 1, 1, true);
 			}
-			if(myPlayer.getCommand().equals("detonate")){
+			if(myPlayer.getAction().getName().equals("detonate")){
 				Color c = Color.RED;
 				c = new Color(c.getRed(), c.getGreen(), c.getBlue(), 153);
 				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 0, 1, c, 1, 2, true);
@@ -65,7 +65,7 @@ public class AttackDrawer {
 				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).getEnemy()!=null ||
 				(xScale==0 && yScale==0))){
 
-				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove(true);
+				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAvailable(true);
 					
 				g.setColor(c);
 				g.fillRect((myStage.getRelativeX(myPlayer.getX()) + xScale*i)*BLOCK_SIZE,

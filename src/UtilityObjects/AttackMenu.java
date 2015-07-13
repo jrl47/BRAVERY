@@ -65,7 +65,7 @@ public class AttackMenu extends SubMenu{
 	public void manageInfo() {
 		myObjects.clear();
 		if(!myAttack.getState().equals("main")){
-			myPlayer.setCommand(myAttack.getState());
+//			myPlayer.setCommand(myAttack.getState());
 			myObjects.add(cancel);
 			myObjects.add(myNameDialog);
 			myObjects.add(mySelectionDialog);
@@ -76,7 +76,7 @@ public class AttackMenu extends SubMenu{
 			int yLoc = myPlayer.getY() + myPlayer.getTargetY();
 			
 			myNameDialog = new Text(900, 20, myAttack.getState().toUpperCase() + ":", 2, myFont);
-			if(!myPlayer.getAction().getType().toUpperCase().equals("WAIT")){
+			if(!myPlayer.getAction().getName().toUpperCase().equals("WAIT")){
 				myCostDialog = new Text(900, 60, 
 					myPlayer.getAction().getCost() + " " + myPlayer.getAction().getType().toUpperCase() + " ENERGY", 2, myFont);
 			}
@@ -105,35 +105,49 @@ public class AttackMenu extends SubMenu{
 				myPowerDialog = emptyDialog;
 			}
 			
-			if(myPlayer.getCommand().equals("boulderfall")){
+			if(myAttack.getState().equals("boulderfall")){
 				if(!(myPlayer.getInventory().getEarth()<5)){
-					Action a = new Action(5, "earth", 3, 1, true);
+					Action a = new Action("boulderfall");
+					a.setCost(5);
+					a.setType("earth");
+					a.setPower(3);
+					a.setRange(1);
 					myPlayer.setAction(a);
 				}
 			}
-			if(myPlayer.getCommand().equals("skytoss")){
+			if(myAttack.getState().equals("skytoss")){
 				if(!(myPlayer.getInventory().getAir()<5)){
-					Action a = new Action(5, "air", 2, 2, true);
+					Action a = new Action("skytoss");
+					a.setCost(5);
+					a.setType("air");
+					a.setPower(2);
+					a.setRange(2);
 					myPlayer.setAction(a);
 				}
 			}
-			if(myPlayer.getCommand().equals("cascade")){
+			if(myAttack.getState().equals("cascade")){
 				if(!(myPlayer.getInventory().getWater()<5)){
-					Action a = new Action(5, "water", 1, 2, false);
+					Action a = new Action("cascade");
+					a.setCost(5);
+					a.setType("water");
+					a.setPower(1);
+					a.setRange(2);
+					a.setSplash(false);
 					myPlayer.setAction(a);
 				}
 			}
-			if(myPlayer.getCommand().equals("detonate")){
+			if(myAttack.getState().equals("detonate")){
 				if(!(myPlayer.getInventory().getFire()<5)){
-					Action a = new Action(5, "fire", 1, 1, true);
+					Action a = new Action("detonate");
+					a.setCost(5);
+					a.setType("fire");
+					a.setPower(1);
+					a.setRange(1);
 					myPlayer.setAction(a);
 				}
 			}
 			
 			return;
-		}
-		else{
-			myPlayer.setCommand(null);
 		}
 		
 		if(myAttackType.getState().equals("main")){
@@ -164,7 +178,7 @@ public class AttackMenu extends SubMenu{
 			myAttack.setState("main");
 			myAttackType.setState("main");
 		}
-		if(myPlayer.getCommand()==null){
+		if(myPlayer.getAction().getName().equals("wait")){
 			myAttack.setState("main");
 		}
 	}

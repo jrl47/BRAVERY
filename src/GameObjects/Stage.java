@@ -87,7 +87,7 @@ public class Stage extends GameObject{
 				if(myPlayer.attackPrepared()){
 					if(ValidAttackChecker.detectAttackTargets(locX, locY, myPlayer, myCells)){
 						ValidAttackChecker.doPlayerAttack(myPlayer, myCells);
-						myPlayer.clearCommand();
+						myPlayer.clearAction();
 					}
 				}
 			}
@@ -201,10 +201,11 @@ public class Stage extends GameObject{
 	}
 	
 	private void handleKeyInput() {
-		if(myPlayer.isPaused() || myPlayer.getCommand()==null)
+		if(myPlayer.isPaused() || myPlayer.getAction().getName().equals("wait"))
 			return;
-		if(myPlayer.getCommand().equals("Up")){
-			myPlayer.clearCommand();
+		if(myPlayer.getAction().getName().equals("up")){
+//			myPlayer.clearCommand();
+			myPlayer.clearAction();
 			if(myPlayer.getY()-1 < 0){
 				roomY -= 1;
 				myPlayer.resetLocation(myPlayer.getX(), 31);
@@ -218,8 +219,9 @@ public class Stage extends GameObject{
 				quickMove = true;
 			}
 		}
-		else if(myPlayer.getCommand().equals("Down")){
-			myPlayer.clearCommand();
+		else if(myPlayer.getAction().getName().equals("down")){
+//			myPlayer.clearCommand();
+			myPlayer.clearAction();
 			if(myPlayer.getY()+1 >= myCells.get(0).size()){
 				roomY += 1;
 				myPlayer.resetLocation(myPlayer.getX(), 0);
@@ -233,8 +235,9 @@ public class Stage extends GameObject{
 				quickMove = true;
 			}
 		}
-		else if(myPlayer.getCommand().equals("Left")){
-			myPlayer.clearCommand();
+		else if(myPlayer.getAction().getName().equals("left")){
+//			myPlayer.clearCommand();
+			myPlayer.clearAction();
 			if(myPlayer.getX()-1 < 0){
 				roomX -= 1;
 				myPlayer.resetLocation(31, myPlayer.getY());
@@ -248,8 +251,9 @@ public class Stage extends GameObject{
 				quickMove = true;
 			}
 		}
-		else if(myPlayer.getCommand().equals("Right")){
-			myPlayer.clearCommand();
+		else if(myPlayer.getAction().getName().equals("right")){
+//			myPlayer.clearCommand();
+			myPlayer.clearAction();
 			if(myPlayer.getX()+1 >= myCells.size()){
 				roomX += 1;
 				myPlayer.resetLocation(0, myPlayer.getY());

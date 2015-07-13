@@ -81,7 +81,7 @@ public class RoomNetwork {
 		
 		for(int i=0; i<myMap.getWidth(); i++){
 			for(int j=0; j<myMap.getHeight(); j++){
-				myCells.get(i).add(new MapCell(i, j, myStage));
+				myCells.get(i).add(new MapCell(i, j));
 				if(myMap.getRGB(i,j)!=-16777216){
 					myCells.get(i).get(j).setPassable(true);
 				}

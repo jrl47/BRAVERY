@@ -3,6 +3,7 @@ package UtilityObjects;
 import GameObjects.Stage;
 import GameObjects.StateChangeButton;
 import GameObjects.Text;
+import Utilities.MovementCostCalculator;
 import Utilities.State;
 
 public class PlaneMenu extends SubMenu{
@@ -76,16 +77,14 @@ public class PlaneMenu extends SubMenu{
 			shift.setNewState(myDesiredPlane.getState());
 			int plane = Integer.parseInt(myDesiredPlane.getState());
 			boolean canPay = true;
-			if(myDesiredPlane.getState().equals("1")){
-				myCost = new Text(874, 90, "0 OF EACH ENERGY", 2, myFont);
-			}
-			else{
-				if(!(myPlayer.getInventory().getMin() >= Math.pow(10, plane - 1))){
+			int cost = 0;
+			if(!myDesiredPlane.getState().equals("1")){
+				cost = (int) Math.pow(10, plane - 1);
+				if(myPlayer.getInventory().getMin() < cost){
 					canPay = false;
 				}
-				myCost = new Text(874, 90, (int)Math.pow(10, plane - 1)  +  " OF EACH ENERGY", 2, myFont);
 			}
-			
+			myCost = new Text(874, 90,cost +  " OF EACH ENERGY", 2, myFont);
 			if(canPay){
 				myObjects.add(shift);
 			}
@@ -93,10 +92,12 @@ public class PlaneMenu extends SubMenu{
 				myObjects.add(cantPay);
 			}
 			myObjects.add(myCost);
-		}
-		
-		if(!myPurchasedPlane.getState().equals("main")){
-			myPlayer.setCommand(myPurchasedPlane.getState());
+			
+			if(!myPurchasedPlane.getState().equals("main") && canPay){
+				Action a = new Action(myPurchasedPlane.getState());
+				a.setCost(cost);
+				myPlayer.setAction(a);
+			}
 		}
 		
 		myObjects.add(myPlaneCounter);

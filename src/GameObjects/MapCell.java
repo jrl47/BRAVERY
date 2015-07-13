@@ -22,24 +22,17 @@ public class MapCell extends GameObject{
 	private boolean isAvailable; // referring to immediate access for movement, attack, etc. "highlightability"
 	private int myX;
 	private int myY;
-	private int myCost;
-	private String myCostType;
 	
 	private String myID;
 	
 	private Collectible myCollectible;
 	private Enemy myEnemy;
 	private Player myPlayer;
-//	private Action myAction;
-	private boolean validMove;
-	private Stage myStage;
 	
-	public MapCell(int x, int y, Stage s){
+	public MapCell(int x, int y){
 		myX = x;
 		myY = y;
 		myID = GRASS;
-		myStage = s;
-		myCostType = "";
 	}
 	public String getID(){
 		return myID;
@@ -60,14 +53,6 @@ public class MapCell extends GameObject{
 	public boolean isAvailable(){
 		return isAvailable;
 	}
-	
-	public void setValidMove(boolean b){
-		validMove = b;
-	}
-	public boolean isValidMove(){
-		return validMove;
-	}
-	
 	
 	public void setCollectible(Collectible c){
 		myCollectible = c;

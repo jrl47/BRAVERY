@@ -79,7 +79,6 @@ public class MoveDrawer {
 				g.setColor(c);
 				g.fillRect((myStage.getRelativeX(myPlayer.getX()) + xScale*i)*BLOCK_SIZE,
 						(myStage.getRelativeY(myPlayer.getY()) - yScale*i)*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setValidMove(true);
 				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAvailable(true);
 			}
 			else{

@@ -2,34 +2,50 @@ package UtilityObjects;
 
 public class Action {
 	
-	private int myCost;
+	private String myName;
 	private String myType;
+	private int myCost;
 	private int myPower;
 	private int myRange;
 	private boolean roundSplash;
 	
-	public Action(int cost, String type, int power, int range, boolean roundsplash){
-		myCost = cost;
-		myType = type;
-		myPower = power;
-		myRange = range;
-		roundSplash = roundsplash;
+	public Action(String name){
+		myName = name;
+		myType = "";
 	}
 	
-	public int getCost(){
-		return myCost;
-	}
-	public int getPower(){
-		return myPower;
+	public String getName(){
+		return myName;
 	}
 	public String getType(){
 		return myType;
 	}
+	public void setType(String type){
+		myType = type;
+	}
+	public int getCost(){
+		return myCost;
+	}
+	public void setCost(int cost){
+		myCost = cost;
+	}
+	public int getPower(){
+		return myPower;
+	}
+	public void setPower(int power){
+		myPower = power;
+	}
 	public int getRange(){
 		return myRange;
 	}
+	public void setRange(int range){
+		myRange = range;
+	}
 	public boolean isRoundSplash(){
 		return roundSplash;
+	}
+	public void setSplash(boolean round){
+		roundSplash = round;
 	}
 	
 }
