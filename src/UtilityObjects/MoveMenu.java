@@ -3,6 +3,7 @@ package UtilityObjects;
 import GameObjects.Stage;
 import GameObjects.StateChangeButton;
 import GameObjects.Text;
+import Utilities.MovementCostCalculator;
 import Utilities.State;
 
 public class MoveMenu extends SubMenu{
@@ -29,9 +30,7 @@ public class MoveMenu extends SubMenu{
 		myObjects.remove(mySelectionDialog);
 		myObjects.remove(myCostDialog);
 		myObjects.remove(back);
-		
-		int x = Math.abs(myPlayer.getTargetX());
-		int y = Math.abs(myPlayer.getTargetY());
+
 		int xLoc = myPlayer.getX() + myPlayer.getTargetX();
 		int yLoc = myPlayer.getY() + myPlayer.getTargetY();
 		int xDif = Math.abs(myPlayer.getTargetX());
@@ -52,23 +51,23 @@ public class MoveMenu extends SubMenu{
 			
 		}
 		else if((xDif==0 && yDif==1) || (yDif==0 && xDif==1)){
-			Action a = new Action(0, "earth", 0, 0, true);
+			Action a = new Action(MovementCostCalculator.getCost(xDif, yDif), "earth", 0, 0, true);
 			myPlayer.setAction(a);
 		}
 		else if(xDif==0 || yDif==0){
-			Action a = new Action((int) Math.pow(xDif + yDif, 6), "earth", 0, 0, true);
+			Action a = new Action(MovementCostCalculator.getCost(xDif, yDif), "earth", 0, 0, true);
 			myPlayer.setAction(a);
 		}
 		else if(xDif==yDif){
-			Action a = new Action((int) Math.pow(xDif + yDif, 6), "air", 0, 0, true);
+			Action a = new Action(MovementCostCalculator.getCost(xDif, yDif), "air", 0, 0, true);
 			myPlayer.setAction(a);
 		}
 		else if(xDif==2*yDif || 2*xDif==yDif){
-			Action a = new Action((int) Math.pow(xDif + yDif, 6), "water", 0, 0, true);
+			Action a = new Action(MovementCostCalculator.getCost(xDif, yDif), "water", 0, 0, true);
 			myPlayer.setAction(a);
 		}
 		else if(xDif==3*yDif || 3*xDif==yDif || 2*xDif==3*yDif || 3*xDif==2*yDif){
-			Action a = new Action((int) Math.pow(xDif + yDif, 6), "fire", 0, 0, true);
+			Action a = new Action(MovementCostCalculator.getCost(xDif, yDif), "fire", 0, 0, true);
 			myPlayer.setAction(a);
 		}
 		else{

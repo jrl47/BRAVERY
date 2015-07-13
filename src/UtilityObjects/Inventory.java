@@ -8,10 +8,10 @@ public class Inventory {
 	private int myFire;
 	
 	public Inventory(){
-		myEarth = 15000;
-		myAir = 15000;
-		myWater = 15000;
-		myFire = 15000;
+		myEarth = 10;
+		myAir = 10;
+		myWater = 10;
+		myFire = 10;
 	}
 	
 	public void setEarth(int e){
@@ -38,5 +38,9 @@ public class Inventory {
 	}
 	public int getFire(){
 		return myFire;
+	}
+
+	public int getMin() {
+		return Math.min(myEarth, Math.min(myAir, Math.min(myWater, myFire)));
 	}
 }

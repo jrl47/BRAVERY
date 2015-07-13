@@ -58,21 +58,20 @@ public class MoveDrawer {
 					
 				}
 				else if((xScale==0 || yScale==0)){
-					if(myPlayer.getInventory().getEarth()<Math.pow(i*Math.max(Math.abs(xScale), Math.abs(yScale)), 6))
+					if(myPlayer.getInventory().getEarth()<MovementCostCalculator.getCost(i*xScale, i*yScale))
 						break;
-					Action a = new Action((int) Math.pow(i*(Math.abs(xScale) + Math.abs(yScale)), 6), "earth", 0, 0, true);
 				}
 				else{
 					if(Math.abs(xScale)==Math.abs(yScale)){
-						if(myPlayer.getInventory().getAir()<Math.pow(i*(Math.abs(xScale) + Math.abs(yScale)), 6))
+						if(myPlayer.getInventory().getAir()<MovementCostCalculator.getCost(i*xScale, i*yScale))
 							break;
 					}
 					else if(Math.abs(xScale)==2*Math.abs(yScale) || 2*Math.abs(xScale)==Math.abs(yScale)){
-						if(myPlayer.getInventory().getWater()<Math.pow(i*(Math.abs(xScale) + Math.abs(yScale)), 6))
+						if(myPlayer.getInventory().getWater()<MovementCostCalculator.getCost(i*xScale, i*yScale))
 							break;
 					}
 					else{
-						if(myPlayer.getInventory().getFire()<Math.pow(i*(Math.abs(xScale) + Math.abs(yScale)), 6))
+						if(myPlayer.getInventory().getFire()<MovementCostCalculator.getCost(i*xScale, i*yScale))
 							break;
 					}
 				}

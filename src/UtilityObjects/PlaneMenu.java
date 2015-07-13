@@ -17,8 +17,11 @@ public class PlaneMenu extends SubMenu{
 	private StateChangeButton six;
 	private StateChangeButton seven;
 	private StateChangeButton eight;
+	private StateChangeButton shift;
 	
 	private Text myPlaneCounter;
+	private Text myCost;
+	private Text cantPay;
 	
 	private State myDesiredPlane;
 	private State myStagePlane;
@@ -37,8 +40,10 @@ public class PlaneMenu extends SubMenu{
 		six = new StateChangeButton(1034, 160, "SIX", 3, myFont, myBlueFont, myBackground, myHoverBackground, myDesiredPlane, "six");
 		seven = new StateChangeButton(904, 230, "SEVEN", 3, myFont, myBlueFont, myBackground, myHoverBackground, myDesiredPlane, "seven");
 		eight = new StateChangeButton(1034, 230, "EIGHT", 3, myFont, myBlueFont, myBackground, myHoverBackground, myDesiredPlane, "eight");
-		
+		shift = new StateChangeButton(964, 20, "SHIFT", 3, myFont, myBlueFont, myBackground, myHoverBackground, myDesiredPlane, "one");
 		myPlaneCounter = new Text(886, 300, " ", 2, myFont);
+		myCost = new Text(886, 300, " ", 2, myFont);
+		cantPay = new Text(914, 30, "NOT ENOUGH ENERGY", 2, myFont);
 		
 		myObjects.add(back);
 		myObjects.add(one);
@@ -68,30 +73,61 @@ public class PlaneMenu extends SubMenu{
 		}
 		else{
 			myObjects.add(subBack);
+			shift.setNewState(myDesiredPlane.getState());
+			boolean canPay = true;
 			if(myDesiredPlane.getState().equals("one")){
-				
+				myCost = new Text(874, 90, "0 OF EACH ENERGY", 2, myFont);
 			}
 			if(myDesiredPlane.getState().equals("two")){
-				
+				if(!(myPlayer.getInventory().getMin() >= 10)){
+					canPay = false;
+				}
+				myCost = new Text(874, 90, "10 OF EACH ENERGY", 2, myFont);
 			}
 			if(myDesiredPlane.getState().equals("three")){
-				
+				if(!(myPlayer.getInventory().getMin() >= 100)){
+					canPay = false;
+				}
+				myCost = new Text(874, 90, "100 OF EACH ENERGY", 2, myFont);
 			}
 			if(myDesiredPlane.getState().equals("four")){
-				
+				if(!(myPlayer.getInventory().getMin() >= 1000)){
+					canPay = false;
+				}
+				myCost = new Text(874, 90, "1000 OF EACH ENERGY", 2, myFont);
 			}
 			if(myDesiredPlane.getState().equals("five")){
-				
+				if(!(myPlayer.getInventory().getMin() >= 10000)){
+					canPay = false;
+				}
+				myCost = new Text(874, 90, "10000 OF EACH ENERGY", 2, myFont);
 			}
 			if(myDesiredPlane.getState().equals("six")){
-				
+				if(!(myPlayer.getInventory().getMin() >= 100000)){
+					canPay = false;
+				}
+				myCost = new Text(874, 90, "100000 OF EACH ENERGY", 2, myFont);
 			}
 			if(myDesiredPlane.getState().equals("seven")){
-				
+				if(!(myPlayer.getInventory().getMin() >= 1000000)){
+					canPay = false;
+				}
+				myCost = new Text(874, 90, "1000000 OF EACH ENERGY", 2, myFont);
 			}
 			if(myDesiredPlane.getState().equals("eight")){
-				
+				if(!(myPlayer.getInventory().getMin() >= 10000000)){
+					canPay = false;
+				}
+				myCost = new Text(874, 90, "10000000 OF EACH ENERGY", 2, myFont);
 			}
+			
+			if(canPay){
+				myObjects.add(shift);
+			}
+			else{
+				myObjects.add(cantPay);
+			}
+			myObjects.add(myCost);
 		}
 		
 		myObjects.add(myPlaneCounter);
