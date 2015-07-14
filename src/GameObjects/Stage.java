@@ -213,19 +213,6 @@ public class Stage extends GameObject{
 					}
 					if(rand == 6 || rand==7){
 						Collectible c = new Collectible(i, j, this, 0);
-//						int type = r.nextInt(5);
-//						Collectible c = null;
-//						if(type==0)
-//							c = new Collectible(3, "earth", i, j, this);
-//						if(type==1)
-//							c = new Collectible(3, "air", i, j, this);
-//						if(type==2)
-//							c = new Collectible(3, "water", i, j, this);
-//						if(type==3)
-//							c = new Collectible(3, "fire", i, j, this);
-//						if(type==4)
-//							c = new Collectible(2, "health", i, j, this);
-						
 						myCollectibles.add(c);
 						myCells.get(i).get(j).setCollectible(c);
 					}
@@ -269,7 +256,10 @@ public class Stage extends GameObject{
 		for(int i=0; i<myEnemies.size(); i++){
 			Enemy e = myEnemies.get(i);
 			if(e.isDead()){
+				Collectible c = new Collectible(e.getX(), e.getY(), this, e.getIndex());
 				myEnemies.remove(e);
+				myCollectibles.add(c);
+				myCells.get(c.getX()).get(c.getY()).setCollectible(c);
 				i--;
 			}
 		}

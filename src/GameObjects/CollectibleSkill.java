@@ -1,59 +1,23 @@
 package GameObjects;
 
 import java.awt.Graphics;
-import java.util.Random;
 
-import Utilities.CollectibleBuilder;
-import Utilities.CollectibleData;
-
-public class Collectible{
+public class CollectibleSkill{
 	
 	private int myAmount;
 	private String myType;
 	private Stage myStage;
 	private int myX;
 	private int myY;
+	private String mySkill;
 	
 	private boolean isDestroyed;
 	
-	public Collectible(int x, int y, Stage stage, int index){
-		CollectibleData data = CollectibleBuilder.getCollectibleObject(index);
+	public CollectibleSkill(int x, int y, Stage stage, String skill){
 		myStage = stage;
 		myX = x;
 		myY = y;
-		
-		Random r = new Random();
-		int type = r.nextInt(data.getTotalChance());
-		if(type<data.getEarthChance()){
-			myAmount = data.getEarthAmount();
-			myType = "earth";
-			return;
-		}
-		type-=data.getEarthChance();
-		if(type<data.getAirChance()){
-			myAmount = data.getAirAmount();
-			myType = "air";
-			return;
-		}
-		type-=data.getAirChance();
-		if(type<data.getWaterChance()){
-			myAmount = data.getWaterAmount();
-			myType = "water";
-			return;
-		}
-		type-=data.getWaterChance();
-		if(type<data.getFireChance()){
-			myAmount = data.getFireAmount();
-			myType = "fire";
-			return;
-		}
-		type-=data.getHealthChance();
-		if(type<data.getHealthChance()){
-			myAmount = data.getHealthAmount();
-			myType = "health";
-			return;
-		}
-		type-=data.getHealthChance();
+		mySkill = skill;
 	}
 	
 	public void draw(Graphics g){
@@ -89,6 +53,10 @@ public class Collectible{
 	}
 	public int getY() {
 		return myY;
+	}
+	
+	public String getSkill(){
+		return mySkill;
 	}
 	
 }

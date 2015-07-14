@@ -2,7 +2,9 @@ package GameObjects;
 
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import UtilityObjects.Action;
 import UtilityObjects.Inventory;
@@ -33,6 +35,7 @@ public class Player extends GameObject{
 	private Action myAction;
 	
 	private Inventory myInventory;
+	private Set<String> mySkills;
 	
 	public Player(Stage stage){
 		myX = 23;
@@ -40,6 +43,9 @@ public class Player extends GameObject{
 		
 		myHealth = 8;
 		myMaxHealth = 8;
+		mySkills = new HashSet<String>();
+		mySkills.add("boulderfall");
+		mySkills.add("planeshift");
 		
 		
 		myAction = new Action("wait");
@@ -290,5 +296,8 @@ public class Player extends GameObject{
 		if(myHealth > myMaxHealth){
 			myHealth = myMaxHealth;
 		}
+	}
+	public Set<String> getSkills(){
+		return mySkills;
 	}
 }

@@ -215,4 +215,10 @@ public class Enemy extends GameObject{
 		return myIndex;
 	}
 
+	public int getX() {
+		return myX;
+	}
+	public int getY() {
+		return myY;
+	}
 }

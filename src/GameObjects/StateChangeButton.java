@@ -27,4 +27,8 @@ public class StateChangeButton extends BorderedButton{
 	public void setNewState(String s){
 		myNewState = s;
 	}
+
+	public String getState() {
+		return myNewState;
+	}
 }

@@ -161,16 +161,20 @@ public class AttackMenu extends SubMenu{
 		else{
 			myObjects.add(subBack);
 			if(myAttackType.getState().equals("earth")){
-				myObjects.add(boulderFall);
+				if(myPlayer.getSkills().contains(boulderFall.getState()))
+					myObjects.add(boulderFall);
 			}
 			if(myAttackType.getState().equals("air")){
-				myObjects.add(skyToss);
+				if(myPlayer.getSkills().contains(skyToss.getState()))
+					myObjects.add(skyToss);
 			}
 			if(myAttackType.getState().equals("water")){
-				myObjects.add(cascade);
+				if(myPlayer.getSkills().contains(cascade.getState()))
+					myObjects.add(cascade);
 			}
 			if(myAttackType.getState().equals("fire")){
-				myObjects.add(detonate);
+				if(myPlayer.getSkills().contains(detonate.getState()))
+					myObjects.add(detonate);
 			}
 		}
 	}
