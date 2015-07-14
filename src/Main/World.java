@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import Utilities.EnemyBuilder;
 import Utilities.State;
 import GameObjects.Background;
 import GameObjects.BorderedButton;
@@ -33,6 +34,7 @@ public class World extends GameObject{
 		myStage = new Stage();
 		myPlayer = new Player(myStage);
 		myStage.addPlayer(myPlayer);
+		EnemyBuilder.init();
 		Background b = null;
 		BorderedButton t = null;
 		try {

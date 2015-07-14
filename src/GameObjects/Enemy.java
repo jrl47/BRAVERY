@@ -26,7 +26,7 @@ public class Enemy extends GameObject{
 	private Stage myStage;
 	private List<List<MapCell>> myCells;
 	
-	public Enemy(int x, int y, int sightrange, int attackrange, int health, int power, Stage stage){
+	public Enemy(int x, int y, Stage stage, int sightrange, int attackrange, int health, int power){
 		myStage = stage;
 		myCells = myStage.getCells();
 		myX = x;
