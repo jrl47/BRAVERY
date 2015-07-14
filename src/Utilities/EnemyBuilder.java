@@ -15,7 +15,7 @@ public class EnemyBuilder {
 	public static Map<String, EnemyData> myStringEnemies;
 	public static void init(){
     	// General file-reading stuff, nothing to see here
-		enemyData = new String[100];
+		enemyData = new String[NUMBER_OF_ENEMIES];
     	URL myFile = EnemyBuilder.class.getResource("/Enemies");
     	BufferedReader b = null;
 		try {

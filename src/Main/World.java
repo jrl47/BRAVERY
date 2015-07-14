@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 
 import Utilities.CollectibleBuilder;
 import Utilities.EnemyBuilder;
+import Utilities.RoomDataBuilder;
 import Utilities.State;
 import GameObjects.Background;
 import GameObjects.BorderedButton;
@@ -32,6 +33,7 @@ public class World extends GameObject{
 	public World() {
 		EnemyBuilder.init();
 		CollectibleBuilder.init();
+//		RoomDataBuilder.init();
 		myState = new State("main");
 		oldState = "main";
 		myStage = new Stage();

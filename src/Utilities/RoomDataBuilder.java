@@ -4,18 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
-public class CollectibleBuilder {
+public class RoomDataBuilder {
 
-	public static final int NUMBER_OF_COLLECTIBLES = 100;
-	public static String[] collectibleData;
-	public static Map<Integer, CollectibleData> myCollectibles;
+	public static String[][] roomData;
+	public static RoomData[][] myRoomDatas;
 	public static void init(){
     	// General file-reading stuff, nothing to see here
-		collectibleData = new String[NUMBER_OF_COLLECTIBLES];
-    	URL myFile = EnemyBuilder.class.getResource("/Collectibles");
+		roomData = new String[RoomNetwork.WORLD_WIDTH][RoomNetwork.WORLD_HEIGHT];
+    	URL myFile = EnemyBuilder.class.getResource("/RoomData");
     	BufferedReader b = null;
 		try {
 			b = new BufferedReader(new InputStreamReader(myFile.openStream()));
@@ -27,18 +24,20 @@ public class CollectibleBuilder {
 		int counter = 0;
     	while(currentLine!=null){
     		// Breaks up at colons
-    		collectibleData[counter] = currentLine;
+    		roomData[counter] = currentLine.split("-");
     		counter++;
     		try {currentLine = b.readLine();} catch (IOException e) {e.printStackTrace();}
     	}
-		myCollectibles = new HashMap<Integer, CollectibleData>();
-		for(int i=0; i<1; i++){
-			CollectibleData c = new CollectibleData(i);
-			myCollectibles.put(i, c);
+		myRoomDatas = new RoomData[RoomNetwork.WORLD_WIDTH][RoomNetwork.WORLD_HEIGHT];
+		for(int i=0; i<RoomNetwork.WORLD_WIDTH; i++){
+			for(int j=0; j<RoomNetwork.WORLD_HEIGHT; j++){
+				RoomData r = new RoomData(i, j);
+				myRoomDatas[i][j] = r;
+			}
 		}
 	}
-	public static CollectibleData getCollectibleObject(int i){
-		return myCollectibles.get(i);
+	public static RoomData getRoomData(int i, int j){
+		return myRoomDatas[i][j];
 	}
 	
 }
