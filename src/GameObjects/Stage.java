@@ -212,7 +212,7 @@ public class Stage extends GameObject{
 						myCells.get(i).get(j).setEnemy(e);
 					}
 					if(rand == 6 || rand==7){
-						int type = r.nextInt(4);
+						int type = r.nextInt(5);
 						Collectible c = null;
 						if(type==0)
 							c = new Collectible(2, "earth", i, j, this);
@@ -222,6 +222,8 @@ public class Stage extends GameObject{
 							c = new Collectible(2, "water", i, j, this);
 						if(type==3)
 							c = new Collectible(2, "fire", i, j, this);
+						if(type==4)
+							c = new Collectible(2, "health", i, j, this);
 						
 						myCollectibles.add(c);
 						myCells.get(i).get(j).setCollectible(c);

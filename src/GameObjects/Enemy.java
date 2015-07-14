@@ -194,4 +194,11 @@ public class Enemy extends GameObject{
 		return attackRange;
 	}
 
+	public int getPower() {
+		return myPower;
+	}
+	public int getHealth() {
+		return myHealth;
+	}
+
 }

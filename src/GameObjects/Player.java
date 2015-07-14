@@ -20,6 +20,7 @@ public class Player extends GameObject{
 	private int targetY;
 	
 	private int myHealth;
+	private int myMaxHealth;
 	
 	private int damageTaken;
 	
@@ -38,6 +39,7 @@ public class Player extends GameObject{
 		myY = 2;
 		
 		myHealth = 8;
+		myMaxHealth = 8;
 		
 		
 		myAction = new Action("wait");
@@ -236,6 +238,8 @@ public class Player extends GameObject{
 			myInventory.setWater(myInventory.getWater()+mapCell.getCollectible().getAmount());
 		if(mapCell.getCollectible().getType().equals("fire"))
 			myInventory.setFire(myInventory.getFire()+mapCell.getCollectible().getAmount());
+		if(mapCell.getCollectible().getType().equals("health"))
+			addHealth(mapCell.getCollectible().getAmount());
 		
 		mapCell.removeCollectible();
 	}
@@ -250,6 +254,9 @@ public class Player extends GameObject{
 
 	public int getHealth() {
 		return myHealth;
+	}
+	public int getMaxHealth() {
+		return myMaxHealth;
 	}
 
 	public Action getAction() {
@@ -274,5 +281,11 @@ public class Player extends GameObject{
 	
 	public int getPlaneCounter(){
 		return planeCounter;
+	}
+	public void addHealth(int amount) {
+		myHealth+=amount;
+		if(myHealth > myMaxHealth){
+			myHealth = myMaxHealth;
+		}
 	}
 }
