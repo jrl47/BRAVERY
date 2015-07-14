@@ -215,13 +215,13 @@ public class Stage extends GameObject{
 						int type = r.nextInt(5);
 						Collectible c = null;
 						if(type==0)
-							c = new Collectible(2, "earth", i, j, this);
+							c = new Collectible(3, "earth", i, j, this);
 						if(type==1)
-							c = new Collectible(2, "air", i, j, this);
+							c = new Collectible(3, "air", i, j, this);
 						if(type==2)
-							c = new Collectible(2, "water", i, j, this);
+							c = new Collectible(3, "water", i, j, this);
 						if(type==3)
-							c = new Collectible(2, "fire", i, j, this);
+							c = new Collectible(3, "fire", i, j, this);
 						if(type==4)
 							c = new Collectible(2, "health", i, j, this);
 						

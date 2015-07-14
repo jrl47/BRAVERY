@@ -181,6 +181,11 @@ public class Enemy extends GameObject{
 	}
 
 	public void doTurn(Player myPlayer) {
+		if(!myStage.getCell(myX, myY).isPassable()){
+			myHealth = -1;
+			return;
+		}
+		
 		int dist = Math.abs(myPlayer.getX() - myX) + Math.abs(myPlayer.getY() - myY);
 		if(dist <= attackRange){
 			attack(myPlayer);
@@ -193,7 +198,6 @@ public class Enemy extends GameObject{
 	public int getAttackRange() {
 		return attackRange;
 	}
-
 	public int getPower() {
 		return myPower;
 	}

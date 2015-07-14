@@ -107,7 +107,7 @@ public class AttackMenu extends SubMenu{
 			if(myAttack.getState().equals("boulderfall")){
 				if(!(myPlayer.getInventory().getEarth()<5)){
 					Action a = new Action("boulderfall");
-					a.setCost(5);
+					a.setCost(6);
 					a.setType("earth");
 					a.setPower(3);
 					a.setRange(1);
@@ -117,7 +117,7 @@ public class AttackMenu extends SubMenu{
 			if(myAttack.getState().equals("skytoss")){
 				if(!(myPlayer.getInventory().getAir()<5)){
 					Action a = new Action("skytoss");
-					a.setCost(5);
+					a.setCost(6);
 					a.setType("air");
 					a.setPower(2);
 					a.setRange(2);
@@ -127,7 +127,7 @@ public class AttackMenu extends SubMenu{
 			if(myAttack.getState().equals("cascade")){
 				if(!(myPlayer.getInventory().getWater()<5)){
 					Action a = new Action("cascade");
-					a.setCost(5);
+					a.setCost(3);
 					a.setType("water");
 					a.setPower(1);
 					a.setRange(2);
@@ -138,7 +138,7 @@ public class AttackMenu extends SubMenu{
 			if(myAttack.getState().equals("detonate")){
 				if(!(myPlayer.getInventory().getFire()<5)){
 					Action a = new Action("detonate");
-					a.setCost(5);
+					a.setCost(3);
 					a.setType("fire");
 					a.setPower(1);
 					a.setRange(1);

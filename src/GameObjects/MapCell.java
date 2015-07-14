@@ -65,7 +65,7 @@ public class MapCell extends GameObject{
 		isAvailable = b;
 	}
 	public boolean isAvailable(){
-		return isAvailable && isPassable() && myEnemy==null;
+		return isAvailable && isPassable();
 	}
 	
 	public void setCollectible(Collectible c){
@@ -77,13 +77,11 @@ public class MapCell extends GameObject{
 	
 	@Override
 	public void useInput(int i, int j, boolean b) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void step() {
-		// TODO Auto-generated method stub
 		
 	}
 	

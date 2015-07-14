@@ -41,10 +41,14 @@ public class AttackDrawer {
 			if(myPlayer.getAction().getName().equals("detonate")){
 				Color c = Color.RED;
 				c = new Color(c.getRed(), c.getGreen(), c.getBlue(), 153);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 0, 1, c, 1, 2, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 0, c, 1, 2, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 1, c, 1, 1, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, -1, c, 1, 1, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 0, 1, c, 1, 3, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 0, c, 1, 3, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 1, c, 1, 2, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, -1, c, 1, 2, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 2, 1, c, 1, 1, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 2, -1, c, 1, 1, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 2, c, 1, 1, true);
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, -2, c, 1, 1, true);
 			}
 			
 		}
@@ -69,7 +73,7 @@ public class AttackDrawer {
 					
 				g.setColor(c);
 				g.fillRect((myStage.getRelativeX(myPlayer.getX()) + xScale*i)*BLOCK_SIZE,
-						(myStage.getRelativeY(myPlayer.getY()) - yScale*i)*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+						(1+(myStage.getRelativeY(myPlayer.getY()) - yScale*i)*BLOCK_SIZE), BLOCK_SIZE, BLOCK_SIZE);
 				myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).setAvailable(true);
 			}
 			

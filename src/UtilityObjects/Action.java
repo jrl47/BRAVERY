@@ -12,6 +12,7 @@ public class Action {
 	public Action(String name){
 		myName = name;
 		myType = "";
+		roundSplash = true;
 	}
 	
 	public String getName(){
