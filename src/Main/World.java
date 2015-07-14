@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import Utilities.CollectibleBuilder;
 import Utilities.EnemyBuilder;
 import Utilities.State;
 import GameObjects.Background;
@@ -30,6 +31,7 @@ public class World extends GameObject{
 	
 	public World() {
 		EnemyBuilder.init();
+		CollectibleBuilder.init();
 		myState = new State("main");
 		oldState = "main";
 		myStage = new Stage();
