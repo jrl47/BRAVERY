@@ -17,22 +17,22 @@ public class EnemyData {
 		sightRange = Integer.parseInt(data[3]);
 		attackRange = Integer.parseInt(data[4]);
 	}
-	public String getMyName() {
+	public String getName() {
 		return myName;
 	}
-	public void setMyName(String myName) {
+	public void setName(String myName) {
 		this.myName = myName;
 	}
-	public int getMyHealth() {
+	public int getHealth() {
 		return myHealth;
 	}
-	public void setMyHealth(int myHealth) {
+	public void setHealth(int myHealth) {
 		this.myHealth = myHealth;
 	}
-	public int getMyPower() {
+	public int getPower() {
 		return myPower;
 	}
-	public void setMyPower(int myPower) {
+	public void setPower(int myPower) {
 		this.myPower = myPower;
 	}
 	public int getSightRange() {

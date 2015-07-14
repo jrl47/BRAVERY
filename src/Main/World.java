@@ -29,12 +29,12 @@ public class World extends GameObject{
 	private boolean mapLoaded;
 	
 	public World() {
+		EnemyBuilder.init();
 		myState = new State("main");
 		oldState = "main";
 		myStage = new Stage();
 		myPlayer = new Player(myStage);
 		myStage.addPlayer(myPlayer);
-		EnemyBuilder.init();
 		Background b = null;
 		BorderedButton t = null;
 		try {

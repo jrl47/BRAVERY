@@ -37,7 +37,7 @@ public class EnemyBuilder {
 		for(int i=0; i<1; i++){
 			EnemyData e = new EnemyData(i);
 			myEnemies.put(i, e);
-			myStringEnemies.put(myEnemies.get(i).getMyName(), myEnemies.get(i));
+			myStringEnemies.put(myEnemies.get(i).getName(), myEnemies.get(i));
 		}
 	}
 	public static EnemyData getEnemyObject(int i){

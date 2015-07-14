@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import Utilities.EnemyBuilder;
+import Utilities.EnemyData;
 import UtilityObjects.Action;
 
 public class Enemy extends GameObject{
@@ -17,6 +19,8 @@ public class Enemy extends GameObject{
 	private int oldY;
 	private boolean attacked;
 	
+	private int myIndex;
+	
 	private int myHealth;
 	private int myPower;
 	
@@ -26,17 +30,19 @@ public class Enemy extends GameObject{
 	private Stage myStage;
 	private List<List<MapCell>> myCells;
 	
-	public Enemy(int x, int y, Stage stage, int sightrange, int attackrange, int health, int power){
+	public Enemy(int x, int y, Stage stage, int index){
 		myStage = stage;
 		myCells = myStage.getCells();
 		myX = x;
 		myY = y;
 		oldX = myX;
 		oldY = myY;
-		sightRange = sightrange;
-		attackRange = attackrange;
-		myPower = power;
-		myHealth = health;
+		myIndex = index;
+		EnemyData data = EnemyBuilder.getEnemyObject(myIndex);
+		sightRange = data.getSightRange();
+		attackRange = data.getAttackRange();
+		myPower = data.getPower();
+		myHealth = data.getHealth();
 	}
 	
 	@Override
@@ -203,6 +209,10 @@ public class Enemy extends GameObject{
 	}
 	public int getHealth() {
 		return myHealth;
+	}
+
+	public int getIndex() {
+		return myIndex;
 	}
 
 }

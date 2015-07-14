@@ -3,6 +3,7 @@ package GameObjects;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import Main.Display;
 import Utilities.RoomNetwork;
 
 public class Map extends GameObject{
@@ -19,22 +20,27 @@ public class Map extends GameObject{
 	
 	@Override
 	public void draw(Graphics g) {
+		int width = Stage.MAP_WIDTH * 32;
+		int height = Display.height;
+		int xshift = width / 2 - RoomNetwork.WORLD_WIDTH*32 / 2;
+		int yshift = height / 2 - RoomNetwork.WORLD_HEIGHT*32 / 2;
+		
 		for(int i=0; i<RoomNetwork.WORLD_WIDTH; i++){
 			for(int j=0; j<RoomNetwork.WORLD_HEIGHT; j++){
 				if(i==myNetwork.getX(i, j) && j==myNetwork.getY(i, j)){
 					g.setColor(Color.PINK);
-					g.fillRect(i*32, j*32, myNetwork.getWidth(i, j) * 32, myNetwork.getHeight(i, j) * 32);
+					g.fillRect(xshift + i*32, yshift + j*32, myNetwork.getWidth(i, j) * 32, myNetwork.getHeight(i, j) * 32);
 					g.setColor(Color.BLACK);
-					g.drawRect(i*32, j*32, myNetwork.getWidth(i, j) * 32, myNetwork.getHeight(i, j) * 32);
+					g.drawRect(xshift + i*32, yshift + j*32, myNetwork.getWidth(i, j) * 32, myNetwork.getHeight(i, j) * 32);
 				}
 			}
 		}
 		g.setColor(Color.GREEN);
-		g.fillRect((myStage.getRoomX() + myStage.getPlayer().getX()/32)*32 + 8,
-				(myStage.getRoomY() + myStage.getPlayer().getY()/32)*32 + 8, 16, 16);
+		g.fillRect((myStage.getRoomX() + myStage.getPlayer().getX()/32)*32 + 8 + xshift,
+				(myStage.getRoomY() + myStage.getPlayer().getY()/32)*32 + 8 + yshift, 16, 16);
 		g.setColor(Color.BLACK);
-		g.drawRect((myStage.getRoomX() + myStage.getPlayer().getX()/32)*32 + 8,
-				(myStage.getRoomY() + myStage.getPlayer().getY()/32)*32 + 8, 16, 16);
+		g.drawRect((myStage.getRoomX() + myStage.getPlayer().getX()/32)*32 + 8 + xshift,
+				(myStage.getRoomY() + myStage.getPlayer().getY()/32)*32 + 8 + yshift, 16, 16);
 	}
 	
 	@Override

@@ -24,6 +24,7 @@ public class PlaneMenu extends SubMenu{
 	private Text myCost;
 	private Text cantPay;
 	private Text cantWalk;
+	private Text tooSoon;
 	
 	private State myDesiredPlane;
 	private State myPurchasedPlane;
@@ -44,9 +45,10 @@ public class PlaneMenu extends SubMenu{
 		eight = new StateChangeButton(1034, 230, "EIGHT", 3, myFont, myBlueFont, myBackground, myHoverBackground, myDesiredPlane, "8");
 		shift = new StateChangeButton(964, 20, "SHIFT", 3, myFont, myBlueFont, myBackground, myHoverBackground, myPurchasedPlane, "main");
 		myPlaneCounter = new Text(886, 300, " ", 2, myFont);
-		myCost = new Text(886, 150, " ", 2, myFont);
+		myCost = new Text(886, 210, " ", 2, myFont);
 		cantPay = new Text(914, 30, "NOT ENOUGH ENERGY", 2, myFont);
 		cantWalk = new Text(880 , 90, "LOWER PLANE IMPASSABLE", 2, myFont);
+		tooSoon = new Text(880 , 150, myPlayer.getPlaneCounter() + " TURN COOLDOWN", 2, myFont);
 		
 		myObjects.add(back);
 		myObjects.add(one);
@@ -89,8 +91,8 @@ public class PlaneMenu extends SubMenu{
 					canPay = false;
 				}
 			}
-			myCost = new Text(874, 150,cost +  " OF EACH ENERGY", 2, myFont);
-			if(canPay && canWalk){
+			myCost = new Text(874, 210, cost +  " OF EACH ENERGY", 2, myFont);
+			if(canPay && canWalk && myPlayer.getPlaneCounter()==0){
 				myObjects.add(shift);
 			}
 			if(!canPay){
@@ -98,6 +100,10 @@ public class PlaneMenu extends SubMenu{
 			}
 			if(!canWalk){
 				myObjects.add(cantWalk);
+			}
+			if(myPlayer.getPlaneCounter()!=0){
+				tooSoon = new Text(880 , 150, myPlayer.getPlaneCounter() + " TURN COOLDOWN", 2, myFont);
+				myObjects.add(tooSoon);
 			}
 			myObjects.add(myCost);
 			

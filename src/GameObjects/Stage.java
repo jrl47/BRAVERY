@@ -207,7 +207,7 @@ public class Stage extends GameObject{
 				if(myCells.get(i).get(j).isPassable()){
 					int rand = r.nextInt(500);
 					if(rand < 5){
-						Enemy e = new Enemy(i,j,this, 5, 2, 5, 1);
+						Enemy e = new Enemy(i,j,this, 0);
 						myEnemies.add(e);
 						myCells.get(i).get(j).setEnemy(e);
 					}

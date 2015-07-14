@@ -186,6 +186,7 @@ public class Player extends GameObject{
 	public void planeShift(){
 		if(!isPaused){
 			tookAction = true;
+			planeCounter = 11;
 			myStage.planeShift(myAction.getName());
 			chargeForAction();
 			stopAction();
@@ -209,6 +210,8 @@ public class Player extends GameObject{
 	}
 
 	public void chargeForAction() {
+		planeCounter--;
+		if(planeCounter<0) planeCounter = 0;
 		if(myAction.getType().equals("earth"))
 			myInventory.setEarth(myInventory.getEarth()-myAction.getCost());
 		if(myAction.getType().equals("air"))
