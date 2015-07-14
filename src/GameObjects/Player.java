@@ -45,6 +45,8 @@ public class Player extends GameObject{
 		myMaxHealth = 8;
 		mySkills = new HashSet<String>();
 		mySkills.add("boulderfall");
+		mySkills.add("skytoss");
+		mySkills.add("cascade");
 		mySkills.add("planeshift");
 		
 		
@@ -236,6 +238,12 @@ public class Player extends GameObject{
 
 	public void getCollectible(MapCell mapCell) {
 		if(mapCell.getCollectible()==null){
+			return;
+		}
+		
+		if(mapCell.getCollectible() instanceof CollectibleSkill){
+			mySkills.add(((CollectibleSkill) mapCell.getCollectible()).getSkill());
+			mapCell.removeCollectible();
 			return;
 		}
 		

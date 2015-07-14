@@ -2,6 +2,7 @@ package UtilityObjects;
 
 import Utilities.State;
 import GameObjects.Collectible;
+import GameObjects.CollectibleSkill;
 import GameObjects.Enemy;
 import GameObjects.Stage;
 import GameObjects.Text;
@@ -51,9 +52,14 @@ public class TileObjectInfoHandler extends SubMenu{
 		else if(myCells.get(xLoc).get(yLoc).getCollectible()!=null){
 			Collectible c = myCells.get(xLoc).get(yLoc).getCollectible();
 			myTileObjectInfo2 = new Text(900, 370, "COLLECTIBLE:", 1.5, myFont);
-			myTileObjectInfo1 = new Text(900, 400, c.getAmount() + " " + c.getType().toUpperCase() + " ENERGY", 1.5, myFont);
-			if(c.getType().equals("health")){
-				myTileObjectInfo1 = new Text(900, 400, c.getAmount() + " " + c.getType().toUpperCase(), 1.5, myFont);
+			if(c instanceof CollectibleSkill){
+				myTileObjectInfo1 = new Text(900, 400, "NEW SKILL: " +  ((CollectibleSkill) c).getSkill().toUpperCase(), 1.5, myFont);
+			}
+			else{
+				myTileObjectInfo1 = new Text(900, 400, c.getAmount() + " " + c.getType().toUpperCase() + " ENERGY", 1.5, myFont);
+				if(c.getType().equals("health")){
+					myTileObjectInfo1 = new Text(900, 400, c.getAmount() + " " + c.getType().toUpperCase(), 1.5, myFont);
+				}
 			}
 		}
 		myObjects.add(myTileObjectInfo1);

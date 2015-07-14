@@ -40,6 +40,8 @@ public class Stage extends GameObject{
 	private boolean quickMove;
 	private State myPlane;
 	
+	private CollectibleSkill myTestSkill;
+	
 	public Stage() {
 		super();
 		roomX = 0;
@@ -51,6 +53,9 @@ public class Stage extends GameObject{
 		myCollectibles = new ArrayList<Collectible>();
 		myCells = new ArrayList<List<MapCell>>();
 		myRooms = new RoomNetwork(this);
+		
+		myTestSkill = new CollectibleSkill(24, 5, this, "detonate");
+		
 		try {
 			manager = new DeciduousTileManager(this);
 		} catch (IOException e1) {
@@ -218,6 +223,11 @@ public class Stage extends GameObject{
 					}
 				}
 			}
+		}
+		
+		if(!myTestSkill.isDestroyed() && roomX == 0 && roomY == 1){
+		myCollectibles.add(myTestSkill);
+		myCells.get(24).get(5).setCollectible(myTestSkill);
 		}
 	}
 	private void setPlayerTarget() {

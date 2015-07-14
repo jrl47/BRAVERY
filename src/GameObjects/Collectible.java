@@ -9,10 +9,10 @@ import Utilities.CollectibleData;
 public class Collectible{
 	
 	private int myAmount;
-	private String myType;
-	private Stage myStage;
-	private int myX;
-	private int myY;
+	protected String myType;
+	protected Stage myStage;
+	protected int myX;
+	protected int myY;
 	
 	private boolean isDestroyed;
 	
@@ -21,6 +21,7 @@ public class Collectible{
 		myStage = stage;
 		myX = x;
 		myY = y;
+		if(index==-1) return;
 		
 		Random r = new Random();
 		int type = r.nextInt(data.getTotalChance());
@@ -68,9 +69,6 @@ public class Collectible{
 
 	public int getAmount(){
 		return myAmount;
-	}
-	public void setAmount(int a){
-		myAmount = a;
 	}
 	
 	public String getType(){
