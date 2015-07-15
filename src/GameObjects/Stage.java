@@ -215,9 +215,9 @@ public class Stage extends GameObject{
 				if(myCells.get(i).get(j).isPassable()){
 					int rand = r.nextInt(500);
 					if(rand < 5){
-						Enemy e = new Enemy(i,j,this, 0);
-						myEnemies.add(e);
-						myCells.get(i).get(j).setEnemy(e);
+//						Enemy e = new Enemy(i,j,this, 0);
+//						myEnemies.add(e);
+//						myCells.get(i).get(j).setEnemy(e);
 					}
 					if(rand == 6 || rand==7){
 						Collectible c = new Collectible(i, j, this, 0);
@@ -233,14 +233,24 @@ public class Stage extends GameObject{
 		myCells.get(24).get(5).setCollectible(myTestSkill);
 		}
 	}
-	public void addBossToMap(Boss b, Character character){
-//		Random r = new Random();
-//		boolean done = false;
-//		while(!done){
-//			int x = r.nextInt(myRooms.getWidth(roomX, roomY));
-//			int y = r.nextInt(myRooms.getHeight(roomX, roomY));
-//			if(myCells.get(x).get(y).isPassable()) done = true;
-//		}
+	public void addBossToMap(Boss b, Character direction){
+		Random r = new Random();
+		int x = 0;
+		int y = 0;
+		boolean done = false;
+		while(!done){
+			x = r.nextInt(myCells.size());
+			y = r.nextInt(myCells.get(0).size());
+			if(direction == 'u') y = myCells.get(0).size() - 1;
+			if(direction == 'd') y = 0;
+			if(direction == 'l') x = myCells.size() - 1;
+			if(direction == 'r') x =0;
+			if(myCells.get(x).get(y).isPassable()){
+				done = true;
+			}
+		}
+		myBosses.add(b);
+		myCells.get(x).get(y).setEnemy(b);
 	}
 	private void createBosses() {
 		myBosses.add(new Boss(1, 1, this, 100, 0, 0));
@@ -266,7 +276,8 @@ public class Stage extends GameObject{
 		for(Enemy e: myEnemies){
 			e.doTurn(myPlayer);
 		}
-		for(Boss b: myBosses){
+		for(int i=0; i<myBosses.size(); i++){
+			Boss b = myBosses.get(i);
 			b.doTurn(myPlayer);
 		}
 	}

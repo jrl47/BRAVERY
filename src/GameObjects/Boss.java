@@ -46,12 +46,10 @@ public class Boss extends Enemy{
 	}
 
 	private void moveRooms() {
-		System.out.println("start");
 		int rand = myRand.nextInt(1);
 		if(rand!=0) return;
 		List<Character> possibleMoves = new ArrayList<Character>();
 		possibleMoves.addAll(RoomDataBuilder.getRoomData(roomX, roomY).getSides());
-		System.out.println(possibleMoves.contains('r'));
 		if(roomY - 1 - myRooms.getY(roomX, roomY) >=0 && !possibleMoves.contains('u')){
 			possibleMoves.add('u');
 		}
@@ -80,7 +78,6 @@ public class Boss extends Enemy{
 		}
 		if(roomX==myStage.getRoomX() && roomY==myStage.getRoomY())
 		myStage.addBossToMap(this, possibleMoves.get(rand));
-		System.out.println("end");
 	}
 	
 	public int getRoomX() {
