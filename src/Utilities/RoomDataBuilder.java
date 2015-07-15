@@ -24,7 +24,10 @@ public class RoomDataBuilder {
 		int counter = 0;
     	while(currentLine!=null){
     		// Breaks up at colons
-    		roomData[counter] = currentLine.split("-");
+    		String[] s = currentLine.split("-");
+    		for(int i=0; i<s.length; i++){
+    			roomData[i][counter] = s[i];
+    		}
     		counter++;
     		try {currentLine = b.readLine();} catch (IOException e) {e.printStackTrace();}
     	}

@@ -11,8 +11,8 @@ import GameObjects.MapCell;
 import GameObjects.Stage;
 
 public class RoomNetwork {
-	public static final int WORLD_WIDTH = 30;
-	public static final int WORLD_HEIGHT = 40;
+	public static final int WORLD_WIDTH = 3;
+	public static final int WORLD_HEIGHT = 4;
 	private List<List<BufferedImage>> myRooms;
 	private List<List<Integer>> myRoomWidths;
 	private List<List<Integer>> myRoomHeights;

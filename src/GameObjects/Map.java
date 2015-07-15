@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import Main.Display;
+import Utilities.RoomData;
+import Utilities.RoomDataBuilder;
 import Utilities.RoomNetwork;
 
 public class Map extends GameObject{
@@ -28,10 +30,12 @@ public class Map extends GameObject{
 		for(int i=0; i<RoomNetwork.WORLD_WIDTH; i++){
 			for(int j=0; j<RoomNetwork.WORLD_HEIGHT; j++){
 				if(i==myNetwork.getX(i, j) && j==myNetwork.getY(i, j)){
-					g.setColor(Color.PINK);
-					g.fillRect(xshift + i*32, yshift + j*32, myNetwork.getWidth(i, j) * 32, myNetwork.getHeight(i, j) * 32);
-					g.setColor(Color.BLACK);
-					g.drawRect(xshift + i*32, yshift + j*32, myNetwork.getWidth(i, j) * 32, myNetwork.getHeight(i, j) * 32);
+					if(myStage.getPlane() >= RoomDataBuilder.getRoomData(i, j).getPlane()){
+						g.setColor(Color.PINK);
+						g.fillRect(xshift + i*32, yshift + j*32, myNetwork.getWidth(i, j) * 32, myNetwork.getHeight(i, j) * 32);
+						g.setColor(Color.BLACK);
+						g.drawRect(xshift + i*32, yshift + j*32, myNetwork.getWidth(i, j) * 32, myNetwork.getHeight(i, j) * 32);
+					}
 				}
 			}
 		}

@@ -33,7 +33,7 @@ public class World extends GameObject{
 	public World() {
 		EnemyBuilder.init();
 		CollectibleBuilder.init();
-//		RoomDataBuilder.init();
+		RoomDataBuilder.init();
 		myState = new State("main");
 		oldState = "main";
 		myStage = new Stage();
