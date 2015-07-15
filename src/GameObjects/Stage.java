@@ -87,7 +87,8 @@ public class Stage extends GameObject{
 		
 		if(myPlayer.getTargetX()!=Integer.MIN_VALUE && myPlayer.getTargetY()!=Integer.MIN_VALUE){
 			if(b){
-				if(myPlayer.movePrepared() && myCells.get(locX).get(locY).isAvailable()){
+				if(myPlayer.movePrepared() && myCells.get(locX).get(locY).isAvailable() &&
+						myCells.get(locX).get(locY).isPassable()){
 					movePlayer();
 				}
 				if(myPlayer.attackPrepared()){
@@ -232,7 +233,7 @@ public class Stage extends GameObject{
 		for(int i=0; i<myCells.size(); i++){
 			for(int j=0; j<myCells.get(0).size(); j++){
 				if(myCells.get(i).get(j).isPassable()){
-					int rand = r.nextInt(800);
+					int rand = r.nextInt(700);
 					if(rand < 5){
 						Enemy e = new Enemy(i,j,this, 0);
 						myEnemies.add(e);

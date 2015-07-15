@@ -68,7 +68,7 @@ public class MapCell extends GameObject{
 		isAvailable = b;
 	}
 	public boolean isAvailable(){
-		return isAvailable && isPassable();
+		return isAvailable;
 	}
 	
 	public void setCollectible(Collectible c){

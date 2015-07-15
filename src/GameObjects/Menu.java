@@ -88,6 +88,7 @@ public class Menu extends GameObject{
 			}
 			if(myState.getState().equals("move") || myState.getState().equals("attack") || myState.getState().equals("plane")){
 				myActiveObjects.addAll(myInventoryHandler.getObjects());
+				myActiveObjects.addAll(myTileHandler.getObjects());
 			}
 		}
 	}

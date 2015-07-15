@@ -17,9 +17,9 @@ public class MainMenu extends SubMenu{
 	public MainMenu(Stage stage, State state, TileObjectInfoHandler handler, State gamestate) {
 		super(stage, state);
 		gameState = gamestate;
-		moveMenuOpen = new StateChangeButton(984, 20, "MOVE", 3, myFont,myBlueFont, myBackground, myHoverBackground, myState, "move");
-		attackMenuOpen = new StateChangeButton(964, 90, "ATTACK", 3, myFont,myBlueFont, myBackground, myHoverBackground, myState, "attack");
-		planeMenuOpen = new StateChangeButton(900, 160, "SHIFT PLANES", 3, myFont,myBlueFont, myBackground, myHoverBackground, myState, "plane");
+		moveMenuOpen = new StateChangeButton(908, 20, "MOVE", 3, myFont,myBlueFont, myBackground, myHoverBackground, myState, "move");
+		attackMenuOpen = new StateChangeButton(1018, 20, "ATTACK", 3, myFont,myBlueFont, myBackground, myHoverBackground, myState, "attack");
+		planeMenuOpen = new StateChangeButton(900, 90, "SHIFT PLANES", 3, myFont,myBlueFont, myBackground, myHoverBackground, myState, "plane");
 		
 		mapOpen = new StateChangeButton(1118, 620, "MAP", 2, myFont,myBlueFont, myBackground, myHoverBackground, gameState, "map");
 		mapClose = new StateChangeButton(1118, 620, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, gameState, "game");
