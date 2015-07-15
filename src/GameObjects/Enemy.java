@@ -12,23 +12,23 @@ import UtilityObjects.Action;
 
 public class Enemy extends GameObject{
 
-	private int myX;
-	private int myY;
+	protected int myX;
+	protected int myY;
 	
-	private int oldX;
-	private int oldY;
-	private boolean attacked;
+	protected int oldX;
+	protected int oldY;
+	protected boolean attacked;
 	
 	private int myIndex;
 	
-	private int myHealth;
-	private int myPower;
+	protected int myHealth;
+	protected int myPower;
 	
-	private int sightRange;
-	private int attackRange;
+	protected int sightRange;
+	protected int attackRange;
 	
 	protected Stage myStage;
-	private List<List<MapCell>> myCells;
+	protected List<List<MapCell>> myCells;
 	
 	public Enemy(int x, int y, Stage stage, int index){
 		myStage = stage;

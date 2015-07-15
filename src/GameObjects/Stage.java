@@ -233,14 +233,14 @@ public class Stage extends GameObject{
 		myCells.get(24).get(5).setCollectible(myTestSkill);
 		}
 	}
-	public void addBossToMap(Boss b){
-		Random r = new Random();
-		boolean done = false;
-		while(!done){
-			int x = r.nextInt(myRooms.getWidth(roomX, roomY));
-			int y = r.nextInt(myRooms.getHeight(roomX, roomY));
-			if(myCells.get(x).get(y).isPassable()) done = true;
-		}
+	public void addBossToMap(Boss b, Character character){
+//		Random r = new Random();
+//		boolean done = false;
+//		while(!done){
+//			int x = r.nextInt(myRooms.getWidth(roomX, roomY));
+//			int y = r.nextInt(myRooms.getHeight(roomX, roomY));
+//			if(myCells.get(x).get(y).isPassable()) done = true;
+//		}
 	}
 	private void createBosses() {
 		myBosses.add(new Boss(1, 1, this, 100, 0, 0));
@@ -265,6 +265,9 @@ public class Stage extends GameObject{
 	private void executeEnemyTurns() {
 		for(Enemy e: myEnemies){
 			e.doTurn(myPlayer);
+		}
+		for(Boss b: myBosses){
+			b.doTurn(myPlayer);
 		}
 	}
 	private void clearAvailability(List<List<MapCell>> myCells) {
