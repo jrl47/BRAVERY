@@ -62,6 +62,9 @@ public class TileObjectInfoHandler extends SubMenu{
 				}
 			}
 		}
+//		else if(myCells.get(xLoc).get(yLoc).getEnemy()==null){
+//			System.out.println(xLoc + " " +  yLoc);
+//		}
 		myObjects.add(myTileObjectInfo1);
 		myObjects.add(myTileObjectInfo2);
 		myObjects.add(myTileObjectInfo3);

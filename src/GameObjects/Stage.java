@@ -237,6 +237,7 @@ public class Stage extends GameObject{
 					if(rand < 5){
 						Enemy e = new Enemy(i,j,this, 0);
 						myEnemies.add(e);
+						myCells.get(i).get(j).setEnemy(e);
 					}
 					else if(rand < 8){
 						Collectible c = new Collectible(i, j, this, 0);
