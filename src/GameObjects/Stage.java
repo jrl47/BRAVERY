@@ -29,6 +29,7 @@ public class Stage extends GameObject{
 	private RoomNetwork myRooms;
 	private List<List<MapCell>> myCells;
 	private List<Enemy> myEnemies;
+	private List<Boss> myBosses;
 	private List<Collectible> myCollectibles;
 	private DeciduousTileManager manager;
 	private boolean wasInput;
@@ -50,6 +51,7 @@ public class Stage extends GameObject{
 		myBounds = new Rectangle(0, 0, MAP_WIDTH * 32, 675);
 		myPlane = new State("1");
 		myEnemies = new ArrayList<Enemy>();
+		myBosses = new ArrayList<Boss>();
 		myCollectibles = new ArrayList<Collectible>();
 		myCells = new ArrayList<List<MapCell>>();
 		myRooms = new RoomNetwork(this);
@@ -65,6 +67,7 @@ public class Stage extends GameObject{
 		myRooms.buildRoom(myCells, roomX, roomY);
 		
 		setEnemiesAndCollectibles();
+		createBosses();
 		drawRoom();
 	}
 	@Override
@@ -230,6 +233,18 @@ public class Stage extends GameObject{
 		myCells.get(24).get(5).setCollectible(myTestSkill);
 		}
 	}
+	public void addBossToMap(Boss b){
+		Random r = new Random();
+		boolean done = false;
+		while(!done){
+			int x = r.nextInt(myRooms.getWidth(roomX, roomY));
+			int y = r.nextInt(myRooms.getHeight(roomX, roomY));
+			if(myCells.get(x).get(y).isPassable()) done = true;
+		}
+	}
+	private void createBosses() {
+		myBosses.add(new Boss(1, 1, this, 100, 0, 0));
+	}
 	private void setPlayerTarget() {
 		int targetX = myCamera.getX() - myPlayer.getX() + hoverX - MAP_WIDTH/2;
 		int targetY = myCamera.getY() - myPlayer.getY() + hoverY - MAP_HEIGHT/2;
@@ -366,5 +381,8 @@ public class Stage extends GameObject{
 	}
 	public void setRoomY(int y) {
 		roomY = y;
+	}
+	public List<Boss> getBosses(){
+		return myBosses;
 	}
 }

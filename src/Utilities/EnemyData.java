@@ -8,14 +8,25 @@ public class EnemyData {
 	private int sightRange;
 	private int attackRange;
 	public EnemyData(int i){
-		String dataLine = EnemyBuilder.enemyData[i];
-		// Breaks up at colons
-		String[] data = dataLine.split(":");
-		myName = data[0];
-		myHealth = Integer.parseInt(data[1]);
-		myPower = Integer.parseInt(data[2]);
-		sightRange = Integer.parseInt(data[3]);
-		attackRange = Integer.parseInt(data[4]);
+		if(i < EnemyBuilder.NUMBER_OF_ENEMIES){
+			String dataLine = EnemyBuilder.enemyData[i];
+			// Breaks up at colons
+			String[] data = dataLine.split(":");
+			myName = data[0];
+			myHealth = Integer.parseInt(data[1]);
+			myPower = Integer.parseInt(data[2]);
+			sightRange = Integer.parseInt(data[3]);
+			attackRange = Integer.parseInt(data[4]);
+		} else{
+			String dataLine = EnemyBuilder.bossData[i-EnemyBuilder.NUMBER_OF_ENEMIES];
+			// Breaks up at colons
+			String[] data = dataLine.split(":");
+			myName = data[0];
+			myHealth = Integer.parseInt(data[1]);
+			myPower = Integer.parseInt(data[2]);
+			sightRange = Integer.parseInt(data[3]);
+			attackRange = Integer.parseInt(data[4]);
+		}
 	}
 	public String getName() {
 		return myName;

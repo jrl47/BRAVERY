@@ -27,7 +27,7 @@ public class Enemy extends GameObject{
 	private int sightRange;
 	private int attackRange;
 	
-	private Stage myStage;
+	protected Stage myStage;
 	private List<List<MapCell>> myCells;
 	
 	public Enemy(int x, int y, Stage stage, int index){
@@ -38,7 +38,12 @@ public class Enemy extends GameObject{
 		oldX = myX;
 		oldY = myY;
 		myIndex = index;
-		EnemyData data = EnemyBuilder.getEnemyObject(myIndex);
+		EnemyData data = null;
+		if(myIndex < 100){
+			data = EnemyBuilder.getEnemyObject(myIndex);
+		} else{
+			data = EnemyBuilder.getBossObject(myIndex-100);
+		}
 		sightRange = data.getSightRange();
 		attackRange = data.getAttackRange();
 		myPower = data.getPower();
