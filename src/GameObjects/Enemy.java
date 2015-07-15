@@ -24,6 +24,8 @@ public class Enemy extends GameObject{
 	protected int myHealth;
 	protected int myPower;
 	
+	protected String myName;
+	
 	protected int sightRange;
 	protected int attackRange;
 	
@@ -44,6 +46,7 @@ public class Enemy extends GameObject{
 		} else{
 			data = EnemyBuilder.getBossObject(myIndex-100);
 		}
+		myName = data.getName();
 		sightRange = data.getSightRange();
 		attackRange = data.getAttackRange();
 		myPower = data.getPower();
@@ -192,7 +195,7 @@ public class Enemy extends GameObject{
 	}
 
 	public void doTurn(Player myPlayer) {
-		if(!myStage.getCell(myX, myY).isPassable()){
+		if(!myStage.getCell(myX, myY).isLand()){
 			myHealth = -1;
 			return;
 		}
@@ -225,5 +228,9 @@ public class Enemy extends GameObject{
 	}
 	public int getY() {
 		return myY;
+	}
+
+	public String getName() {
+		return myName;
 	}
 }

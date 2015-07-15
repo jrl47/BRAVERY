@@ -53,7 +53,7 @@ public class MoveDrawer {
 					myPlayer.getX() + xScale*i < myCells.size() &&
 					myPlayer.getY() - yScale*i >= 0 &&
 					myPlayer.getY() - yScale*i < myCells.get(0).size() &&
-					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).isPassable()){
+					myCells.get(myPlayer.getX() + xScale*i).get(myPlayer.getY() - yScale*i).isSteppable()){
 				if((xScale==0 || yScale==0) && i==1){
 					
 				}

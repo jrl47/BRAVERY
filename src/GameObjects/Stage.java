@@ -30,6 +30,7 @@ public class Stage extends GameObject{
 	private List<List<MapCell>> myCells;
 	private List<Enemy> myEnemies;
 	private List<Boss> myBosses;
+	private List<Boss> myActiveBosses;
 	private List<Collectible> myCollectibles;
 	private DeciduousTileManager manager;
 	private boolean wasInput;
@@ -52,6 +53,7 @@ public class Stage extends GameObject{
 		myPlane = new State("1");
 		myEnemies = new ArrayList<Enemy>();
 		myBosses = new ArrayList<Boss>();
+		myActiveBosses = new ArrayList<Boss>();
 		myCollectibles = new ArrayList<Collectible>();
 		myCells = new ArrayList<List<MapCell>>();
 		myRooms = new RoomNetwork(this);
@@ -109,6 +111,11 @@ public class Stage extends GameObject{
 		removeDeadEnemies();
 		removeDeadCollectibles();
 		
+		for(Boss b : myBosses){
+			if(b.isOnStage() && !myActiveBosses.contains(b))
+				addBossToMap(b, 'n');
+		}
+		
 		if(myPlayer.checkForEnemyTurn()){
 			myPlayer.pause();
 			executeEnemyTurns();
@@ -160,6 +167,17 @@ public class Stage extends GameObject{
 			e.draw(g);
 			}
 		}
+		for(Boss b: myBosses){
+			if(b.isOnStage() && myActiveBosses.contains(b)){
+				if(enemyAnimationCounter > 0){
+					b.drawOld(g);
+					b.drawHover(g);
+				}
+				else{
+				b.draw(g);
+				}
+			}
+		}
 	}
 	private void drawPlayer(Graphics g) {
 		myPlayer.draw(g);
@@ -209,17 +227,17 @@ public class Stage extends GameObject{
 	private void setEnemiesAndCollectibles() {
 		myEnemies.clear();
 		myCollectibles.clear();
+		myActiveBosses.clear();
 		Random r = new Random();
 		for(int i=0; i<myCells.size(); i++){
 			for(int j=0; j<myCells.get(0).size(); j++){
 				if(myCells.get(i).get(j).isPassable()){
-					int rand = r.nextInt(500);
+					int rand = r.nextInt(800);
 					if(rand < 5){
-//						Enemy e = new Enemy(i,j,this, 0);
-//						myEnemies.add(e);
-//						myCells.get(i).get(j).setEnemy(e);
+						Enemy e = new Enemy(i,j,this, 0);
+						myEnemies.add(e);
 					}
-					if(rand == 6 || rand==7){
+					else if(rand < 8){
 						Collectible c = new Collectible(i, j, this, 0);
 						myCollectibles.add(c);
 						myCells.get(i).get(j).setCollectible(c);
@@ -249,8 +267,8 @@ public class Stage extends GameObject{
 				done = true;
 			}
 		}
-		myBosses.add(b);
-		myCells.get(x).get(y).setEnemy(b);
+		myActiveBosses.add(b);
+		b.setLocation(x, y);
 	}
 	private void createBosses() {
 		myBosses.add(new Boss(1, 1, this, 100, 0, 0));

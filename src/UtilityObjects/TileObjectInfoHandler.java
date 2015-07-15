@@ -43,7 +43,7 @@ public class TileObjectInfoHandler extends SubMenu{
 			myTileObjectInfo1 = new Text(900, 400, " ", 2, myFont);
 		} else if(myCells.get(xLoc).get(yLoc).getEnemy()!=null){
 			Enemy e = myCells.get(xLoc).get(yLoc).getEnemy();
-			myTileObjectInfo5 = new Text(900, 280, "ENEMY:", 1.5, myFont);
+			myTileObjectInfo5 = new Text(900, 280, e.getName().toUpperCase(), 1.5, myFont);
 			myTileObjectInfo4 = new Text(900, 310, "POWER: " + e.getPower(), 1.5, myFont);
 			myTileObjectInfo3 = new Text(900, 340, "HEALTH: " + e.getHealth(), 1.5, myFont);
 			myTileObjectInfo2 = new Text(900, 370, "SIGHT RANGE: " + e.getSightRange(), 1.5, myFont);

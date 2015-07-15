@@ -1,10 +1,8 @@
 package GameObjects;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import Utilities.RoomDataBuilder;
 import Utilities.RoomNetwork;
@@ -30,7 +28,7 @@ public class Boss extends Enemy{
 			moveRooms();
 		}
 		else{
-			if(!myStage.getCell(myX, myY).isPassable()){
+			if(!myStage.getCell(myX, myY).isLand()){
 				myHealth = -1;
 				return;
 			}
@@ -46,7 +44,7 @@ public class Boss extends Enemy{
 	}
 
 	private void moveRooms() {
-		int rand = myRand.nextInt(1);
+		int rand = myRand.nextInt(12);
 		if(rand!=0) return;
 		List<Character> possibleMoves = new ArrayList<Character>();
 		possibleMoves.addAll(RoomDataBuilder.getRoomData(roomX, roomY).getSides());
@@ -76,8 +74,21 @@ public class Boss extends Enemy{
 		if(possibleMoves.get(rand)=='r'){
 			roomX++;
 		}
-		if(roomX==myStage.getRoomX() && roomY==myStage.getRoomY())
-		myStage.addBossToMap(this, possibleMoves.get(rand));
+		if(isOnStage())
+			myStage.addBossToMap(this, possibleMoves.get(rand));
+	}
+	
+	public void setLocation(int i, int j){
+		attacked = false;
+		oldX = myX;
+		oldY = myY;
+		
+		myCells.get(myX).get(myY).removeEnemy();
+		
+		myX = i;
+		myY = j;
+		
+		myCells.get(myX).get(myY).setEnemy(this);
 	}
 	
 	public int getRoomX() {
@@ -86,6 +97,10 @@ public class Boss extends Enemy{
 
 	public int getRoomY() {
 		return roomY;
+	}
+
+	public boolean isOnStage() {
+		return myRooms.getX(roomX, roomY)==myStage.getRoomX() && myRooms.getY(roomX, roomY)==myStage.getRoomY();
 	}
 
 }

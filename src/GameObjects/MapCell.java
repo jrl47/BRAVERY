@@ -37,7 +37,7 @@ public class MapCell extends GameObject{
 		passablePlane = 9;
 	}
 	public String getID(){
-		if(isPassable()){
+		if(isLand()){
 			myID = GRASS;
 		}else{
 			myID = WATER;
@@ -51,11 +51,14 @@ public class MapCell extends GameObject{
 	public void setPassable(int i){
 		passablePlane = i;
 	}
+	public boolean isLand(){
+		return passablePlane <= myStage.getPlane();
+	}
 	public boolean isSteppable(){
 		return passablePlane <= myStage.getPlane() && myEnemy==null;
 	}
 	public boolean isPassable(){
-		return passablePlane <= myStage.getPlane();
+		return passablePlane <= myStage.getPlane()  && myEnemy==null  && myCollectible==null;
 	}
 	public boolean isPassable(int i){
 		return passablePlane <= i;

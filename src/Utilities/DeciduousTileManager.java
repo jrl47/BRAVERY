@@ -200,6 +200,8 @@ public class DeciduousTileManager extends TileManager{
 	public BufferedImage getImage(Enemy enemy) {
 		if(enemy.getIndex()==0)
 			return myImage.getSubimage(1*32, 2*32, 32, 32);
+		if(enemy.getIndex()==100)
+			return myImage.getSubimage(3*32, 2*32, 32, 32);
 		return null;
 	}
 
