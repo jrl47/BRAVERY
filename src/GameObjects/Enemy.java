@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import Utilities.EnemyBuilder;
-import Utilities.EnemyData;
+import UtilitiesData.EnemyBuilder;
+import UtilitiesData.EnemyData;
 import UtilityObjects.Action;
 
 public class Enemy extends GameObject{

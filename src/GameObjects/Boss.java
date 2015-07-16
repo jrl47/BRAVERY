@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import Utilities.RoomDataBuilder;
 import Utilities.RoomNetwork;
+import UtilitiesData.RoomDataBuilder;
 
 public class Boss extends Enemy{
 

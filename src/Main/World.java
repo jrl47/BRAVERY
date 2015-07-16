@@ -4,11 +4,12 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import Utilities.CollectibleBuilder;
-import Utilities.EnemyBuilder;
-import Utilities.RoomDataBuilder;
 import Utilities.SongPlayer;
 import Utilities.State;
+import UtilitiesData.CollectibleBuilder;
+import UtilitiesData.EnemyBuilder;
+import UtilitiesData.RoomDataBuilder;
+import UtilitiesData.SkillBuilder;
 import GameObjects.Background;
 import GameObjects.BorderedButton;
 import GameObjects.GameObject;
@@ -36,6 +37,7 @@ public class World extends GameObject{
 		EnemyBuilder.init();
 		CollectibleBuilder.init();
 		RoomDataBuilder.init();
+		SkillBuilder.init();
 		myState = new State("main");
 		oldState = "main";
 		myStage = new Stage();

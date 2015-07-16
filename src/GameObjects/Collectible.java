@@ -3,8 +3,8 @@ package GameObjects;
 import java.awt.Graphics;
 import java.util.Random;
 
-import Utilities.CollectibleBuilder;
-import Utilities.CollectibleData;
+import UtilitiesData.CollectibleBuilder;
+import UtilitiesData.CollectibleData;
 
 public class Collectible{
 	

@@ -5,9 +5,9 @@ import java.awt.Graphics;
 import java.util.Set;
 
 import Main.Display;
-import Utilities.RoomData;
-import Utilities.RoomDataBuilder;
 import Utilities.RoomNetwork;
+import UtilitiesData.RoomData;
+import UtilitiesData.RoomDataBuilder;
 
 public class Map extends GameObject{
 

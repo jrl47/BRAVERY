@@ -1,4 +1,5 @@
-package Utilities;
+package UtilitiesData;
+
 
 public class EnemyData {
 	
