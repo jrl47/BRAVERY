@@ -9,7 +9,7 @@ import Utilities.FixedFont;
 public class Button extends GameObject{
 
 	protected String myString;
-	protected int mySize;
+	protected double mySize;
 	protected BufferedImage myFont;
 	protected BufferedImage myHoverFont;
 	protected BufferedImage mySelectedFont;
@@ -19,11 +19,11 @@ public class Button extends GameObject{
 	protected FixedFont fHover;
 	protected int x;
 	protected int y;
-	public Button(int xx, int yy, String s, int size, BufferedImage font, BufferedImage hoverFont) {
+	public Button(int xx, int yy, String s, double d, BufferedImage font, BufferedImage hoverFont) {
 		x = xx;
 		y = yy;
 		myString = s;
-		mySize = size;
+		mySize = d;
 		myFont = font;
 		fStd = new FixedFont(myFont, 6);
 		fHover = new FixedFont(hoverFont, 6);

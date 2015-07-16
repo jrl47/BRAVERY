@@ -43,12 +43,12 @@ public class AttackMenu extends SubMenu{
 		myCostDialog = emptyDialog;
 		myPowerDialog = emptyDialog;
 		
-		earth = new StateChangeButton(924, 20, "EARTH", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "earth");
-		air = new StateChangeButton(1054, 20, "AIR", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "air");
-		water = new StateChangeButton(914, 90, "WATER", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "water");
-		fire = new StateChangeButton(1044, 90, "FIRE", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "fire");
-		subBack = new StateChangeButton(1130, 495, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttackType, "main");
-		cancel = new StateChangeButton(1102, 495, "CANCEL", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttack, "main");
+		earth = new StateChangeButton(874, 10, "EARTH", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "earth");
+		air = new StateChangeButton(966, 10, "AIR", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "air");
+		water = new StateChangeButton(1026, 10, "WATER", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "water");
+		fire = new StateChangeButton(1118, 10, "FIRE", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "fire");
+		subBack = new StateChangeButton(1130, 400, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttackType, "main");
+		cancel = new StateChangeButton(1102, 400, "CANCEL", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttack, "main");
 		boulderFall = new StateChangeButton(912, 20, "BOULDERFALL", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "boulderfall");
 		skyToss = new StateChangeButton(952, 20, "SKYTOSS", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "skytoss");
 		cascade = new StateChangeButton(952, 20, "CASCADE", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "cascade");

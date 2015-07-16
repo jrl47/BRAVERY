@@ -11,9 +11,9 @@ public class BorderedButton extends Button{
 	protected BufferedImage myFontBacking;
 	protected BufferedImage myHoverFontBacking;
 	protected BufferedImage mySelectedFontBacking;
-	public BorderedButton(int xx, int yy, String s, int size, BufferedImage font, BufferedImage hoverFont,
+	public BorderedButton(int xx, int yy, String s, double d, BufferedImage font, BufferedImage hoverFont,
 			BufferedImage backing, BufferedImage hoverBacking) {
-		super(xx, yy, s, size, font, hoverFont);
+		super(xx, yy, s, d, font, hoverFont);
 		fHover = new BorderedFixedFont(hoverFont, 6, hoverBacking);
 		fStd = new BorderedFixedFont(myFont, 6, backing);
 	}
