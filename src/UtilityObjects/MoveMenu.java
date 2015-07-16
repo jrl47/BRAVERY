@@ -15,7 +15,7 @@ public class MoveMenu extends SubMenu{
 	
 	public MoveMenu(Stage stage, State state){
 		super(stage, state);
-		back = new StateChangeButton(930, 600, "MAIN MENU", 3, myFont,myBlueFont, myBackground, myHoverBackground, myState, "main");
+		back = new StateChangeButton(1130, 630, "HOME", 2, myFont,myBlueFont, myBackground, myHoverBackground, myState, "main");
 		
 		noSelectionDialog = new Text(900, 20, "SELECT A VALID MOVE", 2, myFont);
 		mySelectionDialog = new Text(900, 20, " ", 2, myFont);

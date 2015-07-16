@@ -13,11 +13,11 @@ public class InventoryHandler extends SubMenu {
 	
 	public InventoryHandler(Stage stage, State state) {
 		super(stage, state);
-		myAvailableDialog = new Text(900, 440, "AVAILABLE ENERGY:", 1.5, myFont);
-		myEarthDialog = new Text(900, 470, myPlayer.getInventory().getEarth() + " EARTH ENERGY", 1.5, myFont);
-		myAirDialog = new Text(900, 500, myPlayer.getInventory().getAir() + " AIR ENERGY", 1.5, myFont);
-		myWaterDialog = new Text(900, 530, myPlayer.getInventory().getWater() + " WATER ENERGY", 1.5, myFont);
-		myFireDialog = new Text(900, 560, myPlayer.getInventory().getFire() + " FIRE ENERGY", 1.5, myFont);
+		myAvailableDialog = new Text(900, 510, "AVAILABLE ENERGY:", 1.5, myFont);
+		myEarthDialog = new Text(900, 540, myPlayer.getInventory().getEarth() + " EARTH ENERGY", 1.5, myFont);
+		myAirDialog = new Text(900, 570, myPlayer.getInventory().getAir() + " AIR ENERGY", 1.5, myFont);
+		myWaterDialog = new Text(900, 600, myPlayer.getInventory().getWater() + " WATER ENERGY", 1.5, myFont);
+		myFireDialog = new Text(900, 630, myPlayer.getInventory().getFire() + " FIRE ENERGY", 1.5, myFont);
 		
 		myObjects.add(myAvailableDialog);
 		myObjects.add(myEarthDialog);
@@ -31,10 +31,10 @@ public class InventoryHandler extends SubMenu {
 		myObjects.remove(myAirDialog);
 		myObjects.remove(myWaterDialog);
 		myObjects.remove(myFireDialog);
-		myEarthDialog = new Text(900, 470, myPlayer.getInventory().getEarth() + " EARTH ENERGY", 1.5, myFont);
-		myAirDialog = new Text(900, 500, myPlayer.getInventory().getAir() + " AIR ENERGY", 1.5, myFont);
-		myWaterDialog = new Text(900, 530, myPlayer.getInventory().getWater() + " WATER ENERGY", 1.5, myFont);
-		myFireDialog = new Text(900, 560, myPlayer.getInventory().getFire() + " FIRE ENERGY", 1.5, myFont);
+		myEarthDialog = new Text(900, 540, myPlayer.getInventory().getEarth() + " EARTH ENERGY", 1.5, myFont);
+		myAirDialog = new Text(900, 570, myPlayer.getInventory().getAir() + " AIR ENERGY", 1.5, myFont);
+		myWaterDialog = new Text(900, 600, myPlayer.getInventory().getWater() + " WATER ENERGY", 1.5, myFont);
+		myFireDialog = new Text(900, 630, myPlayer.getInventory().getFire() + " FIRE ENERGY", 1.5, myFont);
 		myObjects.add(myAvailableDialog);
 		myObjects.add(myEarthDialog);
 		myObjects.add(myAirDialog);

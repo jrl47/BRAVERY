@@ -111,6 +111,7 @@ public class ValidAttackChecker {
 				}
 			}
 		}
+		myPlayer.stopAction();
 	}
 	
 	public static boolean detectAttackTargets(int locX, int locY, Player myPlayer, List<List<MapCell>> myCells) {
