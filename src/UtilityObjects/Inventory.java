@@ -8,10 +8,10 @@ public class Inventory {
 	private int myFire;
 	
 	public Inventory(){
-		myEarth = 12;
-		myAir = 12;
-		myWater = 12;
-		myFire = 12;
+		myEarth = 48;
+		myAir = 48;
+		myWater = 48;
+		myFire = 48;
 	}
 	
 	public void setEarth(int e){

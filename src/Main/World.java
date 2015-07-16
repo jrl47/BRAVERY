@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import Utilities.CollectibleBuilder;
 import Utilities.EnemyBuilder;
 import Utilities.RoomDataBuilder;
+import Utilities.SongPlayer;
 import Utilities.State;
 import GameObjects.Background;
 import GameObjects.BorderedButton;
@@ -27,6 +28,7 @@ public class World extends GameObject{
 	private Player myPlayer;
 	private Menu myMenu;
 	private Map myMap;
+	private SongPlayer myMusic;
 	private boolean gameLoaded;
 	private boolean mapLoaded;
 	
@@ -39,6 +41,7 @@ public class World extends GameObject{
 		myStage = new Stage();
 		myPlayer = new Player(myStage);
 		myStage.addPlayer(myPlayer);
+		myMusic = new SongPlayer();
 		Background b = null;
 		BorderedButton t = null;
 		try {
@@ -59,6 +62,7 @@ public class World extends GameObject{
 		for(GameObject g: myActiveObjects){
 			g.step();
 		}
+		myMusic.playWorldTheme();
 	}
 
 	private void manageState() {
