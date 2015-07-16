@@ -41,8 +41,8 @@ public class Player extends GameObject{
 		myX = 23;
 		myY = 2;
 		
-		myHealth = 888;
-		myMaxHealth = 888;
+		myHealth = 16;
+		myMaxHealth =16;
 		mySkills = new HashSet<String>();
 		mySkills.add("boulderfall");
 		mySkills.add("skytoss");
@@ -186,7 +186,6 @@ public class Player extends GameObject{
 		if(!isPaused){
 			tookAction = true;
 			enemy.doDamage(myAction);
-			chargeForAction();
 		}
 	}
 	

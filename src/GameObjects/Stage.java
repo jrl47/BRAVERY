@@ -296,10 +296,15 @@ public class Stage extends GameObject{
 		for(Enemy e: myEnemies){
 			e.doTurn(myPlayer);
 		}
-		for(int i=0; i<myBosses.size(); i++){
-			Boss b = myBosses.get(i);
+		for(Boss b : myBosses){
+//			Boss b = myBosses.get(i);
 			b.doTurn(myPlayer);
 		}
+//		for(int i=0; i<myBosses.size(); i++){
+//			System.out.println("looop");
+//			Boss b = myBosses.get(i);
+//			b.doTurn(myPlayer);
+//		}
 	}
 	private void clearAvailability(List<List<MapCell>> myCells) {
 		for(int i=0; i<myCells.size(); i++){

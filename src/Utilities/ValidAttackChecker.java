@@ -70,12 +70,15 @@ public class ValidAttackChecker {
 		int locX = myPlayer.getX()+myPlayer.getTargetX();
 		int locY = myPlayer.getY()+myPlayer.getTargetY();
 		int lim = myPlayer.getAction().getRange();
+		boolean attacked = false;
 		if(myPlayer.getAction().isRoundSplash()){
 			for(int i=-lim; i<=lim; i++){
 				for(int j=-lim; j<=lim; j++){
 					if(!(locX+i < 0 || locY+j < 0 || locX+i >= myCells.size() || locY+j >=myCells.get(0).size())){
-						if(Math.abs(i) + Math.abs(j) < lim && myCells.get(locX+i).get(locY+j).getEnemy()!=null)
+						if(Math.abs(i) + Math.abs(j) < lim && myCells.get(locX+i).get(locY+j).getEnemy()!=null){
 							myPlayer.attack(myCells.get(locX+i).get(locY+j).getEnemy());
+							attacked = true;
+						}
 					}
 				}
 			}
@@ -85,14 +88,18 @@ public class ValidAttackChecker {
 			int yDif = -(myPlayer.getY() - locY);
 			if(Math.abs(xDif) > Math.abs(yDif)){
 				for(int i = 0; Math.abs(i) < lim; i+=Integer.signum(xDif)){
-					if(checkCellForEnemy(locX+i, locY, myCells))
+					if(checkCellForEnemy(locX+i, locY, myCells)){
 						myPlayer.attack(myCells.get(locX+i).get(locY).getEnemy());
+						attacked = true;
+					}
 				}
 			}
 			else if(Math.abs(xDif) < Math.abs(yDif)){
 				for(int i = 0; Math.abs(i) < lim; i+=Integer.signum(yDif)){
-					if(checkCellForEnemy(locX, locY+i, myCells))
+					if(checkCellForEnemy(locX, locY+i, myCells)){
 						myPlayer.attack(myCells.get(locX).get(locY+i).getEnemy());
+						attacked = true;
+					}
 				}
 			}
 			else if(yDif==0 && xDif ==0){
@@ -100,17 +107,23 @@ public class ValidAttackChecker {
 			}
 			else if(xDif==yDif){
 				for(int i = 0; Math.abs(i) < lim; i+=Integer.signum(xDif)){
-					if(checkCellForEnemy(locX+i, locY+i, myCells))
+					if(checkCellForEnemy(locX+i, locY+i, myCells)){
 						myPlayer.attack(myCells.get(locX+i).get(locY+i).getEnemy());
+						attacked = true;
+					}
 				}
 			}
 			else{
 				for(int i = 0; Math.abs(i) < lim; i+=Integer.signum(xDif)){
-					if(checkCellForEnemy(locX+i, locY-i, myCells))
+					if(checkCellForEnemy(locX+i, locY-i, myCells)){
 						myPlayer.attack(myCells.get(locX+i).get(locY-i).getEnemy());
+						attacked = true;
+					}
 				}
 			}
 		}
+		if(attacked)
+			myPlayer.chargeForAction();
 		myPlayer.stopAction();
 	}
 	

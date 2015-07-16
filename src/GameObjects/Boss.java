@@ -24,7 +24,7 @@ public class Boss extends Enemy{
 	}
 	
 	public void doTurn(Player myPlayer) {
-		if(!(roomX == myStage.getRoomX() && roomY == myStage.getRoomY())){
+		if(!(myRooms.getX(roomX, roomY) == myStage.getRoomX() && myRooms.getY(roomX, roomY) == myStage.getRoomY())){
 			moveRooms();
 		}
 		else{

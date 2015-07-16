@@ -12,10 +12,10 @@ public class RecentActionHandler extends SubMenu{
 		super(stage, state);
 		
 		if(myPlayer.getDamageTaken()==0){
-			myHit = new Text(900, 475, " ", 1.5, myFont);
+			myHit = new Text(900, 505, " ", 1.5, myFont);
 		}
 		else{
-			myHit = new Text(900, 475, "TOOK " + myPlayer.getDamageTaken() + " DAMAGE", 2, myFont);
+			myHit = new Text(900, 505, "TOOK " + myPlayer.getDamageTaken() + " DAMAGE", 2, myFont);
 		}
 		
 		myObjects.add(myHit);
@@ -23,10 +23,10 @@ public class RecentActionHandler extends SubMenu{
 	public void manageInfo() {
 		myObjects.remove(myHit);
 		if(myPlayer.getDamageTaken()==0){
-			myHit = new Text(900, 475, " ", 2, myFont);
+			myHit = new Text(900, 505, " ", 2, myFont);
 		}
 		else{
-			myHit = new Text(900, 475, "TOOK " + myPlayer.getDamageTaken() + " DAMAGE", 1.5, myFont);
+			myHit = new Text(900, 505, "TOOK " + myPlayer.getDamageTaken() + " DAMAGE", 1.5, myFont);
 		}
 		myObjects.add(myHit);
 	}
