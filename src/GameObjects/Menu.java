@@ -26,7 +26,7 @@ public class Menu extends GameObject{
 	
 	private TileObjectInfoHandler myTileHandler;
 	private InventoryHandler myInventoryHandler;
-	private PlayerInfoHandler myInfoHandler;
+//	private PlayerInfoHandler myInfoHandler;
 	private RecentActionHandler myActionHandler;
 	
 	public Menu(Stage stage, State gamestate){
@@ -38,7 +38,7 @@ public class Menu extends GameObject{
 		oldState = new State("main");
 		myTileHandler = new TileObjectInfoHandler(myStage, myState);
 		myInventoryHandler = new InventoryHandler(myStage, myState);
-		myInfoHandler = new PlayerInfoHandler(myStage, myState);
+//		myInfoHandler = new PlayerInfoHandler(myStage, myState);
 		myActionHandler = new RecentActionHandler(myStage, myState);
 		mySubMenus = new HashMap<String, SubMenu>();
 		mySubMenus.put("main", new MainMenu(myStage, myState, myTileHandler, gameState));
@@ -58,7 +58,7 @@ public class Menu extends GameObject{
 		manageState();
 		myTileHandler.manageInfo();
 		myInventoryHandler.manageInfo();
-		myInfoHandler.manageInfo();
+//		myInfoHandler.manageInfo();
 		myActionHandler.manageInfo();
 		if(myState.getState().equals("main")){
 			mySubMenus.get("main").manageInfo();
@@ -82,7 +82,7 @@ public class Menu extends GameObject{
 		if(gameState.getState().equals("game")){
 			if(myState.getState().equals("main")){
 				myActiveObjects.addAll(myTileHandler.getObjects());
-				myActiveObjects.addAll(myInfoHandler.getObjects());
+//				myActiveObjects.addAll(myInfoHandler.getObjects());
 				myActiveObjects.addAll(myActionHandler.getObjects());
 				myActiveObjects.addAll(myInventoryHandler.getObjects());
 			}
