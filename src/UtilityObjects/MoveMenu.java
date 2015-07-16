@@ -10,26 +10,21 @@ public class MoveMenu extends SubMenu{
 	private Text mySelectionDialog;
 	private Text noSelectionDialog;
 	private Text myCostDialog;
-	
-	private StateChangeButton back;
-	
+
 	public MoveMenu(Stage stage, State state){
 		super(stage, state);
-		back = new StateChangeButton(1130, 630, "HOME", 2, myFont,myBlueFont, myBackground, myHoverBackground, myState, "main");
-		
+
 		noSelectionDialog = new Text(900, 20, "SELECT A VALID MOVE", 2, myFont);
 		mySelectionDialog = new Text(900, 20, " ", 2, myFont);
 		myCostDialog = new Text(900, 20, " ", 2, myFont);
 
 		myObjects.add(mySelectionDialog);
 		myObjects.add(myCostDialog);
-		myObjects.add(back);
 	}
 
 	public void manageInfo() {
 		myObjects.remove(mySelectionDialog);
 		myObjects.remove(myCostDialog);
-		myObjects.remove(back);
 
 		int xLoc = myPlayer.getX() + myPlayer.getTargetX();
 		int yLoc = myPlayer.getY() + myPlayer.getTargetY();
@@ -97,7 +92,6 @@ public class MoveMenu extends SubMenu{
 		
 		myObjects.add(mySelectionDialog);
 		myObjects.add(myCostDialog);
-		myObjects.add(back);
 	}
 	
 }

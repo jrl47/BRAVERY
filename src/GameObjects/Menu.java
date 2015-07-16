@@ -31,7 +31,7 @@ public class Menu extends GameObject{
 	
 	public Menu(Stage stage, State gamestate){
 		gameState = gamestate;
-		myBounds = new Rectangle(928, 0, 272, 675);
+		myBounds = new Rectangle(864, 0, 336, 675);
 		myStage = stage;
 		myPlayer = myStage.getPlayer();
 		myState = new State("main");
@@ -60,9 +60,7 @@ public class Menu extends GameObject{
 		myInventoryHandler.manageInfo();
 //		myInfoHandler.manageInfo();
 		myActionHandler.manageInfo();
-		if(myState.getState().equals("main")){
-			mySubMenus.get("main").manageInfo();
-		}
+		mySubMenus.get("main").manageInfo();
 		if(myState.getState().equals("move")){
 			mySubMenus.get("move").manageInfo();
 		}
@@ -78,26 +76,22 @@ public class Menu extends GameObject{
 
 	private void manageActiveObjects() {
 		myActiveObjects = new ArrayList<GameObject>();
-		myActiveObjects.addAll(mySubMenus.get(myState.getState()).getObjects());
-		if(gameState.getState().equals("game")){
-			if(myState.getState().equals("main")){
-				myActiveObjects.addAll(myTileHandler.getObjects());
-//				myActiveObjects.addAll(myInfoHandler.getObjects());
-				myActiveObjects.addAll(myActionHandler.getObjects());
-				myActiveObjects.addAll(myInventoryHandler.getObjects());
-			}
+		myActiveObjects.addAll(mySubMenus.get("main").getObjects());
+		if(!myState.getState().equals("main"))
+			myActiveObjects.addAll(mySubMenus.get(myState.getState()).getObjects());
+			myActiveObjects.addAll(myTileHandler.getObjects());
+//			myActiveObjects.addAll(myInfoHandler.getObjects());
+			myActiveObjects.addAll(myActionHandler.getObjects());
+			myActiveObjects.addAll(myInventoryHandler.getObjects());
 			if(myState.getState().equals("move") || myState.getState().equals("attack") || myState.getState().equals("plane")){
 				myActiveObjects.addAll(myInventoryHandler.getObjects());
 				myActiveObjects.addAll(myTileHandler.getObjects());
 			}
-		}
 	}
 
 	private void manageState() {
 		if(!oldState.getState().equals(myState.getState())){
-			if(myState.getState().equals("main")){
-				myPlayer.stopAction();
-			}
+			myPlayer.stopAction();
 			if(myState.getState().equals("move")){
 				myPlayer.prepareMove();
 			}

@@ -8,7 +8,6 @@ import Utilities.State;
 
 public class PlaneMenu extends SubMenu{
 
-	private StateChangeButton back;
 	private StateChangeButton subBack;
 	private StateChangeButton one;
 	private StateChangeButton two;
@@ -33,8 +32,7 @@ public class PlaneMenu extends SubMenu{
 		super(stage, state);
 		myPurchasedPlane = new State("main");
 		myDesiredPlane = new State("main");
-		back = new StateChangeButton(1130, 630, "HOME", 2, myFont,myBlueFont, myBackground, myHoverBackground, myState, "main");
-		subBack = new StateChangeButton(1130, 630, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, myDesiredPlane, "main");
+		subBack = new StateChangeButton(1130, 495, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, myDesiredPlane, "main");
 		one = new StateChangeButton(944, 20, "ONE", 3, myFont, myBlueFont, myBackground, myHoverBackground, myDesiredPlane, "1");
 		two = new StateChangeButton(1034, 20, "TWO", 3, myFont, myBlueFont, myBackground, myHoverBackground, myDesiredPlane, "2");
 		three = new StateChangeButton(904, 90, "THREE", 3, myFont, myBlueFont, myBackground, myHoverBackground, myDesiredPlane, "3");
@@ -49,8 +47,7 @@ public class PlaneMenu extends SubMenu{
 		cantPay = new Text(914, 30, "NOT ENOUGH ENERGY", 2, myFont);
 		cantWalk = new Text(880 , 90, "LOWER PLANE IMPASSABLE", 2, myFont);
 		tooSoon = new Text(880 , 150, myPlayer.getPlaneCounter() + " TURN COOLDOWN", 2, myFont);
-		
-		myObjects.add(back);
+
 		myObjects.add(one);
 		myObjects.add(two);
 		myObjects.add(three);
@@ -66,7 +63,6 @@ public class PlaneMenu extends SubMenu{
 		myObjects.clear();
 		
 		if(myDesiredPlane.getState().equals("main")){
-			myObjects.add(back);
 			myObjects.add(one);
 			myObjects.add(two);
 			myObjects.add(three);

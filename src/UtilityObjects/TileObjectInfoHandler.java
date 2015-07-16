@@ -44,11 +44,11 @@ public class TileObjectInfoHandler extends SubMenu{
 			myTileObjectInfo1 = new Text(900, 470, " ", 2, myFont);
 		} else if(myCells.get(xLoc).get(yLoc).getEnemy()!=null){
 			Enemy e = myCells.get(xLoc).get(yLoc).getEnemy();
-			myTileObjectInfo5 = new Text(900, 350, e.getName().toUpperCase(), 1.5, myFont);
-			myTileObjectInfo4 = new Text(900, 380, "POWER: " + e.getPower(), 1.5, myFont);
-			myTileObjectInfo3 = new Text(900, 410, "HEALTH: " + e.getHealth(), 1.5, myFont);
-			myTileObjectInfo2 = new Text(900, 440, "SIGHT RANGE: " + e.getSightRange(), 1.5, myFont);
-			myTileObjectInfo1 = new Text(900, 470, "ATTACK RANGE: " + e.getAttackRange(), 1.5, myFont);
+			myTileObjectInfo5 = new Text(900, 410, e.getName().toUpperCase(), 1.5, myFont);
+			myTileObjectInfo4 = new Text(900, 440, "POWER: " + e.getPower(), 1.5, myFont);
+			myTileObjectInfo3 = new Text(1050, 440, "HEALTH: " + e.getHealth(), 1.5, myFont);
+			myTileObjectInfo2 = new Text(900, 470, "VISION: " + e.getSightRange(), 1.5, myFont);
+			myTileObjectInfo1 = new Text(1050, 470, "RANGE: " + e.getAttackRange(), 1.5, myFont);
 		}
 		else if(myCells.get(xLoc).get(yLoc).getCollectible()!=null){
 			Collectible c = myCells.get(xLoc).get(yLoc).getCollectible();

@@ -15,8 +15,7 @@ public class AttackMenu extends SubMenu{
 	private Text myCostDialog;
 	private Text myPowerDialog;
 	private Text emptyDialog;
-	
-	private StateChangeButton back;
+
 	private StateChangeButton earth;
 	private StateChangeButton air;
 	private StateChangeButton water;
@@ -44,19 +43,17 @@ public class AttackMenu extends SubMenu{
 		myCostDialog = emptyDialog;
 		myPowerDialog = emptyDialog;
 		
-		back = new StateChangeButton(1130, 630, "HOME", 2, myFont,myBlueFont, myBackground, myHoverBackground, myState, "main");
 		earth = new StateChangeButton(924, 20, "EARTH", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "earth");
 		air = new StateChangeButton(1054, 20, "AIR", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "air");
 		water = new StateChangeButton(914, 90, "WATER", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "water");
 		fire = new StateChangeButton(1044, 90, "FIRE", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "fire");
-		subBack = new StateChangeButton(1130, 630, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttackType, "main");
-		cancel = new StateChangeButton(1102, 630, "CANCEL", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttack, "main");
+		subBack = new StateChangeButton(1130, 495, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttackType, "main");
+		cancel = new StateChangeButton(1102, 495, "CANCEL", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttack, "main");
 		boulderFall = new StateChangeButton(912, 20, "BOULDERFALL", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "boulderfall");
 		skyToss = new StateChangeButton(952, 20, "SKYTOSS", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "skytoss");
 		cascade = new StateChangeButton(952, 20, "CASCADE", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "cascade");
 		detonate = new StateChangeButton(942, 20, "DETONATE", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "detonate");
-		
-		myObjects.add(back);
+
 		myObjects.add(earth);
 		myObjects.add(air);
 		myObjects.add(water);
@@ -152,7 +149,6 @@ public class AttackMenu extends SubMenu{
 		}
 		
 		if(myAttackType.getState().equals("main")){
-			myObjects.add(back);
 			myObjects.add(earth);
 			myObjects.add(air);
 			myObjects.add(water);

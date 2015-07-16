@@ -77,7 +77,7 @@ public class InputListener implements MouseListener, MouseMotionListener, KeyLis
 	
 	private void doIdle(GameObject g) {
 		Shape s = g.getBounds();
-		if(s!=null&&s.contains(mostRecentEvent.getX(), mostRecentEvent.getY())){
+		if(s!=null&& mostRecentEvent!=null && s.contains(mostRecentEvent.getX(), mostRecentEvent.getY())){
 			for(GameObject gg: g.getComponents()){
 				doIdle(gg);
 			}
