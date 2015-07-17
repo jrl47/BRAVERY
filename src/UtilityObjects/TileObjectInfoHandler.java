@@ -54,7 +54,12 @@ public class TileObjectInfoHandler extends SubMenu{
 			Collectible c = myCells.get(xLoc).get(yLoc).getCollectible();
 			myTileObjectInfo2 = new Text(900, 470, "COLLECTIBLE:", 1.5, myFont);
 			if(c instanceof CollectibleSkill){
-				myTileObjectInfo1 = new Text(900,500, "NEW SKILL: " +  ((CollectibleSkill) c).getGenericSkill().toUpperCase(), 1.5, myFont);
+				if(((CollectibleSkill) c).getGenericSkill().toUpperCase().equals("")){
+					myTileObjectInfo1 = new Text(900,500, "NEW SKILL: " +  ((CollectibleSkill) c).getGenericSkill().toUpperCase(), 1.5, myFont);
+				}
+				else{
+					myTileObjectInfo1 = new Text(900,500, "NEW SKILL: " +  ((CollectibleSkill) c).getSkill().getName().toUpperCase(), 1.5, myFont);
+				}
 			}
 			else{
 				myTileObjectInfo1 = new Text(900, 500, c.getAmount() + " " + c.getType().toUpperCase() + " ENERGY", 1.5, myFont);
@@ -62,13 +67,6 @@ public class TileObjectInfoHandler extends SubMenu{
 					myTileObjectInfo1 = new Text(900, 500, c.getAmount() + " " + c.getType().toUpperCase(), 1.5, myFont);
 				}
 			}
-		} else if(myCells.get(xLoc).get(yLoc).getPlayer()!=null){
-//			Player p = myCells.get(xLoc).get(yLoc).getPlayer();
-//			myTileObjectInfo5 = new Text(900, 500, "HP: " + p.getHealth() + "/" + p.getMaxHealth(), 1.5, myFont);
-//			myTileObjectInfo4 = new Text(900, 380, "POWER: " + e.getPower(), 1.5, myFont);
-//			myTileObjectInfo3 = new Text(900, 410, "HEALTH: " + e.getHealth(), 1.5, myFont);
-//			myTileObjectInfo2 = new Text(900, 440, "SIGHT RANGE: " + e.getSightRange(), 1.5, myFont);
-//			myTileObjectInfo1 = new Text(900, 470, "ATTACK RANGE: " + e.getAttackRange(), 1.5, myFont);
 		}
 		
 		

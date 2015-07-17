@@ -38,7 +38,7 @@ public class Player extends GameObject{
 	private Action myAction;
 	
 	private Inventory myInventory;
-	private Set<String> mySkills;
+	private Set<String> myGenericSkills;
 	
 	private List<SkillData> myEarthSkills;
 	private List<SkillData> myAirSkills;
@@ -56,7 +56,7 @@ public class Player extends GameObject{
 		
 		myHealth = 16;
 		myMaxHealth =16;
-		mySkills = new HashSet<String>();
+		myGenericSkills = new HashSet<String>();
 		
 		
 		myEarthSkills.add(SkillBuilder.getSkill(0, "earth"));
@@ -64,10 +64,10 @@ public class Player extends GameObject{
 		myWaterSkills.add(SkillBuilder.getSkill(0, "water"));
 //		myFireSkills.add(SkillBuilder.getSkill(0, "fire"));
 		
-		mySkills.add("boulderfall");
-		mySkills.add("skytoss");
-		mySkills.add("cascade");
-		mySkills.add("planeshift");
+		myGenericSkills.add("boulderfall");
+		myGenericSkills.add("skytoss");
+		myGenericSkills.add("cascade");
+		myGenericSkills.add("planeshift");
 		
 		
 		myAction = new Action("wait");
@@ -260,9 +260,46 @@ public class Player extends GameObject{
 		}
 		
 		if(mapCell.getCollectible() instanceof CollectibleSkill){
-			mySkills.add(((CollectibleSkill) mapCell.getCollectible()).getGenericSkill());
+			if(!((CollectibleSkill) mapCell.getCollectible()).getGenericSkill().equals("")){
+			myGenericSkills.add(((CollectibleSkill) mapCell.getCollectible()).getGenericSkill());
 			mapCell.removeCollectible();
 			return;
+			}
+			else{
+				SkillData data = ((CollectibleSkill) mapCell.getCollectible()).getSkill();
+				
+				if(data.getType().equals("earth")){
+					if(myEarthSkills.size()>data.getIndex()){
+						myEarthSkills.set(data.getIndex(), data);
+					} else if (myEarthSkills.size()==data.getIndex()){
+						myEarthSkills.add(data);
+					}
+				}
+				if(data.getType().equals("air")){
+					if(myAirSkills.size()>data.getIndex()){
+						myAirSkills.set(data.getIndex(), data);
+					} else if (myAirSkills.size()==data.getIndex()){
+						myAirSkills.add(data);
+					}
+				}
+				if(data.getType().equals("water")){
+					if(myWaterSkills.size()>data.getIndex()){
+						myWaterSkills.set(data.getIndex(), data);
+					} else if (myWaterSkills.size()==data.getIndex()){
+						myWaterSkills.add(data);
+					}
+				}
+				if(data.getType().equals("fire")){
+					if(myFireSkills.size()>data.getIndex()){
+						myFireSkills.set(data.getIndex(), data);
+					} else if (myFireSkills.size()==data.getIndex()){
+						myFireSkills.add(data);
+					}
+				}
+				
+				mapCell.removeCollectible();
+				return;
+			}
 		}
 		
 		if(mapCell.getCollectible().getType().equals("earth"))
@@ -323,7 +360,20 @@ public class Player extends GameObject{
 			myHealth = myMaxHealth;
 		}
 	}
-	public Set<String> getSkills(){
-		return mySkills;
+	public Set<String> getGenericSkills(){
+		return myGenericSkills;
+	}
+
+	public List<SkillData> getEarthSkills() {
+		return myEarthSkills;
+	}
+	public List<SkillData> getAirSkills() {
+		return myAirSkills;
+	}
+	public List<SkillData> getWaterSkills() {
+		return myWaterSkills;
+	}
+	public List<SkillData> getFireSkills() {
+		return myFireSkills;
 	}
 }

@@ -58,7 +58,8 @@ public class Stage extends GameObject{
 		myCells = new ArrayList<List<MapCell>>();
 		myRooms = new RoomNetwork(this);
 		
-		myTestSkill = new CollectibleSkill(24, 5, this, "detonate");
+//		myTestSkill = new CollectibleSkill(24, 5, this, "detonate");
+		myTestSkill = new CollectibleSkill(24, 5, this, 0, "fire");
 		
 		try {
 			manager = new DeciduousTileManager(this);

@@ -28,10 +28,6 @@ public class AttackMenu extends SubMenu{
 	private State myAttackType;
 	private State myAttack;
 	
-	private StateChangeButton earthSkill0;
-	private StateChangeButton airSkill0;
-	private StateChangeButton waterSkill0;
-	private StateChangeButton fireSkill0;
 	public AttackMenu(Stage stage, State state) {
 		super(stage, state);
 		myAttackType = new State("main");
@@ -51,14 +47,6 @@ public class AttackMenu extends SubMenu{
 		fire = new StateChangeButton(1118, 10, "FIRE", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "fire");
 		subBack = new StateChangeButton(1130, 400, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttackType, "main");
 		cancel = new StateChangeButton(1102, 400, "CANCEL", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttack, "main");
-		earthSkill0 = new StateChangeButton(876, 10, SkillBuilder.getSkill(0, "earth").getName().toUpperCase(),
-				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getSkill(0, "earth").getName().toLowerCase());
-		airSkill0 = new StateChangeButton(876, 10, SkillBuilder.getSkill(0, "air").getName().toUpperCase(),
-				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getSkill(0, "air").getName().toLowerCase());
-		waterSkill0 = new StateChangeButton(876, 10, SkillBuilder.getSkill(0, "water").getName().toUpperCase(),
-				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getSkill(0, "water").getName().toLowerCase());
-		fireSkill0 = new StateChangeButton(876, 10, SkillBuilder.getSkill(0, "fire").getName().toUpperCase(),
-				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getSkill(0, "fire").getName().toLowerCase());
 
 		myObjects.add(earth);
 		myObjects.add(air);
@@ -124,21 +112,17 @@ public class AttackMenu extends SubMenu{
 		}
 		else{
 			myObjects.add(subBack);
-			if(myAttackType.getState().equals("earth")){
-				if(myPlayer.getSkills().contains(earthSkill0.getState()))
-					myObjects.add(earthSkill0);
+			for(SkillData data: myPlayer.getEarthSkills()){
+				addAttackButton(data);
 			}
-			if(myAttackType.getState().equals("air")){
-				if(myPlayer.getSkills().contains(airSkill0.getState()))
-					myObjects.add(airSkill0);
+			for(SkillData data: myPlayer.getAirSkills()){
+				addAttackButton(data);
 			}
-			if(myAttackType.getState().equals("water")){
-				if(myPlayer.getSkills().contains(waterSkill0.getState()))
-					myObjects.add(waterSkill0);
+			for(SkillData data: myPlayer.getWaterSkills()){
+				addAttackButton(data);
 			}
-			if(myAttackType.getState().equals("fire")){
-				if(myPlayer.getSkills().contains(fireSkill0.getState()))
-					myObjects.add(fireSkill0);
+			for(SkillData data: myPlayer.getFireSkills()){
+				addAttackButton(data);
 			}
 		}
 	}
@@ -149,6 +133,12 @@ public class AttackMenu extends SubMenu{
 		}
 		if(myPlayer.getAction().getName().equals("wait")){
 			myAttack.setState("main");
+		}
+	}
+	public void addAttackButton(SkillData data){
+		if(data.getType().equals(myAttackType.getState())){
+			myObjects.add(new StateChangeButton(876, 10 + data.getIndex() * 50, data.getName().toUpperCase(),
+					3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, data.getName().toLowerCase()));
 		}
 	}
 }

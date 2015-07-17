@@ -26,7 +26,7 @@ public class MainMenu extends SubMenu{
 		
 		myObjects.add(moveMenuOpen);
 		myObjects.add(attackMenuOpen);
-		if(myPlayer.getSkills().contains("planeshift"))
+		if(myPlayer.getGenericSkills().contains("planeshift"))
 			myObjects.add(planeMenuOpen);
 		myObjects.add(mapOpen);
 	}
@@ -36,7 +36,7 @@ public class MainMenu extends SubMenu{
 		myObjects.clear();
 		myObjects.add(moveMenuOpen);
 		myObjects.add(attackMenuOpen);
-		if(myPlayer.getSkills().contains("planeshift"))
+		if(myPlayer.getGenericSkills().contains("planeshift"))
 			myObjects.add(planeMenuOpen);
 		if(gameState.getState().equals("game")){
 			myObjects.add(mapOpen);
