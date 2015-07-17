@@ -32,31 +32,16 @@ public class EnemyData {
 	public String getName() {
 		return myName;
 	}
-	public void setName(String myName) {
-		this.myName = myName;
-	}
 	public int getHealth() {
 		return myHealth;
-	}
-	public void setHealth(int myHealth) {
-		this.myHealth = myHealth;
 	}
 	public int getPower() {
 		return myPower;
 	}
-	public void setPower(int myPower) {
-		this.myPower = myPower;
-	}
 	public int getSightRange() {
 		return sightRange;
 	}
-	public void setSightRange(int sightRange) {
-		this.sightRange = sightRange;
-	}
 	public int getAttackRange() {
 		return attackRange;
-	}
-	public void setAttackRange(int attackRange) {
-		this.attackRange = attackRange;
 	}
 }

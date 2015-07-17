@@ -118,9 +118,9 @@ public class SkillBuilder {
 		return myAirSkills.get(myIndex);
 	}
 	public static SkillData getWaterObject(int myIndex){
-		return myEarthSkills.get(myIndex);
+		return myWaterSkills.get(myIndex);
 	}
 	public static SkillData getFireObject(int myIndex) {
-		return myAirSkills.get(myIndex);
+		return myFireSkills.get(myIndex);
 	}
 }

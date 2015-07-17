@@ -29,6 +29,7 @@ public class InventoryHandler extends SubMenu {
 	}
 	public void manageInfo() {
 		myObjects.clear();
+		myHealth = new Text(1050, 540, myPlayer.getHealth() + "/" + myPlayer.getMaxHealth() + " HEALTH", 1.5, myFont);
 		myEarthDialog = new Text(900, 570, myPlayer.getInventory().getEarth() + " EARTH", 1.5, myFont);
 		myAirDialog = new Text(900, 600, myPlayer.getInventory().getAir() + " AIR", 1.5, myFont);
 		myWaterDialog = new Text(1050, 570, myPlayer.getInventory().getWater() + " WATER", 1.5, myFont);

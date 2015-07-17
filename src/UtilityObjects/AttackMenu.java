@@ -5,6 +5,7 @@ import GameObjects.StateChangeButton;
 import GameObjects.Text;
 import Utilities.State;
 import Utilities.ValidAttackChecker;
+import UtilitiesData.SkillBuilder;
 
 public class AttackMenu extends SubMenu{
 
@@ -26,10 +27,10 @@ public class AttackMenu extends SubMenu{
 	private State myAttackType;
 	private State myAttack;
 	
-	private StateChangeButton boulderFall;
-	private StateChangeButton skyToss;
-	private StateChangeButton cascade;
-	private StateChangeButton detonate;
+	private StateChangeButton earthSkill0;
+	private StateChangeButton airSkill0;
+	private StateChangeButton waterSkill0;
+	private StateChangeButton fireSkill0;
 	public AttackMenu(Stage stage, State state) {
 		super(stage, state);
 		myAttackType = new State("main");
@@ -49,10 +50,14 @@ public class AttackMenu extends SubMenu{
 		fire = new StateChangeButton(1118, 10, "FIRE", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "fire");
 		subBack = new StateChangeButton(1130, 400, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttackType, "main");
 		cancel = new StateChangeButton(1102, 400, "CANCEL", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttack, "main");
-		boulderFall = new StateChangeButton(912, 20, "BOULDERFALL", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "boulderfall");
-		skyToss = new StateChangeButton(952, 20, "SKYTOSS", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "skytoss");
-		cascade = new StateChangeButton(952, 20, "CASCADE", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "cascade");
-		detonate = new StateChangeButton(942, 20, "DETONATE", 3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, "detonate");
+		earthSkill0 = new StateChangeButton(892, 20, SkillBuilder.getEarthObject(0).getName().toUpperCase(),
+				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getEarthObject(0).getName().toLowerCase());
+		airSkill0 = new StateChangeButton(892, 20, SkillBuilder.getAirObject(0).getName().toUpperCase(),
+				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getAirObject(0).getName().toLowerCase());
+		waterSkill0 = new StateChangeButton(892, 20, SkillBuilder.getWaterObject(0).getName().toUpperCase(),
+				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getWaterObject(0).getName().toLowerCase());
+		fireSkill0 = new StateChangeButton(892, 20, SkillBuilder.getFireObject(0).getName().toUpperCase(),
+				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getFireObject(0).getName().toLowerCase());
 
 		myObjects.add(earth);
 		myObjects.add(air);
@@ -157,20 +162,20 @@ public class AttackMenu extends SubMenu{
 		else{
 			myObjects.add(subBack);
 			if(myAttackType.getState().equals("earth")){
-				if(myPlayer.getSkills().contains(boulderFall.getState()))
-					myObjects.add(boulderFall);
+				if(myPlayer.getSkills().contains(earthSkill0.getState()))
+					myObjects.add(earthSkill0);
 			}
 			if(myAttackType.getState().equals("air")){
-				if(myPlayer.getSkills().contains(skyToss.getState()))
-					myObjects.add(skyToss);
+				if(myPlayer.getSkills().contains(airSkill0.getState()))
+					myObjects.add(airSkill0);
 			}
 			if(myAttackType.getState().equals("water")){
-				if(myPlayer.getSkills().contains(cascade.getState()))
-					myObjects.add(cascade);
+				if(myPlayer.getSkills().contains(waterSkill0.getState()))
+					myObjects.add(waterSkill0);
 			}
 			if(myAttackType.getState().equals("fire")){
-				if(myPlayer.getSkills().contains(detonate.getState()))
-					myObjects.add(detonate);
+				if(myPlayer.getSkills().contains(fireSkill0.getState()))
+					myObjects.add(fireSkill0);
 			}
 		}
 	}
