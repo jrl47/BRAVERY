@@ -111,16 +111,32 @@ public class SkillBuilder {
 			myFireSkills.put(i, e);
 		}
 	}
-	public static SkillData getEarthObject(int myIndex){
+	
+	public static SkillData getSkill(int myIndex, String type){
+		if(type.equals("earth")){
+			return getEarthObject(myIndex);
+		}
+		if(type.equals("air")){
+			return getAirObject(myIndex);
+		}
+		if(type.equals("water")){
+			return getWaterObject(myIndex);
+		}
+		if(type.equals("fire")){
+			return getFireObject(myIndex);
+		}
+		return null;
+	}
+	private static SkillData getEarthObject(int myIndex){
 		return myEarthSkills.get(myIndex);
 	}
-	public static SkillData getAirObject(int myIndex) {
+	private static SkillData getAirObject(int myIndex) {
 		return myAirSkills.get(myIndex);
 	}
-	public static SkillData getWaterObject(int myIndex){
+	private static SkillData getWaterObject(int myIndex){
 		return myWaterSkills.get(myIndex);
 	}
-	public static SkillData getFireObject(int myIndex) {
+	private static SkillData getFireObject(int myIndex) {
 		return myFireSkills.get(myIndex);
 	}
 }

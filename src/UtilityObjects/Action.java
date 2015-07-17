@@ -1,5 +1,7 @@
 package UtilityObjects;
 
+import UtilitiesData.SkillData;
+
 public class Action {
 	
 	private String myName;
@@ -15,6 +17,15 @@ public class Action {
 		roundSplash = true;
 	}
 	
+	public Action(SkillData data) {
+		myName = data.getName();
+		myType = data.getType();
+		myCost = data.getCost();
+		myPower = data.getPower();
+		myRange = data.getRange();
+		roundSplash = data.isRound();
+	}
+
 	public String getName(){
 		return myName;
 	}

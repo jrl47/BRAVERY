@@ -6,7 +6,9 @@ public class SkillData {
 	private int myPower;
 	private int myRange;
 	private int isRound;
+	private String myType;
 	public SkillData(int i, String type){
+		myType = type;
 		if(type.equals("earth")){
 			String dataLine = SkillBuilder.earthData[i];
 			// Breaks up at colons
@@ -62,5 +64,8 @@ public class SkillData {
 	}
 	public boolean isRound() {
 		return isRound==1;
+	}
+	public String getType() {
+		return myType;
 	}
 }

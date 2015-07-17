@@ -6,6 +6,7 @@ import GameObjects.Text;
 import Utilities.State;
 import Utilities.ValidAttackChecker;
 import UtilitiesData.SkillBuilder;
+import UtilitiesData.SkillData;
 
 public class AttackMenu extends SubMenu{
 
@@ -50,14 +51,14 @@ public class AttackMenu extends SubMenu{
 		fire = new StateChangeButton(1118, 10, "FIRE", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "fire");
 		subBack = new StateChangeButton(1130, 400, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttackType, "main");
 		cancel = new StateChangeButton(1102, 400, "CANCEL", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttack, "main");
-		earthSkill0 = new StateChangeButton(892, 20, SkillBuilder.getEarthObject(0).getName().toUpperCase(),
-				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getEarthObject(0).getName().toLowerCase());
-		airSkill0 = new StateChangeButton(892, 20, SkillBuilder.getAirObject(0).getName().toUpperCase(),
-				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getAirObject(0).getName().toLowerCase());
-		waterSkill0 = new StateChangeButton(892, 20, SkillBuilder.getWaterObject(0).getName().toUpperCase(),
-				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getWaterObject(0).getName().toLowerCase());
-		fireSkill0 = new StateChangeButton(892, 20, SkillBuilder.getFireObject(0).getName().toUpperCase(),
-				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getFireObject(0).getName().toLowerCase());
+		earthSkill0 = new StateChangeButton(892, 20, SkillBuilder.getSkill(0, "earth").getName().toUpperCase(),
+				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getSkill(0, "earth").getName().toLowerCase());
+		airSkill0 = new StateChangeButton(892, 20, SkillBuilder.getSkill(0, "air").getName().toUpperCase(),
+				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getSkill(0, "air").getName().toLowerCase());
+		waterSkill0 = new StateChangeButton(892, 20, SkillBuilder.getSkill(0, "water").getName().toUpperCase(),
+				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getSkill(0, "water").getName().toLowerCase());
+		fireSkill0 = new StateChangeButton(892, 20, SkillBuilder.getSkill(0, "fire").getName().toUpperCase(),
+				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getSkill(0, "fire").getName().toLowerCase());
 
 		myObjects.add(earth);
 		myObjects.add(air);
@@ -106,47 +107,9 @@ public class AttackMenu extends SubMenu{
 				myPowerDialog = emptyDialog;
 			}
 			
-			if(myAttack.getState().equals("boulderfall")){
-				if(!(myPlayer.getInventory().getEarth()<5)){
-					Action a = new Action("boulderfall");
-					a.setCost(6);
-					a.setType("earth");
-					a.setPower(3);
-					a.setRange(1);
-					myPlayer.setAction(a);
-				}
-			}
-			if(myAttack.getState().equals("skytoss")){
-				if(!(myPlayer.getInventory().getAir()<5)){
-					Action a = new Action("skytoss");
-					a.setCost(6);
-					a.setType("air");
-					a.setPower(2);
-					a.setRange(2);
-					myPlayer.setAction(a);
-				}
-			}
-			if(myAttack.getState().equals("cascade")){
-				if(!(myPlayer.getInventory().getWater()<5)){
-					Action a = new Action("cascade");
-					a.setCost(3);
-					a.setType("water");
-					a.setPower(1);
-					a.setRange(2);
-					a.setSplash(false);
-					myPlayer.setAction(a);
-				}
-			}
-			if(myAttack.getState().equals("detonate")){
-				if(!(myPlayer.getInventory().getFire()<5)){
-					Action a = new Action("detonate");
-					a.setCost(3);
-					a.setType("fire");
-					a.setPower(1);
-					a.setRange(1);
-					myPlayer.setAction(a);
-				}
-			}
+			SkillData data = SkillBuilder.getSkill(0, myAttackType.getState());
+			Action a = new Action(data);
+			myPlayer.setAction(a);
 			return;
 		}
 		else{
