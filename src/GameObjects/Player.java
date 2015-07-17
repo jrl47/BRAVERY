@@ -2,10 +2,13 @@ package GameObjects;
 
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import UtilitiesData.SkillBuilder;
+import UtilitiesData.SkillData;
 import UtilityObjects.Action;
 import UtilityObjects.Inventory;
 
@@ -37,13 +40,30 @@ public class Player extends GameObject{
 	private Inventory myInventory;
 	private Set<String> mySkills;
 	
+	private List<SkillData> myEarthSkills;
+	private List<SkillData> myAirSkills;
+	private List<SkillData> myWaterSkills;
+	private List<SkillData> myFireSkills;
+	
 	public Player(Stage stage){
 		myX = 23;
 		myY = 2;
 		
+		myEarthSkills = new ArrayList<SkillData>();
+		myAirSkills = new ArrayList<SkillData>();
+		myWaterSkills = new ArrayList<SkillData>();
+		myFireSkills = new ArrayList<SkillData>();
+		
 		myHealth = 16;
 		myMaxHealth =16;
 		mySkills = new HashSet<String>();
+		
+		
+		myEarthSkills.add(SkillBuilder.getSkill(0, "earth"));
+		myAirSkills.add(SkillBuilder.getSkill(0, "air"));
+		myWaterSkills.add(SkillBuilder.getSkill(0, "water"));
+//		myFireSkills.add(SkillBuilder.getSkill(0, "fire"));
+		
 		mySkills.add("boulderfall");
 		mySkills.add("skytoss");
 		mySkills.add("cascade");
@@ -240,7 +260,7 @@ public class Player extends GameObject{
 		}
 		
 		if(mapCell.getCollectible() instanceof CollectibleSkill){
-			mySkills.add(((CollectibleSkill) mapCell.getCollectible()).getSkill());
+			mySkills.add(((CollectibleSkill) mapCell.getCollectible()).getGenericSkill());
 			mapCell.removeCollectible();
 			return;
 		}

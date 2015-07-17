@@ -24,6 +24,6 @@ public class SongPlayer {
 		}
 	}
 	public void playWorldTheme() {
-//        worldSong.loop(100);
+        worldSong.loop(100);
 	}
 }

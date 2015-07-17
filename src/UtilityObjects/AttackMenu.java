@@ -51,13 +51,13 @@ public class AttackMenu extends SubMenu{
 		fire = new StateChangeButton(1118, 10, "FIRE", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "fire");
 		subBack = new StateChangeButton(1130, 400, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttackType, "main");
 		cancel = new StateChangeButton(1102, 400, "CANCEL", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttack, "main");
-		earthSkill0 = new StateChangeButton(892, 20, SkillBuilder.getSkill(0, "earth").getName().toUpperCase(),
+		earthSkill0 = new StateChangeButton(876, 10, SkillBuilder.getSkill(0, "earth").getName().toUpperCase(),
 				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getSkill(0, "earth").getName().toLowerCase());
-		airSkill0 = new StateChangeButton(892, 20, SkillBuilder.getSkill(0, "air").getName().toUpperCase(),
+		airSkill0 = new StateChangeButton(876, 10, SkillBuilder.getSkill(0, "air").getName().toUpperCase(),
 				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getSkill(0, "air").getName().toLowerCase());
-		waterSkill0 = new StateChangeButton(892, 20, SkillBuilder.getSkill(0, "water").getName().toUpperCase(),
+		waterSkill0 = new StateChangeButton(876, 10, SkillBuilder.getSkill(0, "water").getName().toUpperCase(),
 				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getSkill(0, "water").getName().toLowerCase());
-		fireSkill0 = new StateChangeButton(892, 20, SkillBuilder.getSkill(0, "fire").getName().toUpperCase(),
+		fireSkill0 = new StateChangeButton(876, 10, SkillBuilder.getSkill(0, "fire").getName().toUpperCase(),
 				3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, SkillBuilder.getSkill(0, "fire").getName().toLowerCase());
 
 		myObjects.add(earth);

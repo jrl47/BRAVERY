@@ -3,15 +3,16 @@ package GameObjects;
 import java.awt.Graphics;
 
 public class CollectibleSkill extends Collectible{
-	private String mySkill;
+	
+	private String myGenericSkill;
 	
 	public CollectibleSkill(int x, int y, Stage stage, String skill){
 		super(x, y, stage, -1);
-		mySkill = skill;
+		myGenericSkill = skill;
 	}
 	
-	public String getSkill(){
-		return mySkill;
+	public String getGenericSkill(){
+		return myGenericSkill;
 	}
 	
 	@Override
