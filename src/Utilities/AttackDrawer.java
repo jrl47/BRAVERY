@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
 
+import UtilitiesData.AttackRangeSpecs;
 import UtilityObjects.Action;
 import GameObjects.MapCell;
 import GameObjects.Player;
@@ -21,36 +22,33 @@ public class AttackDrawer {
 			}
 		}
 		if(myPlayer.getAction()!=null){
-			if(myPlayer.getAction().getName().equals("boulderfall")){
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 0, 1, new Color(.6f, .4f, .3f, .6f), 1, 1, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 0, new Color(.6f, .4f, .3f, .6f), 1, 1, true);
-			}
-			if(myPlayer.getAction().getName().equals("skytoss")){
-				Color c = Color.lightGray;
-				c = new Color(c.getRed(), c.getGreen(), c.getBlue(), 153);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 0, 0, c, 0, 0, false);
-			}
-			if(myPlayer.getAction().getName().equals("cascade")){
-				Color c = Color.BLUE;
-				c = new Color(c.getRed(), c.getGreen(), c.getBlue(), 153);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 0, 1, c, 1, 1, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 0, c, 1, 1, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 1, c, 1, 1, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, -1, c, 1, 1, true);
-			}
-			if(myPlayer.getAction().getName().equals("detonate")){
-				Color c = Color.RED;
-				c = new Color(c.getRed(), c.getGreen(), c.getBlue(), 153);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 0, 1, c, 1, 3, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 0, c, 1, 3, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 1, c, 1, 2, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, -1, c, 1, 2, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 2, 1, c, 1, 1, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 2, -1, c, 1, 1, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, 2, c, 1, 1, true);
-				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, 1, -2, c, 1, 1, true);
-			}
+			if(myPlayer.getAction().getName().equals("wait")) return;
 			
+			Color c = null;
+			if(myPlayer.getAction().getType().equals("earth")){
+				c = new Color(.6f, .4f, .3f, .6f);
+			}
+			if(myPlayer.getAction().getType().equals("air")){
+				c = Color.lightGray;
+			}
+			if(myPlayer.getAction().getType().equals("water")){
+				c = Color.BLUE;
+			}
+			if(myPlayer.getAction().getType().equals("fire")){
+				c = Color.RED;
+			}
+			c = new Color(c.getRed(), c.getGreen(), c.getBlue(), 153);
+			List<AttackRangeSpecs> mySpecs = myPlayer.getAction().getHitRange();
+			for(AttackRangeSpecs s : mySpecs){
+				drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, s.getScale1(), s.getScale2(), c, s.getStart(), s.getEnd(), true);
+				if(s.getScale2()!=s.getScale1())
+					drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, s.getScale2(), s.getScale1(), c, s.getStart(), s.getEnd(), true);
+				if(s.getScale1()!=0 && s.getScale2()!=0 && s.getScale2()!=-s.getScale1()){
+					drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, s.getScale1(), -s.getScale2(), c, s.getStart(), s.getEnd(), true);
+					if(s.getScale2()!=s.getScale1())
+						drawLine(MAP_WIDTH, MAP_HEIGHT, BLOCK_SIZE, myStage, g, s.getScale2(), -s.getScale1(), c, s.getStart(), s.getEnd(), true);
+				}
+			}
 		}
 	}
 	

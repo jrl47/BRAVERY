@@ -36,9 +36,9 @@ public class SkillData {
 		myRange = Integer.parseInt(data[4]);
 		isRound = Integer.parseInt(data[5]);
 		myHitRange = new ArrayList<AttackRangeSpecs>();
-		String[] hitRange = data[6].split("|");
+		String[] hitRange = data[6].split("\\|");
 		for(String  s : hitRange){
-//			myHitRange.add(new AttackRangeSpecs(s);
+			myHitRange.add(new AttackRangeSpecs(s));
 		}
 	}
 	public String getName() {
@@ -61,5 +61,8 @@ public class SkillData {
 	}
 	public String getType() {
 		return myType;
+	}
+	public List<AttackRangeSpecs> getHitRange(){
+		return myHitRange;
 	}
 }

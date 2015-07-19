@@ -1,5 +1,8 @@
 package UtilityObjects;
 
+import java.util.List;
+
+import UtilitiesData.AttackRangeSpecs;
 import UtilitiesData.SkillData;
 
 public class Action {
@@ -10,6 +13,7 @@ public class Action {
 	private int myPower;
 	private int myRange;
 	private boolean roundSplash;
+	private List<AttackRangeSpecs> myHitRange;
 	
 	public Action(String name){
 		myName = name;
@@ -24,6 +28,7 @@ public class Action {
 		myPower = data.getPower();
 		myRange = data.getRange();
 		roundSplash = data.isRound();
+		myHitRange = data.getHitRange();
 	}
 
 	public String getName(){
@@ -59,5 +64,7 @@ public class Action {
 	public void setSplash(boolean round){
 		roundSplash = round;
 	}
-	
+	public List<AttackRangeSpecs> getHitRange(){
+		return myHitRange;
+	}
 }
