@@ -95,7 +95,7 @@ public class AttackMenu extends SubMenu{
 				myPowerDialog = emptyDialog;
 			}
 			
-			SkillData data = SkillBuilder.getSkill(0, myAttackType.getState());
+			SkillData data = myPlayer.getSkill(0, myAttackType.getState());
 			Action a = new Action(data);
 			myPlayer.setAction(a);
 			return;
@@ -137,7 +137,7 @@ public class AttackMenu extends SubMenu{
 	}
 	public void addAttackButton(SkillData data){
 		if(data.getType().equals(myAttackType.getState())){
-			myObjects.add(new StateChangeButton(876, 10 + data.getIndex() * 50, data.getName().toUpperCase(),
+			myObjects.add(new StateChangeButton(876, 10 + (data.getIndex() * 50), data.getName().toUpperCase(),
 					3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, data.getName().toLowerCase()));
 		}
 	}

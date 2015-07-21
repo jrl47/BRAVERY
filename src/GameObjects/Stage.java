@@ -43,6 +43,7 @@ public class Stage extends GameObject{
 	private State myPlane;
 	
 	private CollectibleSkill myTestSkill;
+	private CollectibleSkill myOtherTestSkill;
 	
 	public Stage() {
 		super();
@@ -57,9 +58,9 @@ public class Stage extends GameObject{
 		myCollectibles = new ArrayList<Collectible>();
 		myCells = new ArrayList<List<MapCell>>();
 		myRooms = new RoomNetwork(this);
-		
-//		myTestSkill = new CollectibleSkill(24, 5, this, "detonate");
-		myTestSkill = new CollectibleSkill(24, 5, this, 0, "fire");
+
+		myTestSkill = new CollectibleSkill(24, 5, this, 1, "earth");
+		myOtherTestSkill = new CollectibleSkill(25, 6, this, 2, "earth");
 		
 		try {
 			manager = new DeciduousTileManager(this);
@@ -253,6 +254,10 @@ public class Stage extends GameObject{
 		myCollectibles.add(myTestSkill);
 		myCells.get(24).get(5).setCollectible(myTestSkill);
 		}
+		if(!myOtherTestSkill.isDestroyed() && roomX == 0 && roomY == 1){
+			myCollectibles.add(myOtherTestSkill);
+			myCells.get(25).get(6).setCollectible(myOtherTestSkill);
+			}
 	}
 	public void addBossToMap(Boss b, Character direction){
 		Random r = new Random();

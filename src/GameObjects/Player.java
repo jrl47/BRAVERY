@@ -62,11 +62,8 @@ public class Player extends GameObject{
 		myEarthSkills.add(SkillBuilder.getSkill(0, "earth"));
 		myAirSkills.add(SkillBuilder.getSkill(0, "air"));
 		myWaterSkills.add(SkillBuilder.getSkill(0, "water"));
-//		myFireSkills.add(SkillBuilder.getSkill(0, "fire"));
-		
-		myGenericSkills.add("boulderfall");
-		myGenericSkills.add("skytoss");
-		myGenericSkills.add("cascade");
+		myFireSkills.add(SkillBuilder.getSkill(0, "fire"));
+
 		myGenericSkills.add("planeshift");
 		
 		
@@ -375,5 +372,20 @@ public class Player extends GameObject{
 	}
 	public List<SkillData> getFireSkills() {
 		return myFireSkills;
+	}
+	public SkillData getSkill(int myIndex, String type){
+		if(type.equals("earth")){
+			return myEarthSkills.get(myIndex);
+		}
+		if(type.equals("air")){
+			return myAirSkills.get(myIndex);
+		}
+		if(type.equals("water")){
+			return myWaterSkills.get(myIndex);
+		}
+		if(type.equals("fire")){
+			return myFireSkills.get(myIndex);
+		}
+		return null;
 	}
 }

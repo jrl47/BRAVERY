@@ -37,7 +37,7 @@ public class SkillBuilder {
     		try {currentLine = b.readLine();} catch (IOException e) {e.printStackTrace();}
     	}
 		myEarthSkills = new HashMap<Integer, SkillData>();
-		for(int i=0; i<1; i++){
+		for(int i=0; i<3; i++){
 			SkillData e = new SkillData(i, "earth");
 			myEarthSkills.put(i, e);
 		}
