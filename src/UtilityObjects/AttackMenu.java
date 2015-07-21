@@ -1,5 +1,8 @@
 package UtilityObjects;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import GameObjects.Stage;
 import GameObjects.StateChangeButton;
 import GameObjects.Text;
@@ -28,10 +31,14 @@ public class AttackMenu extends SubMenu{
 	private State myAttackType;
 	private State myAttack;
 	
+	private Set<StateChangeButton> myAttackButtons;
+	
 	public AttackMenu(Stage stage, State state) {
 		super(stage, state);
 		myAttackType = new State("main");
 		myAttack = new State("main");
+		
+		myAttackButtons = new HashSet<StateChangeButton>();
 		
 		noSelectionDialog = new Text(886, 140, "SELECT A VALID TARGET", 2, myFont);
 		emptySelectionDialog = new Text(886, 140, "NO ENEMIES TARGETED", 2, myFont);
@@ -65,8 +72,9 @@ public class AttackMenu extends SubMenu{
 			int xLoc = myPlayer.getX() + myPlayer.getTargetX();
 			int yLoc = myPlayer.getY() + myPlayer.getTargetY();
 			
-			myNameDialog = new Text(900, 20, myAttack.getState().toUpperCase() + ":", 2, myFont);
-			if(!myPlayer.getAction().getName().toUpperCase().equals("WAIT")){
+			SkillData data = SkillBuilder.getSkill(Integer.parseInt(myAttack.getState()), myAttackType.getState());
+			myNameDialog = new Text(900, 20, data.getName().toUpperCase() + ":", 2, myFont);
+			if(myPlayer.canAfford(data.getCost(), data.getType().toLowerCase())){
 				myCostDialog = new Text(900, 60, 
 					myPlayer.getAction().getCost() + " " + myPlayer.getAction().getType().toUpperCase() + " ENERGY", 2, myFont);
 			}
@@ -95,20 +103,18 @@ public class AttackMenu extends SubMenu{
 				myPowerDialog = emptyDialog;
 			}
 			
-			SkillData data = myPlayer.getSkill(0, myAttackType.getState());
 			Action a = new Action(data);
 			myPlayer.setAction(a);
 			return;
 		}
-		else{
-			myPlayer.setAction(new Action("wait"));
-		}
+		myPlayer.setAction(new Action("wait"));
 		
 		if(myAttackType.getState().equals("main")){
 			myObjects.add(earth);
 			myObjects.add(air);
 			myObjects.add(water);
 			myObjects.add(fire);
+			myAttackButtons.clear();
 		}
 		else{
 			myObjects.add(subBack);
@@ -124,6 +130,7 @@ public class AttackMenu extends SubMenu{
 			for(SkillData data: myPlayer.getFireSkills()){
 				addAttackButton(data);
 			}
+			myObjects.addAll(myAttackButtons);
 		}
 	}
 	public void manageState() {
@@ -137,8 +144,8 @@ public class AttackMenu extends SubMenu{
 	}
 	public void addAttackButton(SkillData data){
 		if(data.getType().equals(myAttackType.getState())){
-			myObjects.add(new StateChangeButton(876, 10 + (data.getIndex() * 50), data.getName().toUpperCase(),
-					3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, data.getName().toLowerCase()));
+			myAttackButtons.add(new StateChangeButton(876, 10 + (data.getIndex() * 65), data.getName().toUpperCase(),
+					3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, ""+data.getAbsoluteIndex()));
 		}
 	}
 }

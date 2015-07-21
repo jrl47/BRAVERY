@@ -12,7 +12,9 @@ public class SkillData {
 	private int isRound;
 	private String myType;
 	private List<AttackRangeSpecs> myHitRange;
+	private int absoluteIndex;
 	public SkillData(int i, String type){
+		absoluteIndex = i;
 		myType = type;
 		String dataLine = null;
 		if(type.equals("earth")){
@@ -64,5 +66,8 @@ public class SkillData {
 	}
 	public List<AttackRangeSpecs> getHitRange(){
 		return myHitRange;
+	}
+	public int getAbsoluteIndex(){
+		return absoluteIndex;
 	}
 }

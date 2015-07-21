@@ -250,6 +250,18 @@ public class Player extends GameObject{
 			myInventory.setFire(myInventory.getFire()-myAction.getCost());
 		}
 	}
+	
+	public boolean canAfford(int i, String type){
+		if(type.equals("earth"))
+			return myInventory.getEarth()>=i;
+		if(type.equals("air"))
+			return myInventory.getAir()>=i;
+		if(type.equals("water"))
+			return myInventory.getWater()>=i;
+		if(type.equals("fire"))
+			return myInventory.getFire()>=i;
+		return false;
+	}
 
 	public void getCollectible(MapCell mapCell) {
 		if(mapCell.getCollectible()==null){

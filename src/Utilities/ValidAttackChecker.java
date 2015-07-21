@@ -76,8 +76,10 @@ public class ValidAttackChecker {
 				for(int j=-lim; j<=lim; j++){
 					if(!(locX+i < 0 || locY+j < 0 || locX+i >= myCells.size() || locY+j >=myCells.get(0).size())){
 						if(Math.abs(i) + Math.abs(j) < lim && myCells.get(locX+i).get(locY+j).getEnemy()!=null){
-							myPlayer.attack(myCells.get(locX+i).get(locY+j).getEnemy());
-							attacked = true;
+							if(myPlayer.canAfford(myPlayer.getAction().getCost(), myPlayer.getAction().getType())){
+								myPlayer.attack(myCells.get(locX+i).get(locY+j).getEnemy());
+								attacked = true;
+							}
 						}
 					}
 				}
@@ -89,16 +91,20 @@ public class ValidAttackChecker {
 			if(Math.abs(xDif) > Math.abs(yDif)){
 				for(int i = 0; Math.abs(i) < lim; i+=Integer.signum(xDif)){
 					if(checkCellForEnemy(locX+i, locY, myCells)){
-						myPlayer.attack(myCells.get(locX+i).get(locY).getEnemy());
-						attacked = true;
+						if(myPlayer.canAfford(myPlayer.getAction().getCost(), myPlayer.getAction().getType())){
+							myPlayer.attack(myCells.get(locX+i).get(locY).getEnemy());
+							attacked = true;
+						}
 					}
 				}
 			}
 			else if(Math.abs(xDif) < Math.abs(yDif)){
 				for(int i = 0; Math.abs(i) < lim; i+=Integer.signum(yDif)){
 					if(checkCellForEnemy(locX, locY+i, myCells)){
-						myPlayer.attack(myCells.get(locX).get(locY+i).getEnemy());
-						attacked = true;
+						if(myPlayer.canAfford(myPlayer.getAction().getCost(), myPlayer.getAction().getType())){
+							myPlayer.attack(myCells.get(locX).get(locY+i).getEnemy());
+							attacked = true;
+						}
 					}
 				}
 			}
@@ -108,16 +114,20 @@ public class ValidAttackChecker {
 			else if(xDif==yDif){
 				for(int i = 0; Math.abs(i) < lim; i+=Integer.signum(xDif)){
 					if(checkCellForEnemy(locX+i, locY+i, myCells)){
-						myPlayer.attack(myCells.get(locX+i).get(locY+i).getEnemy());
-						attacked = true;
+						if(myPlayer.canAfford(myPlayer.getAction().getCost(), myPlayer.getAction().getType())){
+							myPlayer.attack(myCells.get(locX+i).get(locY+i).getEnemy());
+							attacked = true;
+						}
 					}
 				}
 			}
 			else{
 				for(int i = 0; Math.abs(i) < lim; i+=Integer.signum(xDif)){
 					if(checkCellForEnemy(locX+i, locY-i, myCells)){
-						myPlayer.attack(myCells.get(locX+i).get(locY-i).getEnemy());
-						attacked = true;
+						if(myPlayer.canAfford(myPlayer.getAction().getCost(), myPlayer.getAction().getType())){
+							myPlayer.attack(myCells.get(locX+i).get(locY-i).getEnemy());
+							attacked = true;
+						}
 					}
 				}
 			}
@@ -130,6 +140,8 @@ public class ValidAttackChecker {
 	public static boolean detectAttackTargets(int locX, int locY, Player myPlayer, List<List<MapCell>> myCells) {
 		boolean enemyInRange = false;
 		int lim = myPlayer.getAction().getRange();
+		if(!myPlayer.canAfford(myPlayer.getAction().getCost(), myPlayer.getAction().getType()))
+			return false;
 		if(myPlayer.getAction().isRoundSplash()){
 			for(int x=-lim; x<=lim; x++){
 				for(int y=-lim; y<=lim; y++){
