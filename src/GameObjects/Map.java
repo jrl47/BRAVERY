@@ -2,24 +2,56 @@ package GameObjects;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.io.IOException;
 import java.util.Set;
 
 import Main.Display;
+import Utilities.DeciduousTileManager;
 import Utilities.RoomNetwork;
+import Utilities.ValidAttackChecker;
 import UtilitiesData.RoomData;
 import UtilitiesData.RoomDataBuilder;
 
 public class Map extends GameObject{
 
 	
-	Stage myStage;
-	RoomNetwork myNetwork;
+	private Stage myStage;
+	private RoomNetwork myNetwork;
+	private boolean wasInput;
+	private int hoverX;
+	private int hoverY;
+	private DeciduousTileManager manager;
 	
 	public Map(Stage stage){
 		myStage = stage;
 		myNetwork = myStage.getRooms();
+		myBounds = new Rectangle(0, 0, Stage.MAP_WIDTH * 32, 675);
+		try {
+			manager = new DeciduousTileManager(myStage);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
+	@Override
+	public void useInput(int i, int j, boolean b) {
+		if(!(j>=0 && j < 675 && i < Stage.MAP_WIDTH * 32))
+			return;
+		
+		wasInput = true;
+
+		hoverX = i/32;
+		hoverY = (j+1)/32;
+	}
+	
+	@Override
+	public void step() {
+		if(!wasInput){
+			hoverX = -1;
+			hoverY = -1;
+		}
+	}
 	
 	@Override
 	public void draw(Graphics g) {
@@ -75,18 +107,10 @@ public class Map extends GameObject{
 		g.drawRect((myStage.getRoomX() + myStage.getPlayer().getX()/32)*32 + 8 + xshift,
 				(myStage.getRoomY() + myStage.getPlayer().getY()/32)*32 + 8 + yshift, 16, 16);
 		
-	}
-	
-	@Override
-	public void useInput(int i, int j, boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void step() {
-		// TODO Auto-generated method stub
-		
+		if(hoverX!=-1 || hoverY!=-1){
+				g.drawImage(manager.getHoverTransparency(), (hoverX)*Stage.BLOCK_SIZE, 1+((hoverY)*Stage.BLOCK_SIZE), null, null);
+		}
+		wasInput = false;
 	}
 
 }

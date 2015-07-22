@@ -10,7 +10,7 @@ import GameObjects.Stage;
 
 public class ValidAttackChecker {
 
-	public static void drawHoverInfo(Graphics g, Stage myStage, int hoverX, int hoverY,
+	public static boolean drawHoverInfo(Graphics g, Stage myStage, int hoverX, int hoverY,
 			DeciduousTileManager manager) {
 		
 		Player myPlayer = myStage.getPlayer();
@@ -60,10 +60,9 @@ public class ValidAttackChecker {
 					}
 				}
 			}
+			return true;
 		}
-		else{
-			g.drawImage(manager.getHoverTransparency(), (hoverX)*Stage.BLOCK_SIZE, 1+((hoverY)*Stage.BLOCK_SIZE), null, null);
-		} 
+		return false;
 	}
 	
 	public static void doPlayerAttack(Player myPlayer, List<List<MapCell>> myCells) {

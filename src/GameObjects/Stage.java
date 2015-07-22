@@ -105,8 +105,8 @@ public class Stage extends GameObject{
 	@Override
 	public void step() {
 		if(!wasInput){
-			hoverX = -200;
-			hoverY = -200;
+			hoverX = -1;
+			hoverY = -1;
 			myPlayer.setTargetX(Integer.MIN_VALUE);
 			myPlayer.setTargetY(Integer.MIN_VALUE);
 		}
@@ -196,7 +196,8 @@ public class Stage extends GameObject{
 		}
 		
 		if(hoverX!=-1 || hoverY!=-1){
-			ValidAttackChecker.drawHoverInfo(g, this, hoverX, hoverY, manager);
+			if(!ValidAttackChecker.drawHoverInfo(g, this, hoverX, hoverY, manager))
+				g.drawImage(manager.getHoverTransparency(), (hoverX)*Stage.BLOCK_SIZE, 1+((hoverY)*Stage.BLOCK_SIZE), null, null);
 		}
 	}
 	public void changeRoom() {
@@ -303,14 +304,8 @@ public class Stage extends GameObject{
 			e.doTurn(myPlayer);
 		}
 		for(Boss b : myBosses){
-//			Boss b = myBosses.get(i);
 			b.doTurn(myPlayer);
 		}
-//		for(int i=0; i<myBosses.size(); i++){
-//			System.out.println("looop");
-//			Boss b = myBosses.get(i);
-//			b.doTurn(myPlayer);
-//		}
 	}
 	private void clearAvailability(List<List<MapCell>> myCells) {
 		for(int i=0; i<myCells.size(); i++){
