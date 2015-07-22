@@ -78,7 +78,7 @@ public class TileObjectInfoHandler extends SubMenu{
 			Collectible c = myCells.get(xLoc).get(yLoc).getCollectible();
 			myTileObjectInfo2 = new Text(900, 470, "COLLECTIBLE:", 1.5, myFont);
 			if(c instanceof CollectibleSkill){
-				if(((CollectibleSkill) c).getGenericSkill().toUpperCase().equals("")){
+				if(!((CollectibleSkill) c).getGenericSkill().toUpperCase().equals("")){
 					myTileObjectInfo1 = new Text(900,500, "NEW SKILL: " +  ((CollectibleSkill) c).getGenericSkill().toUpperCase(), 1.5, myFont);
 				}
 				else{
