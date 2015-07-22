@@ -17,14 +17,18 @@ public class Map extends GameObject{
 
 	
 	private Stage myStage;
+	private Player myPlayer;
 	private RoomNetwork myNetwork;
 	private boolean wasInput;
 	private int hoverX;
 	private int hoverY;
+	private int xshift;
+	private int yshift;
 	private DeciduousTileManager manager;
 	
 	public Map(Stage stage){
 		myStage = stage;
+		myPlayer = myStage.getPlayer();
 		myNetwork = myStage.getRooms();
 		myBounds = new Rectangle(0, 0, Stage.MAP_WIDTH * 32, 675);
 		try {
@@ -32,6 +36,10 @@ public class Map extends GameObject{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		int width = Stage.MAP_WIDTH * 32;
+		int height = Display.height;
+		xshift = width / 2 - RoomNetwork.WORLD_WIDTH*32 / 2;
+		yshift = height / 2 - RoomNetwork.WORLD_HEIGHT*32 / 2;
 	}
 	
 	@Override
@@ -41,25 +49,25 @@ public class Map extends GameObject{
 		
 		wasInput = true;
 
-		hoverX = i/32;
-		hoverY = (j+1)/32;
+		
+		hoverX = i - xshift;
+		hoverX = hoverX / 32;
+		hoverY = j - yshift;
+		hoverY = hoverY / 32;
 	}
 	
 	@Override
 	public void step() {
-		if(!wasInput){
+		if(!wasInput || RoomDataBuilder.getRoomData(hoverX, hoverY)==null || RoomDataBuilder.getRoomData(hoverX, hoverY).getPlane()>myStage.getPlane()){
 			hoverX = -1;
 			hoverY = -1;
 		}
+		myStage.setHoverRoomX(hoverX);
+		myStage.setHoverRoomY(hoverY);
 	}
 	
 	@Override
 	public void draw(Graphics g) {
-		int width = Stage.MAP_WIDTH * 32;
-		int height = Display.height;
-		int xshift = width / 2 - RoomNetwork.WORLD_WIDTH*32 / 2;
-		int yshift = height / 2 - RoomNetwork.WORLD_HEIGHT*32 / 2;
-		
 		for(int i=0; i<RoomNetwork.WORLD_WIDTH; i++){
 			for(int j=0; j<RoomNetwork.WORLD_HEIGHT; j++){
 				RoomData data = RoomDataBuilder.getRoomData(i, j);
@@ -107,8 +115,8 @@ public class Map extends GameObject{
 		g.drawRect((myStage.getRoomX() + myStage.getPlayer().getX()/32)*32 + 8 + xshift,
 				(myStage.getRoomY() + myStage.getPlayer().getY()/32)*32 + 8 + yshift, 16, 16);
 		
-		if(hoverX!=-1 || hoverY!=-1){
-				g.drawImage(manager.getHoverTransparency(), (hoverX)*Stage.BLOCK_SIZE, 1+((hoverY)*Stage.BLOCK_SIZE), null, null);
+		if(hoverX!=-1 && hoverY!=-1){
+			g.drawImage(manager.getHoverTransparency(), (hoverX)*Stage.BLOCK_SIZE + xshift, 1+((hoverY)*Stage.BLOCK_SIZE) + yshift, null, null);
 		}
 		wasInput = false;
 	}

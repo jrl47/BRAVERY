@@ -36,6 +36,8 @@ public class Stage extends GameObject{
 	private boolean wasInput;
 	private int hoverX = -1;
 	private int hoverY = -1;
+	private int hoverRoomX = -1;
+	private int hoverRoomY = -1;
 	private Camera myCamera;
 	private int enemyAnimationCounter;
 	private static final int ENEMY_ANIMATION_START = 6;
@@ -104,6 +106,7 @@ public class Stage extends GameObject{
 	}
 	@Override
 	public void step() {
+		hoverRoomX = -1;
 		if(!wasInput){
 			hoverX = -1;
 			hoverY = -1;
@@ -424,5 +427,20 @@ public class Stage extends GameObject{
 	}
 	public List<Boss> getBosses(){
 		return myBosses;
+	}
+	public void setHoverRoomX(int hoverX) {
+		hoverRoomX = hoverX;
+	}
+	public void setHoverRoomY(int hoverY) {
+		hoverRoomY = hoverY;
+	}
+	public int getHoverRoomX(){
+		return hoverRoomX;
+	}
+	public int getHoverRoomY(){
+		return hoverRoomY;
+	}
+	public boolean wasInput() {
+		return wasInput;
 	}
 }

@@ -9,7 +9,10 @@ public class RoomData {
 	private Set<Character> mySides;
 	public RoomData(int i, int j){
 		String dataLine = RoomDataBuilder.roomData[i][j];
-		if(dataLine==null) return;
+		if(dataLine==null) {
+			myPlane = 10;
+			return;
+		}
 		
 		mySides = new HashSet<Character>();
 		String[] data = dataLine.split(":");

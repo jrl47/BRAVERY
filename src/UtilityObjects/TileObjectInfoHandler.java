@@ -1,6 +1,11 @@
 package UtilityObjects;
 
+import java.awt.Color;
+
+import Utilities.RoomNetwork;
 import Utilities.State;
+import UtilitiesData.RoomDataBuilder;
+import GameObjects.Boss;
 import GameObjects.Collectible;
 import GameObjects.CollectibleSkill;
 import GameObjects.Enemy;
@@ -15,6 +20,8 @@ public class TileObjectInfoHandler extends SubMenu{
 	private Text myTileObjectInfo4;
 	private Text myTileObjectInfo5;
 	
+	private RoomNetwork myNetwork;
+	
 	public TileObjectInfoHandler(Stage stage, State state) {
 		super(stage, state);
 		myTileObjectInfo1 = new Text(900, 470, " ", 1.5, myFont);
@@ -22,6 +29,8 @@ public class TileObjectInfoHandler extends SubMenu{
 		myTileObjectInfo3 = new Text(900, 410, " ", 1.5, myFont);
 		myTileObjectInfo4 = new Text(900, 380, " ", 1.5, myFont);
 		myTileObjectInfo5 = new Text(900, 350, " ", 1.5, myFont);
+		
+		myNetwork = myStage.getRooms();
 		
 		myObjects.add(myTileObjectInfo1);
 		myObjects.add(myTileObjectInfo2);
@@ -32,13 +41,28 @@ public class TileObjectInfoHandler extends SubMenu{
 
 	public void manageInfo() {
 		myObjects.clear();
-		int xLoc = myPlayer.getX() + myPlayer.getTargetX();
-		int yLoc = myPlayer.getY() + myPlayer.getTargetY();
 		myTileObjectInfo5 = new Text(900, 350, " ", 2, myFont);
 		myTileObjectInfo4 = new Text(900, 380, " ", 2, myFont);
 		myTileObjectInfo3 = new Text(900, 410, " ", 2, myFont);
 		myTileObjectInfo2 = new Text(900, 440, " ", 2, myFont);
 		myTileObjectInfo1 = new Text(900, 470, " ", 2, myFont);
+		if(myStage.wasInput()){
+			drawTileData();
+		}
+		else if(!(myStage.getHoverRoomX()==-1 || myStage.getHoverRoomY()==-1)){
+			drawRoomData();
+		}
+		
+		myObjects.add(myTileObjectInfo1);
+		myObjects.add(myTileObjectInfo2);
+		myObjects.add(myTileObjectInfo3);
+		myObjects.add(myTileObjectInfo4);
+		myObjects.add(myTileObjectInfo5);
+	}
+
+	private void drawTileData() {
+		int xLoc = myPlayer.getX() + myPlayer.getTargetX();
+		int yLoc = myPlayer.getY() + myPlayer.getTargetY();
 		if(myPlayer.getTargetX()==Integer.MIN_VALUE || myPlayer.getTargetY()==Integer.MIN_VALUE){
 			myTileObjectInfo2 = new Text(900, 470, " ", 2, myFont);
 			myTileObjectInfo1 = new Text(900, 500, " ", 2, myFont);
@@ -68,13 +92,17 @@ public class TileObjectInfoHandler extends SubMenu{
 				}
 			}
 		}
-		
-		
-		
-		myObjects.add(myTileObjectInfo1);
-		myObjects.add(myTileObjectInfo2);
-		myObjects.add(myTileObjectInfo3);
-		myObjects.add(myTileObjectInfo4);
-		myObjects.add(myTileObjectInfo5);
+	}
+	
+	private void drawRoomData() {
+		for(Boss b: myStage.getBosses()){
+			if(myStage.getHoverRoomX()==b.getRoomX() && myStage.getHoverRoomY()==b.getRoomY()){
+				myTileObjectInfo5 = new Text(900, 440, b.getName().toUpperCase(), 1.5, myFont);
+				myTileObjectInfo4 = new Text(900, 470, "POWER: " + b.getPower(), 1.5, myFont);
+				myTileObjectInfo3 = new Text(1050, 470, "HEALTH: " + b.getHealth(), 1.5, myFont);
+				myTileObjectInfo2 = new Text(900, 500, "VISION: " + b.getSightRange(), 1.5, myFont);
+				myTileObjectInfo1 = new Text(1050, 500, "RANGE: " + b.getAttackRange(), 1.5, myFont);
+			}
+		}
 	}
 }

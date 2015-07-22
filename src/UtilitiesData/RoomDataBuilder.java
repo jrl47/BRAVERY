@@ -42,7 +42,9 @@ public class RoomDataBuilder {
 		}
 	}
 	public static RoomData getRoomData(int i, int j){
-		return myRoomDatas[i][j];
+		if(i>=0 && j>=0 && i<myRoomDatas.length && j < myRoomDatas[i].length)
+			return myRoomDatas[i][j];
+		return null;
 	}
 	
 }
