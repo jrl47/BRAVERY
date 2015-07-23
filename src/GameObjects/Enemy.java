@@ -31,6 +31,7 @@ public class Enemy extends GameObject{
 	
 	protected Stage myStage;
 	protected List<List<MapCell>> myCells;
+	protected EnemyData data;
 	
 	public Enemy(int x, int y, Stage stage, int index){
 		myStage = stage;
@@ -40,7 +41,7 @@ public class Enemy extends GameObject{
 		oldX = myX;
 		oldY = myY;
 		myIndex = index;
-		EnemyData data = null;
+		data = null;
 		if(myIndex < 100){
 			data = EnemyBuilder.getEnemyObject(myIndex);
 		} else{

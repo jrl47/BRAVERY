@@ -15,10 +15,10 @@ public class Boss extends Enemy{
 	private Random myRand;
 	private RoomNetwork myRooms;
 	
-	public Boss(int x, int y, Stage stage, int index, int roomx, int roomy) {
+	public Boss(int x, int y, Stage stage, int index) {
 		super(x, y, stage, index);
-		roomX = roomx;
-		roomY = roomy;
+		roomX = data.getRoomX();
+		roomY = data.getRoomY();
 		myRand = new Random();
 		myRooms = myStage.getRooms();
 	}

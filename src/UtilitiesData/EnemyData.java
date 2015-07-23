@@ -8,6 +8,8 @@ public class EnemyData {
 	private int myPower;
 	private int sightRange;
 	private int attackRange;
+	private int roomX;
+	private int roomY;
 	public EnemyData(int i){
 		if(i < EnemyBuilder.NUMBER_OF_ENEMIES){
 			String dataLine = EnemyBuilder.enemyData[i];
@@ -27,6 +29,8 @@ public class EnemyData {
 			myPower = Integer.parseInt(data[2]);
 			sightRange = Integer.parseInt(data[3]);
 			attackRange = Integer.parseInt(data[4]);
+			roomX = Integer.parseInt(data[5]);
+			roomY = Integer.parseInt(data[6]);
 		}
 	}
 	public String getName() {
@@ -43,5 +47,11 @@ public class EnemyData {
 	}
 	public int getAttackRange() {
 		return attackRange;
+	}
+	public int getRoomX() {
+		return roomX;
+	}
+	public int getRoomY() {
+		return roomY;
 	}
 }
