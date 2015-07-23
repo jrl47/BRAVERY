@@ -46,8 +46,11 @@ public class Player extends GameObject{
 	private List<SkillData> myFireSkills;
 	
 	public Player(Stage stage){
-		myX = 16;
-		myY = 2;
+		myStage = stage;
+		int roomX = myStage.getRoomX();
+		int roomY = myStage.getRoomY();
+		myX = 10 + Stage.ROOM_SIZE*-(myStage.getRooms().getX(roomX, roomY) - roomX);
+		myY = 9  + Stage.ROOM_SIZE*-(myStage.getRooms().getY(roomX, roomY) - roomY);
 		
 		myEarthSkills = new ArrayList<SkillData>();
 		myAirSkills = new ArrayList<SkillData>();
@@ -69,7 +72,6 @@ public class Player extends GameObject{
 		
 		myAction = new Action("wait");
 		
-		myStage = stage;
 		myCells = myStage.getCells();
 		
 		myCells.get(myX).get(myY).addPlayer(this);

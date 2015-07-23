@@ -12,7 +12,6 @@ public class ValidAttackChecker {
 
 	public static boolean drawHoverInfo(Graphics g, Stage myStage, int hoverX, int hoverY,
 			DeciduousTileManager manager) {
-		
 		Player myPlayer = myStage.getPlayer();
 		List<List<MapCell>> myCells = myStage.getCells();
 		Camera myCamera = myStage.getCamera();
@@ -141,6 +140,9 @@ public class ValidAttackChecker {
 		int lim = myPlayer.getAction().getRange();
 		if(!myPlayer.canAfford(myPlayer.getAction().getCost(), myPlayer.getAction().getType()))
 			return false;
+		if(!myCells.get(locX).get(locY).isAvailable()){
+			return false;
+		}
 		if(myPlayer.getAction().isRoundSplash()){
 			for(int x=-lim; x<=lim; x++){
 				for(int y=-lim; y<=lim; y++){

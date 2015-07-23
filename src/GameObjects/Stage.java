@@ -51,8 +51,8 @@ public class Stage extends GameObject{
 	
 	public Stage() {
 		super();
-		roomX = 0;
-		roomY = 0;
+		roomX = 5;
+		roomY = 3;
 		myCamera = new Camera();
 		myBounds = new Rectangle(0, 0, MAP_WIDTH * 32,705);
 		myPlane = new State("1");
@@ -334,6 +334,13 @@ public class Stage extends GameObject{
 				myEnemies.remove(e);
 				myCollectibles.add(c);
 				myCells.get(c.getX()).get(c.getY()).setCollectible(c);
+				i--;
+			}
+		}
+		for(int i=0; i<myBosses.size(); i++){
+			Boss b = myBosses.get(i);
+			if(b.isDead()){
+				myEnemies.remove(b);
 				i--;
 			}
 		}

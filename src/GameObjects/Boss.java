@@ -47,7 +47,7 @@ public class Boss extends Enemy{
 	}
 
 	private void moveRooms() {
-		int rand = myRand.nextInt(1);
+		int rand = myRand.nextInt(12);
 		if(rand!=0) return;
 		List<Character> possibleMoves = new ArrayList<Character>();
 		possibleMoves.addAll(RoomDataBuilder.getRoomData(roomX, roomY).getSides());
