@@ -48,7 +48,7 @@ public class World extends GameObject{
 		BorderedButton t = null;
 		try {
 			b = new Background(ImageIO.read(World.class.getResource("/titleBackground.png")));
-			t = new StateChangeButton(464, 268, "BRAVERY", 6, ImageIO.read(World.class.getResource("/fonts.png")),
+			t = new StateChangeButton(384, 284, "BRAVERY", 6, ImageIO.read(World.class.getResource("/fonts.png")),
 					ImageIO.read(World.class.getResource("/bluefonts.png")),
 					ImageIO.read(World.class.getResource("/textbackground.png")),
 					ImageIO.read(World.class.getResource("/textbackgroundhover.png")), myState, "game");

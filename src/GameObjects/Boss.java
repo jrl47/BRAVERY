@@ -22,9 +22,10 @@ public class Boss extends Enemy{
 		myRand = new Random();
 		myRooms = myStage.getRooms();
 	}
-	
 	public void doTurn(Player myPlayer) {
-		if(!(myRooms.getX(roomX, roomY) == myStage.getRoomX() && myRooms.getY(roomX, roomY) == myStage.getRoomY())){
+		if(!isOnStage()){
+			myX = 0;
+			myY = 0;
 			moveRooms();
 		}
 		else{
@@ -41,10 +42,12 @@ public class Boss extends Enemy{
 				move(myPlayer);
 			}
 		}
+		roomX = myRooms.getX(roomX, roomY) + myX/Stage.ROOM_SIZE;
+		roomY = myRooms.getY(roomX, roomY) + myY/Stage.ROOM_SIZE;
 	}
 
 	private void moveRooms() {
-		int rand = myRand.nextInt(12);
+		int rand = myRand.nextInt(1);
 		if(rand!=0) return;
 		List<Character> possibleMoves = new ArrayList<Character>();
 		possibleMoves.addAll(RoomDataBuilder.getRoomData(roomX, roomY).getSides());
@@ -100,7 +103,8 @@ public class Boss extends Enemy{
 	}
 
 	public boolean isOnStage() {
-		return myRooms.getX(roomX, roomY)==myStage.getRoomX() && myRooms.getY(roomX, roomY)==myStage.getRoomY();
+		return myRooms.getX(roomX, roomY) == myRooms.getX(myStage.getRoomX(), myStage.getRoomY()) 
+				&& myRooms.getY(roomX, roomY) == myRooms.getY(myStage.getRoomX(), myStage.getRoomY());
 	}
 
 }

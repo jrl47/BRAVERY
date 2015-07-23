@@ -31,7 +31,7 @@ public class Menu extends GameObject{
 	
 	public Menu(Stage stage, State gamestate){
 		gameState = gamestate;
-		myBounds = new Rectangle(864, 0, 336, 675);
+		myBounds = new Rectangle(704, 0, 352, 704);
 		myStage = stage;
 		myPlayer = myStage.getPlayer();
 		myState = new State("main");

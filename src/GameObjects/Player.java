@@ -46,7 +46,7 @@ public class Player extends GameObject{
 	private List<SkillData> myFireSkills;
 	
 	public Player(Stage stage){
-		myX = 23;
+		myX = 16;
 		myY = 2;
 		
 		myEarthSkills = new ArrayList<SkillData>();
@@ -54,8 +54,8 @@ public class Player extends GameObject{
 		myWaterSkills = new ArrayList<SkillData>();
 		myFireSkills = new ArrayList<SkillData>();
 		
-		myHealth = 16;
-		myMaxHealth =16;
+		myHealth = 32;
+		myMaxHealth =32;
 		myGenericSkills = new HashSet<String>();
 		
 		

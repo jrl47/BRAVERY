@@ -17,12 +17,12 @@ public class MainMenu extends SubMenu{
 	public MainMenu(Stage stage, State state, TileObjectInfoHandler handler, State gamestate) {
 		super(stage, state);
 		gameState = gamestate;
-		moveMenuOpen = new StateChangeButton(872, 630, "MOVE", 2, myFont,myBlueFont, myBackground, myHoverBackground, myState, "move");
-		attackMenuOpen = new StateChangeButton(944, 630, "ATTACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, myState, "attack");
-		planeMenuOpen = new StateChangeButton(1044, 630, "SHIFT", 2, myFont,myBlueFont, myBackground, myHoverBackground, myState, "plane");
+		moveMenuOpen = new StateChangeButton(712, 660, "MOVE", 2, myFont,myBlueFont, myBackground, myHoverBackground, myState, "move");
+		attackMenuOpen = new StateChangeButton(790, 660, "ATTACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, myState, "attack");
+		planeMenuOpen = new StateChangeButton(896, 660, "SHIFT", 2, myFont,myBlueFont, myBackground, myHoverBackground, myState, "plane");
 		
-		mapOpen = new StateChangeButton(1130, 630, "MAP", 2, myFont,myBlueFont, myBackground, myHoverBackground, gameState, "map");
-		mapClose = new StateChangeButton(1130, 630, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, gameState, "game");
+		mapOpen = new StateChangeButton(990, 660, "MAP", 2, myFont,myBlueFont, myBackground, myHoverBackground, gameState, "map");
+		mapClose = new StateChangeButton(988, 660, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, gameState, "game");
 		
 		myObjects.add(moveMenuOpen);
 		myObjects.add(attackMenuOpen);

@@ -8,8 +8,8 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 
 public class Display {
-	public static int width = 1200;
-	public static int height = (width / 16) * 9;
+	public static int width = 1056;
+	public static int height = (width / 3) * 2;
 	
 	private JFrame frame;
 	private Canvas canvas;

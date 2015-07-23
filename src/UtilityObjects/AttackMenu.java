@@ -40,20 +40,20 @@ public class AttackMenu extends SubMenu{
 		
 		myAttackButtons = new HashSet<StateChangeButton>();
 		
-		noSelectionDialog = new Text(886, 140, "SELECT A VALID TARGET", 2, myFont);
-		emptySelectionDialog = new Text(886, 140, "NO ENEMIES TARGETED", 2, myFont);
-		myNameDialog = new Text(886, 20, " ", 2, myFont);
-		emptyDialog = new Text(900, 20, " ", 2, myFont);
+		noSelectionDialog = new Text(736, 140, "SELECT A VALID TARGET", 2, myFont);
+		emptySelectionDialog = new Text(736, 140, "NO ENEMIES TARGETED", 2, myFont);
+		myNameDialog = new Text(736, 20, " ", 2, myFont);
+		emptyDialog = new Text(750, 20, " ", 2, myFont);
 		mySelectionDialog = emptyDialog;
 		myCostDialog = emptyDialog;
 		myPowerDialog = emptyDialog;
 		
-		earth = new StateChangeButton(874, 10, "EARTH", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "earth");
-		air = new StateChangeButton(966, 10, "AIR", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "air");
-		water = new StateChangeButton(1026, 10, "WATER", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "water");
-		fire = new StateChangeButton(1118, 10, "FIRE", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "fire");
-		subBack = new StateChangeButton(1130, 400, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttackType, "main");
-		cancel = new StateChangeButton(1102, 400, "CANCEL", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttack, "main");
+		earth = new StateChangeButton(724, 10, "EARTH", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "earth");
+		air = new StateChangeButton(816, 10, "AIR", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "air");
+		water = new StateChangeButton(876, 10, "WATER", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "water");
+		fire = new StateChangeButton(968, 10, "FIRE", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "fire");
+		subBack = new StateChangeButton(980, 400, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttackType, "main");
+		cancel = new StateChangeButton(952, 400, "CANCEL", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttack, "main");
 
 		myObjects.add(earth);
 		myObjects.add(air);
@@ -73,16 +73,16 @@ public class AttackMenu extends SubMenu{
 			int yLoc = myPlayer.getY() + myPlayer.getTargetY();
 			
 			SkillData data = SkillBuilder.getSkill(Integer.parseInt(myAttack.getState()), myAttackType.getState());
-			myNameDialog = new Text(900, 20, data.getName().toUpperCase() + ":", 2, myFont);
+			myNameDialog = new Text(750, 20, data.getName().toUpperCase() + ":", 2, myFont);
 			if(myPlayer.canAfford(data.getCost(), data.getType().toLowerCase())){
-				myCostDialog = new Text(900, 60, 
+				myCostDialog = new Text(750, 60, 
 					myPlayer.getAction().getCost() + " " + myPlayer.getAction().getType().toUpperCase() + " ENERGY", 2, myFont);
 			}
 			else{
-				myCostDialog = new Text(900, 60, 
+				myCostDialog = new Text(750, 60, 
 						"NOT ENOUGH ENERGY", 2, myFont);
 			}
-			myPowerDialog = new Text(900, 100, 
+			myPowerDialog = new Text(750, 100, 
 					myPlayer.getAction().getPower() +  " POWER", 2, myFont);
 			
 			if(myPlayer.getTargetX()==Integer.MIN_VALUE || myPlayer.getTargetY()==Integer.MIN_VALUE){
@@ -95,7 +95,7 @@ public class AttackMenu extends SubMenu{
 				mySelectionDialog = emptySelectionDialog;
 			}
 			else if(myPlayer.getAction().getCost()!=0){
-				mySelectionDialog = new Text(900, 140, " ", 2, myFont);
+				mySelectionDialog = new Text(750, 140, " ", 2, myFont);
 			}
 			else{
 				mySelectionDialog = noSelectionDialog;
@@ -144,7 +144,7 @@ public class AttackMenu extends SubMenu{
 	}
 	public void addAttackButton(SkillData data){
 		if(data.getType().equals(myAttackType.getState())){
-			myAttackButtons.add(new StateChangeButton(876, 10 + (data.getIndex() * 65), data.getName().toUpperCase(),
+			myAttackButtons.add(new StateChangeButton(726, 10 + (data.getIndex() * 65), data.getName().toUpperCase(),
 					3, myFont, myBlueFont, myBackground, myHoverBackground, myAttack, ""+data.getAbsoluteIndex()));
 		}
 	}

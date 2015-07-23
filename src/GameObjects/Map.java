@@ -95,7 +95,7 @@ public class Map extends GameObject{
 				}
 				if(sides.contains('r')){
 					g.setColor(Color.WHITE);
-					g.fillRect(xshift + i*32 + + 15, yshift + j*32 + 31, 3, 16);
+					g.fillRect(xshift + i*32 + 31, yshift + j*32 + 8, 3, 16);
 				}
 			}
 		}
@@ -109,11 +109,11 @@ public class Map extends GameObject{
 		
 		
 		g.setColor(Color.GREEN);
-		g.fillRect((myStage.getRoomX() + myStage.getPlayer().getX()/32)*32 + 8 + xshift,
-				(myStage.getRoomY() + myStage.getPlayer().getY()/32)*32 + 8 + yshift, 16, 16);
+		g.fillRect((myStage.getRoomX())*32 + 8 + xshift,
+				(myStage.getRoomY())*32 + 8 + yshift, 16, 16);
 		g.setColor(Color.BLACK);
-		g.drawRect((myStage.getRoomX() + myStage.getPlayer().getX()/32)*32 + 8 + xshift,
-				(myStage.getRoomY() + myStage.getPlayer().getY()/32)*32 + 8 + yshift, 16, 16);
+		g.drawRect((myStage.getRoomX())*32 + 8 + xshift,
+				(myStage.getRoomY())*32 + 8 + yshift, 16, 16);
 		
 		if(hoverX!=-1 && hoverY!=-1){
 			g.drawImage(manager.getHoverTransparency(), (hoverX)*Stage.BLOCK_SIZE + xshift, 1+((hoverY)*Stage.BLOCK_SIZE) + yshift, null, null);

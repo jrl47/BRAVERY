@@ -14,9 +14,9 @@ public class MoveMenu extends SubMenu{
 	public MoveMenu(Stage stage, State state){
 		super(stage, state);
 
-		noSelectionDialog = new Text(900, 20, "SELECT A VALID MOVE", 2, myFont);
-		mySelectionDialog = new Text(900, 20, " ", 2, myFont);
-		myCostDialog = new Text(900, 20, " ", 2, myFont);
+		noSelectionDialog = new Text(740, 20, "SELECT A VALID MOVE", 2, myFont);
+		mySelectionDialog = new Text(740, 20, " ", 2, myFont);
+		myCostDialog = new Text(740, 20, " ", 2, myFont);
 
 		myObjects.add(mySelectionDialog);
 		myObjects.add(myCostDialog);
@@ -31,16 +31,16 @@ public class MoveMenu extends SubMenu{
 		int xDif = Math.abs(myPlayer.getTargetX());
 		int yDif = Math.abs(myPlayer.getTargetY());
 		
-		myCostDialog = new Text(900, 60, 
+		myCostDialog = new Text(740, 60, 
 				myPlayer.getAction().getCost() + " " + myPlayer.getAction().getType().toUpperCase() + " ENERGY", 2, myFont);
 		
 		if(myPlayer.getTargetX()==Integer.MIN_VALUE || myPlayer.getTargetY()==Integer.MIN_VALUE){
 			mySelectionDialog = noSelectionDialog;
-				myCostDialog = new Text(900, 60, " ", 2, myFont);
+				myCostDialog = new Text(740, 60, " ", 2, myFont);
 		}
 		else if(!myCells.get(xLoc).get(yLoc).isAvailable()){
 			mySelectionDialog = noSelectionDialog;
-				myCostDialog = new Text(900, 60, " ", 2, myFont);
+				myCostDialog = new Text(740, 60, " ", 2, myFont);
 		}
 		else if(xDif==0 && yDif==0){
 			
@@ -71,21 +71,21 @@ public class MoveMenu extends SubMenu{
 		}
 		else{
 			mySelectionDialog = noSelectionDialog;
-			myCostDialog = new Text(900, 60, " ", 2, myFont);
+			myCostDialog = new Text(740, 60, " ", 2, myFont);
 		}
 		
 		
 		if(myPlayer.getAction().getType().equals("earth")){
-			mySelectionDialog = new Text(900, 20, "ORTHOGONAL MOVE:", 2, myFont);
+			mySelectionDialog = new Text(740, 20, "ORTHOGONAL MOVE:", 2, myFont);
 		}
 		else if(myPlayer.getAction().getType().equals("air")){
-			mySelectionDialog = new Text(900, 20, "DIAGONAL MOVE:", 2, myFont);
+			mySelectionDialog = new Text(740, 20, "DIAGONAL MOVE:", 2, myFont);
 		}
 		else if(myPlayer.getAction().getType().equals("water")){
-			mySelectionDialog = new Text(900, 20, "SKEW MOVE:", 2, myFont);
+			mySelectionDialog = new Text(740, 20, "SKEW MOVE:", 2, myFont);
 		}
 		else if(myPlayer.getAction().getType().equals("fire")){
-			mySelectionDialog = new Text(900, 20, "STRAY MOVE:", 2, myFont);
+			mySelectionDialog = new Text(740, 20, "STRAY MOVE:", 2, myFont);
 		}
 		
 		

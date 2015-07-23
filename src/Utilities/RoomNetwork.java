@@ -11,8 +11,8 @@ import GameObjects.MapCell;
 import GameObjects.Stage;
 
 public class RoomNetwork {
-	public static final int WORLD_WIDTH = 3;
-	public static final int WORLD_HEIGHT = 4;
+	public static final int WORLD_WIDTH = 7;
+	public static final int WORLD_HEIGHT = 7;
 	private List<List<BufferedImage>> myRooms;
 	private List<List<Integer>> myRoomWidths;
 	private List<List<Integer>> myRoomHeights;
@@ -51,13 +51,13 @@ public class RoomNetwork {
 					} catch (IOException e) { }
 				}
 				if(room!=null){
-					for(int x=0; x<room.getWidth(); x+=32){
-						for(int y=0; y<room.getHeight(); y+=32){
-							myRooms.get(i + (x/32)).set(j + (y/32), room);
-							myRoomWidths.get(i + (x/32)).set(j + (y/32), room.getWidth()/32);
-							myRoomHeights.get(i + (x/32)).set(j + (y/32), room.getHeight()/32);
-							myRoomXs.get(i + (x/32)).set(j + (y/32), i);
-							myRoomYs.get(i + (x/32)).set(j + (y/32), j);
+					for(int x=0; x<room.getWidth(); x+=Stage.ROOM_SIZE){
+						for(int y=0; y<room.getHeight(); y+=Stage.ROOM_SIZE){
+							myRooms.get(i + (x/Stage.ROOM_SIZE)).set(j + (y/Stage.ROOM_SIZE), room);
+							myRoomWidths.get(i + (x/Stage.ROOM_SIZE)).set(j + (y/Stage.ROOM_SIZE), room.getWidth()/Stage.ROOM_SIZE);
+							myRoomHeights.get(i + (x/Stage.ROOM_SIZE)).set(j + (y/Stage.ROOM_SIZE), room.getHeight()/Stage.ROOM_SIZE);
+							myRoomXs.get(i + (x/Stage.ROOM_SIZE)).set(j + (y/Stage.ROOM_SIZE), i);
+							myRoomYs.get(i + (x/Stage.ROOM_SIZE)).set(j + (y/Stage.ROOM_SIZE), j);
 						}
 					}
 				}
@@ -67,7 +67,6 @@ public class RoomNetwork {
 	}
 	public void buildRoom(List<List<MapCell>> myCells, int roomX, int roomY) {
 		myCells.clear();
-		
 		BufferedImage myMap = myRooms.get(roomX).get(roomY);
 		
 		for(int i=0; i<myMap.getWidth(); i++){
@@ -77,7 +76,7 @@ public class RoomNetwork {
 		for(int i=0; i<myMap.getWidth(); i++){
 			for(int j=0; j<myMap.getHeight(); j++){
 				myCells.get(i).add(new MapCell(i, j, myStage));
-				if(myMap.getRGB(i,j)==-1){
+				if(myMap.getRGB(i,j)==-16777216){
 					myCells.get(i).get(j).setPassable(1);
 				}
 				else if(myMap.getRGB(i,j)==-8421505){

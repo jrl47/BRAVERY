@@ -16,12 +16,14 @@ import Utilities.RoomNetwork;
 import Utilities.StageKeyHandler;
 import Utilities.State;
 import Utilities.ValidAttackChecker;
+import UtilitiesData.RoomDataBuilder;
 
 public class Stage extends GameObject{
 
 	public static final int BLOCK_SIZE = 32;
-	public static final int MAP_WIDTH = 27;
-	public static final int MAP_HEIGHT = 21;
+	public static final int MAP_WIDTH = 22;
+	public static final int MAP_HEIGHT = 22;
+	public static final int ROOM_SIZE = 22;
 	private Player myPlayer;
 	private int roomX;
 	private int roomY;
@@ -50,9 +52,9 @@ public class Stage extends GameObject{
 	public Stage() {
 		super();
 		roomX = 0;
-		roomY = 1;
+		roomY = 0;
 		myCamera = new Camera();
-		myBounds = new Rectangle(0, 0, MAP_WIDTH * 32, 675);
+		myBounds = new Rectangle(0, 0, MAP_WIDTH * 32,705);
 		myPlane = new State("1");
 		myEnemies = new ArrayList<Enemy>();
 		myBosses = new ArrayList<Boss>();
@@ -61,8 +63,8 @@ public class Stage extends GameObject{
 		myCells = new ArrayList<List<MapCell>>();
 		myRooms = new RoomNetwork(this);
 
-		myTestSkill = new CollectibleSkill(24, 5, this, 1, "earth");
-		myOtherTestSkill = new CollectibleSkill(25, 6, this, 2, "earth");
+		myTestSkill = new CollectibleSkill(18, 3, this, 1, "earth");
+		myOtherTestSkill = new CollectibleSkill(19, 4, this, 2, "earth");
 		
 		try {
 			manager = new DeciduousTileManager(this);
@@ -78,7 +80,7 @@ public class Stage extends GameObject{
 	}
 	@Override
 	public void useInput(int i, int j, boolean b) {
-		if(!(j>0 && j < 674 && i < MAP_WIDTH * 32))
+		if(!(j>0 && j < 705 && i < MAP_WIDTH * 32))
 			return;
 		
 		wasInput = true;
@@ -113,6 +115,9 @@ public class Stage extends GameObject{
 			myPlayer.setTargetX(Integer.MIN_VALUE);
 			myPlayer.setTargetY(Integer.MIN_VALUE);
 		}
+		
+		roomX = myRooms.getX(roomX, roomY) + myPlayer.getX()/ROOM_SIZE;
+		roomY = myRooms.getY(roomX, roomY) + myPlayer.getY()/ROOM_SIZE;
 		
 		removeDeadEnemies();
 		removeDeadCollectibles();
@@ -155,7 +160,8 @@ public class Stage extends GameObject{
 		wasInput = false;
 	}
 	private void drawCells(Graphics g) {
-		g.drawImage(myRoom.getSubimage(32*(myCamera.getX() - MAP_WIDTH/2), 32*(myCamera.getY() - MAP_HEIGHT/2), 32*MAP_WIDTH, 32*MAP_HEIGHT),
+		g.drawImage(myRoom.getSubimage(32*(myCamera.getX() - MAP_WIDTH/2), 32*(myCamera.getY() - MAP_HEIGHT/2), 
+				Math.min(MAP_WIDTH, ROOM_SIZE*myRooms.getWidth(roomX, roomY))*32, Math.min(MAP_HEIGHT, ROOM_SIZE*myRooms.getHeight(roomX, roomY))*32),
 				0, 0, null);
 	}
 	private void drawCollectibles(Graphics g) {
@@ -210,10 +216,10 @@ public class Stage extends GameObject{
 		roomY = myRooms.getY(specificRoomX, specificRoomY);
 		myRooms.buildRoom(myCells, roomX, roomY);
 		
-		int newX = myPlayer.getX() % 32;
-		int newY = myPlayer.getY() % 32;
-		newX += 32*(specificRoomX - roomX);
-		newY += 32*(specificRoomY - roomY);
+		int newX = myPlayer.getX() % ROOM_SIZE;
+		int newY = myPlayer.getY() % ROOM_SIZE;
+		newX += ROOM_SIZE*(specificRoomX - roomX);
+		newY += ROOM_SIZE*(specificRoomY - roomY);
 		
 		setEnemiesAndCollectibles();
 		myPlayer.resetLocation(newX, newY);
@@ -222,10 +228,10 @@ public class Stage extends GameObject{
 	private void drawRoom() {
 		int roomWidth = myRooms.getWidth(roomX, roomY);
 		int roomHeight = myRooms.getHeight(roomX, roomY);
-		myRoom = new BufferedImage(32*32*roomWidth, 32*32*roomHeight, BufferedImage.TYPE_INT_ARGB);
+		myRoom = new BufferedImage(ROOM_SIZE*BLOCK_SIZE*roomWidth, ROOM_SIZE*BLOCK_SIZE*roomHeight, BufferedImage.TYPE_INT_ARGB);
 		Graphics g = myRoom.getGraphics();
-		for(int i=0; i<roomWidth*32; i++){
-			for(int j=0; j<roomHeight*32; j++){
+		for(int i=0; i<roomWidth*ROOM_SIZE; i++){
+			for(int j=0; j<roomHeight*ROOM_SIZE; j++){
 				((MapCell)myCells.get(i).get(j)).draw(g, manager, i, j);
 			}
 		}
@@ -254,13 +260,13 @@ public class Stage extends GameObject{
 			}
 		}
 		
-		if(!myTestSkill.isDestroyed() && roomX == 0 && roomY == 1){
+		if(!myTestSkill.isDestroyed() && roomX == 0 && roomY == 0){
 		myCollectibles.add(myTestSkill);
-		myCells.get(24).get(5).setCollectible(myTestSkill);
+		myCells.get(18).get(3).setCollectible(myTestSkill);
 		}
-		if(!myOtherTestSkill.isDestroyed() && roomX == 0 && roomY == 1){
+		if(!myOtherTestSkill.isDestroyed() && roomX == 0 && roomY == 0){
 			myCollectibles.add(myOtherTestSkill);
-			myCells.get(25).get(6).setCollectible(myOtherTestSkill);
+			myCells.get(19).get(4).setCollectible(myOtherTestSkill);
 			}
 	}
 	public void addBossToMap(Boss b, Character direction){
@@ -283,7 +289,7 @@ public class Stage extends GameObject{
 		b.setLocation(x, y);
 	}
 	private void createBosses() {
-		myBosses.add(new Boss(1, 1, this, 100, 0, 0));
+		myBosses.add(new Boss(1, 1, this, 100, 1, 1));
 	}
 	private void setPlayerTarget() {
 		int targetX = myCamera.getX() - myPlayer.getX() + hoverX - MAP_WIDTH/2;
@@ -344,17 +350,17 @@ public class Stage extends GameObject{
 	private void setCamera() {
 		int camX = myPlayer.getX();
 		int camY = myPlayer.getY();
+		if(camX + MAP_WIDTH/2 >= myCells.size()){
+			camX = myCells.size() - MAP_WIDTH/2;
+		}
 		if(camX - MAP_WIDTH/2 < 0){
 			camX = MAP_WIDTH/2;
 		}
+		if(camY + MAP_HEIGHT/2 >= myCells.get(0).size()){
+			camY = myCells.get(0).size() - MAP_HEIGHT/2;
+		}
 		if(camY - MAP_HEIGHT/2 < 0){
 			camY = MAP_HEIGHT/2;
-		}
-		if(camX + MAP_WIDTH/2 >= myCells.size()){
-			camX = myCells.size() - MAP_WIDTH/2 - 1;
-		}
-		if(camY + MAP_HEIGHT/2 >= myCells.get(0).size()){
-			camY = myCells.get(0).size() - MAP_HEIGHT/2 - 1;
 		}
 		myCamera.setX(camX);
 		myCamera.setY(camY);
