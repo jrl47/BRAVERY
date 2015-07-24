@@ -20,6 +20,7 @@ public class Player extends GameObject{
 	private boolean preparedMove;
 	private boolean preparedAttack;
 	private boolean preparedPlane;
+	private boolean shiftHeld;
 	
 	private int targetX;
 	private int targetY;
@@ -101,7 +102,6 @@ public class Player extends GameObject{
 
 	@Override
 	public void step() {
-
 	}
 	
 	@Override
@@ -137,10 +137,6 @@ public class Player extends GameObject{
 	public void useKeyPress(KeyEvent k) {
 		if(k==null){
 			return;
-		}
-		if(k.getKeyCode()==KeyEvent.VK_W || k.getKeyCode()==KeyEvent.VK_S || 
-				k.getKeyCode()==KeyEvent.VK_A || k.getKeyCode()==KeyEvent.VK_D){
-			myAction = new Action("wait");
 		}
 		
 		if(k.getKeyCode()==KeyEvent.VK_W)
@@ -401,5 +397,12 @@ public class Player extends GameObject{
 			return myFireSkills.get(myIndex);
 		}
 		return null;
+	}
+
+	public void setShiftKey(boolean b) {
+		shiftHeld = b;
+	}
+	public boolean getShiftHeld(){
+		return shiftHeld;
 	}
 }

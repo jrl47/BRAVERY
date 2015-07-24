@@ -128,11 +128,18 @@ public class InputListener implements MouseListener, MouseMotionListener, KeyLis
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-
+		if(arg0.getKeyCode()==KeyEvent.VK_SHIFT){
+			myPlayer.setShiftKey(true);
+			return;
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
+		if(arg0.getKeyCode()==KeyEvent.VK_SHIFT){
+			myPlayer.setShiftKey(false);
+			return;
+		}
 		mostRecentKeyEvent = arg0;
 	}
 

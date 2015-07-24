@@ -292,7 +292,6 @@ public class Stage extends GameObject{
 		for(int i=0; i<1; i++){
 			myBosses.add(new Boss(1, 1, this, 100));
 		}
-//		myBosses.add(new Boss(1, 1, this, 100, 1, 1));
 	}
 	private void setPlayerTarget() {
 		int targetX = myCamera.getX() - myPlayer.getX() + hoverX - MAP_WIDTH/2;
