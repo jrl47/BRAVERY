@@ -2,6 +2,7 @@ package GameObjects;
 
 import java.awt.Graphics;
 
+import Utilities.RoomNetwork;
 import UtilitiesData.CollectibleSkillBuilder;
 import UtilitiesData.CollectibleSkillData;
 import UtilitiesData.SkillBuilder;
@@ -16,12 +17,18 @@ public class CollectibleSkill extends Collectible{
 	private int roomY;
 	
 	public CollectibleSkill(int i, Stage stage){
-		super(CollectibleSkillBuilder.getSkillObject(i).getX(),CollectibleSkillBuilder.getSkillObject(i).getY(), stage, -1);
+		super(0, 0, stage, -1);
 		CollectibleSkillData data = CollectibleSkillBuilder.getSkillObject(i);
-		myGenericSkill = data.getName();
+		myGenericSkill = "";
+//		myGenericSkill = data.getName();
 		mySkill = SkillBuilder.getSkill(data.getIndex(), data.getType());
 		roomX = data.getRoomX();
 		roomY = data.getRoomY();
+		RoomNetwork myRooms = stage.getRooms();
+		int difX = roomX - myRooms.getX(roomX, roomY);
+		int difY = roomY - myRooms.getY(roomX, roomY);
+		myX = data.getX() + difX*Stage.ROOM_SIZE;
+		myY = data.getY() + difY*Stage.ROOM_SIZE;
 	}
 	
 	public String getGenericSkill(){
@@ -31,16 +38,6 @@ public class CollectibleSkill extends Collectible{
 		return mySkill;
 	}
 	
-	@Override
-	public void draw(Graphics g){
-		if(myStage.getRelativeX(myX)*Stage.BLOCK_SIZE <0 || 
-				1+(myStage.getRelativeY(myY)*Stage.BLOCK_SIZE) < 0 ||
-				myStage.getRelativeX(myX)*Stage.BLOCK_SIZE >= myStage.getWidth()*Stage.BLOCK_SIZE ||
-				1+(myStage.getRelativeY(myY)*Stage.BLOCK_SIZE) >= myStage.getHeight()*Stage.BLOCK_SIZE)
-			return;
-		g.drawImage(myStage.getManager().getImage(this), myStage.getRelativeX(myX)*Stage.BLOCK_SIZE,
-				1+(myStage.getRelativeY(myY)*Stage.BLOCK_SIZE), null);
-	}
 	public int getRoomX() {
 		return roomX;
 	}

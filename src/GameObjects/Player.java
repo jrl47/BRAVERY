@@ -50,16 +50,16 @@ public class Player extends GameObject{
 		myStage = stage;
 		int roomX = myStage.getRoomX();
 		int roomY = myStage.getRoomY();
-		myX = 10 + Stage.ROOM_SIZE*-(myStage.getRooms().getX(roomX, roomY) - roomX);
-		myY = 9  + Stage.ROOM_SIZE*-(myStage.getRooms().getY(roomX, roomY) - roomY);
+		myX = 3 + Stage.ROOM_SIZE*-(myStage.getRooms().getX(roomX, roomY) - roomX);
+		myY = 14  + Stage.ROOM_SIZE*-(myStage.getRooms().getY(roomX, roomY) - roomY);
 		
 		myEarthSkills = new ArrayList<SkillData>();
 		myAirSkills = new ArrayList<SkillData>();
 		myWaterSkills = new ArrayList<SkillData>();
 		myFireSkills = new ArrayList<SkillData>();
 		
-		myHealth = 350;
-		myMaxHealth =350;
+		myHealth = 20;
+		myMaxHealth =20;
 		myGenericSkills = new HashSet<String>();
 		
 		

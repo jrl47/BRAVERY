@@ -51,8 +51,8 @@ public class Stage extends GameObject{
 
 	public Stage() {
 		super();
-		roomX = 5;
-		roomY = 3;
+		roomX = 2;
+		roomY = 1;
 		myCamera = new Camera();
 		myBounds = new Rectangle(0, 0, MAP_WIDTH * 32,705);
 		myPlane = new State("1");
@@ -229,10 +229,7 @@ public class Stage extends GameObject{
 		for(CollectibleSkill c: myCollectibleSkills){
 			if(!c.isDestroyed() && roomX==myRooms.getX(c.getRoomX(), c.getRoomY()) && roomY==myRooms.getY(c.getRoomX(), c.getRoomY()) && !myCollectibles.contains(c)){
 				myCollectibles.add(c);
-				int difX = c.getRoomX() - myRooms.getX(c.getRoomX(), c.getRoomY());
-				int difY = c.getRoomY() - myRooms.getY(c.getRoomX(), c.getRoomY());
-				System.out.println((c.getX() + ROOM_SIZE*difX) + " " + (c.getY() + ROOM_SIZE*difY));
-				myCells.get(c.getX() + ROOM_SIZE*difX).get(c.getY() + ROOM_SIZE*difY).setCollectible(c);
+				myCells.get(c.getX()).get(c.getY()).setCollectible(c);
 			}
 		}
 	}

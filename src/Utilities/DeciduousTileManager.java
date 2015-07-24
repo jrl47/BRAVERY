@@ -194,6 +194,9 @@ public class DeciduousTileManager extends TileManager{
 	}
 	
 	public BufferedImage getImage(Collectible c) {
+		if(c instanceof CollectibleSkill){
+			return myImage.getSubimage(2*32, 2*32, 32, 32);
+		}
 		return myImage.getSubimage(0*32, 2*32, 32, 32);
 	}
 	
@@ -203,10 +206,6 @@ public class DeciduousTileManager extends TileManager{
 		if(enemy.getIndex()==100)
 			return myImage.getSubimage(3*32, 2*32, 32, 32);
 		return null;
-	}
-
-	public Image getImage(CollectibleSkill collectibleSkill) {
-		return myImage.getSubimage(2*32, 2*32, 32, 32);
 	}
 
 }
