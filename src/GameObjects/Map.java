@@ -107,13 +107,19 @@ public class Map extends GameObject{
 			g.drawRect(b.getRoomX()*32 + 6 + xshift, b.getRoomY()*32 + 6 + yshift, 20, 20);
 		}
 		
-		
 		g.setColor(Color.GREEN);
 		g.fillRect((myStage.getRoomX())*32 + 8 + xshift,
 				(myStage.getRoomY())*32 + 8 + yshift, 16, 16);
 		g.setColor(Color.BLACK);
 		g.drawRect((myStage.getRoomX())*32 + 8 + xshift,
 				(myStage.getRoomY())*32 + 8 + yshift, 16, 16);
+		
+		for(CollectibleSkill c: myStage.getCollectibleSkills()){
+			g.setColor(Color.BLUE);
+			g.fillRect(c.getRoomX()*32 + 10 + xshift, c.getRoomY()*32 + 10 + yshift, 12, 12);
+			g.setColor(Color.BLACK);
+			g.drawRect(c.getRoomX()*32 + 10 + xshift, c.getRoomY()*32 + 10 + yshift, 12, 12);
+		}
 		
 		if(hoverX!=-1 && hoverY!=-1){
 			g.drawImage(manager.getHoverTransparency(), (hoverX)*Stage.BLOCK_SIZE + xshift, 1+((hoverY)*Stage.BLOCK_SIZE) + yshift, null, null);

@@ -2,6 +2,8 @@ package GameObjects;
 
 import java.awt.Graphics;
 
+import UtilitiesData.CollectibleSkillBuilder;
+import UtilitiesData.CollectibleSkillData;
 import UtilitiesData.SkillBuilder;
 import UtilitiesData.SkillData;
 
@@ -10,15 +12,16 @@ public class CollectibleSkill extends Collectible{
 	private String myGenericSkill;
 	
 	private SkillData mySkill;
+	private int  roomX;
+	private int roomY;
 	
-	public CollectibleSkill(int x, int y, Stage stage, String skill){
-		super(x, y, stage, -1);
-		myGenericSkill = skill;
-	}
-	public CollectibleSkill(int x, int y, Stage stage, int i, String type){
-		super(x, y, stage, -1);
-		myGenericSkill = "";
-		mySkill = SkillBuilder.getSkill(i, type);
+	public CollectibleSkill(int i, Stage stage){
+		super(CollectibleSkillBuilder.getSkillObject(i).getX(),CollectibleSkillBuilder.getSkillObject(i).getY(), stage, -1);
+		CollectibleSkillData data = CollectibleSkillBuilder.getSkillObject(i);
+		myGenericSkill = data.getName();
+		mySkill = SkillBuilder.getSkill(data.getIndex(), data.getType());
+		roomX = data.getRoomX();
+		roomY = data.getRoomY();
 	}
 	
 	public String getGenericSkill(){
@@ -37,5 +40,11 @@ public class CollectibleSkill extends Collectible{
 			return;
 		g.drawImage(myStage.getManager().getImage(this), myStage.getRelativeX(myX)*Stage.BLOCK_SIZE,
 				1+(myStage.getRelativeY(myY)*Stage.BLOCK_SIZE), null);
+	}
+	public int getRoomX() {
+		return roomX;
+	}
+	public int getRoomY(){
+		return roomY;
 	}
 }

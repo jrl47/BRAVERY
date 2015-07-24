@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import Utilities.SongPlayer;
 import Utilities.State;
 import UtilitiesData.CollectibleBuilder;
+import UtilitiesData.CollectibleSkillBuilder;
 import UtilitiesData.EnemyBuilder;
 import UtilitiesData.RoomDataBuilder;
 import UtilitiesData.SkillBuilder;
@@ -38,6 +39,7 @@ public class World extends GameObject{
 		CollectibleBuilder.init();
 		RoomDataBuilder.init();
 		SkillBuilder.init();
+		CollectibleSkillBuilder.init();
 		myState = new State("main");
 		oldState = "main";
 		myStage = new Stage();

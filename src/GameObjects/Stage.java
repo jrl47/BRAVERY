@@ -16,6 +16,8 @@ import Utilities.RoomNetwork;
 import Utilities.StageKeyHandler;
 import Utilities.State;
 import Utilities.ValidAttackChecker;
+import UtilitiesData.CollectibleSkillBuilder;
+import UtilitiesData.CollectibleSkillData;
 import UtilitiesData.RoomDataBuilder;
 
 public class Stage extends GameObject{
@@ -34,6 +36,7 @@ public class Stage extends GameObject{
 	private List<Boss> myBosses;
 	private List<Boss> myActiveBosses;
 	private List<Collectible> myCollectibles;
+	private List<CollectibleSkill> myCollectibleSkills;
 	private DeciduousTileManager manager;
 	private boolean wasInput;
 	private int hoverX = -1;
@@ -45,10 +48,7 @@ public class Stage extends GameObject{
 	private static final int ENEMY_ANIMATION_START = 6;
 	private boolean quickMove;
 	private State myPlane;
-	
-	private CollectibleSkill myTestSkill;
-	private CollectibleSkill myOtherTestSkill;
-	
+
 	public Stage() {
 		super();
 		roomX = 5;
@@ -60,12 +60,10 @@ public class Stage extends GameObject{
 		myBosses = new ArrayList<Boss>();
 		myActiveBosses = new ArrayList<Boss>();
 		myCollectibles = new ArrayList<Collectible>();
+		myCollectibleSkills = new ArrayList<CollectibleSkill>();
 		myCells = new ArrayList<List<MapCell>>();
 		myRooms = new RoomNetwork(this);
 
-		myTestSkill = new CollectibleSkill(18, 3, this, 1, "earth");
-		myOtherTestSkill = new CollectibleSkill(19, 4, this, 2, "earth");
-		
 		try {
 			manager = new DeciduousTileManager(this);
 		} catch (IOException e1) {
@@ -76,6 +74,7 @@ public class Stage extends GameObject{
 		
 		setEnemiesAndCollectibles();
 		createBosses();
+		createCollectibleSkills();
 		drawRoom();
 	}
 	@Override
@@ -135,7 +134,7 @@ public class Stage extends GameObject{
 			}
 			else{
 				quickMove = false;
-				enemyAnimationCounter = 2;
+				enemyAnimationCounter = 1;
 			}
 		}
 		
@@ -223,7 +222,19 @@ public class Stage extends GameObject{
 		
 		setEnemiesAndCollectibles();
 		myPlayer.resetLocation(newX, newY);
+		addCollectibleSkillsToMap();
 		drawRoom();
+	}
+	private void addCollectibleSkillsToMap() {
+		for(CollectibleSkill c: myCollectibleSkills){
+			if(!c.isDestroyed() && roomX==myRooms.getX(c.getRoomX(), c.getRoomY()) && roomY==myRooms.getY(c.getRoomX(), c.getRoomY()) && !myCollectibles.contains(c)){
+				myCollectibles.add(c);
+				int difX = c.getRoomX() - myRooms.getX(c.getRoomX(), c.getRoomY());
+				int difY = c.getRoomY() - myRooms.getY(c.getRoomX(), c.getRoomY());
+				System.out.println((c.getX() + ROOM_SIZE*difX) + " " + (c.getY() + ROOM_SIZE*difY));
+				myCells.get(c.getX() + ROOM_SIZE*difX).get(c.getY() + ROOM_SIZE*difY).setCollectible(c);
+			}
+		}
 	}
 	private void drawRoom() {
 		int roomWidth = myRooms.getWidth(roomX, roomY);
@@ -259,15 +270,6 @@ public class Stage extends GameObject{
 				}
 			}
 		}
-		
-		if(!myTestSkill.isDestroyed() && roomX == 0 && roomY == 0){
-		myCollectibles.add(myTestSkill);
-		myCells.get(18).get(3).setCollectible(myTestSkill);
-		}
-		if(!myOtherTestSkill.isDestroyed() && roomX == 0 && roomY == 0){
-			myCollectibles.add(myOtherTestSkill);
-			myCells.get(19).get(4).setCollectible(myOtherTestSkill);
-			}
 	}
 	public void addBossToMap(Boss b, Character direction){
 		Random r = new Random();
@@ -291,6 +293,11 @@ public class Stage extends GameObject{
 	private void createBosses() {
 		for(int i=0; i<1; i++){
 			myBosses.add(new Boss(1, 1, this, 100));
+		}
+	}
+	private void createCollectibleSkills() {
+		for(int i=0; i<2; i++){
+			myCollectibleSkills.add(new CollectibleSkill(i, this));
 		}
 	}
 	private void setPlayerTarget() {
@@ -457,5 +464,8 @@ public class Stage extends GameObject{
 	}
 	public boolean wasInput() {
 		return wasInput;
+	}
+	public List<CollectibleSkill> getCollectibleSkills() {
+		return myCollectibleSkills;
 	}
 }

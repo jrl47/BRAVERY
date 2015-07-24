@@ -58,8 +58,8 @@ public class Player extends GameObject{
 		myWaterSkills = new ArrayList<SkillData>();
 		myFireSkills = new ArrayList<SkillData>();
 		
-		myHealth = 20;
-		myMaxHealth =20;
+		myHealth = 350;
+		myMaxHealth =350;
 		myGenericSkills = new HashSet<String>();
 		
 		
