@@ -89,6 +89,7 @@ public class Player extends GameObject{
 		if(myHealth<=0){
 			myCells.get(myX).get(myY).removeEnemy();
 		}
+		clearAction();
 	}
 	
 	public int getDamageTaken(){
