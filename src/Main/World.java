@@ -33,6 +33,10 @@ public class World extends GameObject{
 	private SongPlayer myMusic;
 	private boolean gameLoaded;
 	private boolean mapLoaded;
+	private State mySoundState;
+	private String oldSoundState;
+	private boolean soundOn;
+	private StateChangeButton soundToggle;
 	
 	public World() {
 		EnemyBuilder.init();
@@ -41,6 +45,8 @@ public class World extends GameObject{
 		SkillBuilder.init();
 		CollectibleSkillBuilder.init();
 		myState = new State("main");
+		mySoundState = new State("false");
+		oldSoundState = "false";
 		oldState = "main";
 		myStage = new Stage();
 		myPlayer = new Player(myStage);
@@ -48,12 +54,17 @@ public class World extends GameObject{
 		myMusic = new SongPlayer();
 		Background b = null;
 		BorderedButton t = null;
+		soundToggle = null;
 		try {
 			b = new Background(ImageIO.read(World.class.getResource("/titleBackground.png")));
 			t = new StateChangeButton(384, 284, "BRAVERY", 6, ImageIO.read(World.class.getResource("/fonts.png")),
 					ImageIO.read(World.class.getResource("/bluefonts.png")),
 					ImageIO.read(World.class.getResource("/textbackground.png")),
 					ImageIO.read(World.class.getResource("/textbackgroundhover.png")), myState, "game");
+			soundToggle = new StateChangeButton(928, 660, "SOUND ON", 2, ImageIO.read(World.class.getResource("/fonts.png")),
+					ImageIO.read(World.class.getResource("/bluefonts.png")),
+					ImageIO.read(World.class.getResource("/textbackground.png")),
+					ImageIO.read(World.class.getResource("/textbackgroundhover.png")), mySoundState, "true");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -66,10 +77,38 @@ public class World extends GameObject{
 		for(GameObject g: myActiveObjects){
 			g.step();
 		}
-		myMusic.playWorldTheme();
+		soundOn = Boolean.parseBoolean(mySoundState.getState());
+		if(soundOn){
+			myMusic.playTheme(myState.getState());
+		} else{
+			myMusic.stop();
+		}
 	}
 
 	private void manageState() {
+		if(myState.getState().equals("main")){
+			try {
+				myActiveObjects.remove(soundToggle);
+				if(mySoundState.getState().equals("false") && !oldSoundState.equals("false")){
+					oldSoundState = "false";
+				soundToggle = new StateChangeButton(928, 660, "SOUND ON", 2, ImageIO.read(World.class.getResource("/fonts.png")),
+						ImageIO.read(World.class.getResource("/bluefonts.png")),
+						ImageIO.read(World.class.getResource("/textbackground.png")),
+						ImageIO.read(World.class.getResource("/textbackgroundhover.png")), mySoundState, "true");
+				}
+				else if(mySoundState.getState().equals("true") && !oldSoundState.equals("true")){
+					oldSoundState = "true";
+					soundToggle = new StateChangeButton(914, 660, "SOUND OFF", 2, ImageIO.read(World.class.getResource("/fonts.png")),
+							ImageIO.read(World.class.getResource("/bluefonts.png")),
+							ImageIO.read(World.class.getResource("/textbackground.png")),
+							ImageIO.read(World.class.getResource("/textbackgroundhover.png")), mySoundState, "false");
+				}
+				myActiveObjects.add(soundToggle);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		if(myState.getState().equals("game") && !oldState.equals("game")){
 			oldState = "game";
 			myActiveObjects.clear();
