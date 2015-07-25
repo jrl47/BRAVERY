@@ -11,6 +11,7 @@ import GameObjects.Collectible;
 import GameObjects.CollectibleSkill;
 import GameObjects.Enemy;
 import GameObjects.MapCell;
+import GameObjects.NPC;
 import GameObjects.Player;
 import GameObjects.Stage;
 
@@ -205,6 +206,12 @@ public class DeciduousTileManager extends TileManager{
 			return myImage.getSubimage(1*32, 2*32, 32, 32);
 		if(enemy.getIndex()==100)
 			return myImage.getSubimage(3*32, 2*32, 32, 32);
+		return null;
+	}
+
+	public Image getImage(NPC npc) {
+		if(npc.getIndex()==0)
+			return myImage.getSubimage(4*32, 2*32, 32, 32);
 		return null;
 	}
 
