@@ -134,7 +134,7 @@ public class Stage extends GameObject{
 			}
 			else{
 				quickMove = false;
-				enemyAnimationCounter = 1;
+				enemyAnimationCounter = 2;
 			}
 		}
 		

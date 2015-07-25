@@ -92,13 +92,20 @@ public class TileObjectInfoHandler extends SubMenu{
 	}
 	
 	private void drawRoomData() {
+		boolean hasBoss = false;
 		for(Boss b: myStage.getBosses()){
-			if(myStage.getHoverRoomX()==b.getRoomX() && myStage.getHoverRoomY()==b.getRoomY()){
+			if(myStage.getHoverRoomX()==b.getRoomX() && myStage.getHoverRoomY()==b.getRoomY() && !myStage.getPlayer().getShiftHeld()){
 				myTileObjectInfo5 = new Text(740, 465, b.getName().toUpperCase(), 1.5, myFont);
 				myTileObjectInfo4 = new Text(740, 495, "POWER: " + b.getPower(), 1.5, myFont);
 				myTileObjectInfo3 = new Text(890, 495, "HEALTH: " + b.getHealth(), 1.5, myFont);
 				myTileObjectInfo2 = new Text(740, 525, "VISION: " + b.getSightRange(), 1.5, myFont);
 				myTileObjectInfo1 = new Text(890, 525, "RANGE: " + b.getAttackRange(), 1.5, myFont);
+				hasBoss = true;
+			}
+		}
+		for(CollectibleSkill c: myStage.getCollectibleSkills()){
+			if(myStage.getHoverRoomX()==c.getRoomX() && myStage.getHoverRoomY()==c.getRoomY() && (!hasBoss || myStage.getPlayer().getShiftHeld())){
+				myTileObjectInfo1 = new Text(740,525, "NEW SKILL: " +  ((CollectibleSkill) c).getSkill().getName().toUpperCase(), 1.5, myFont);
 			}
 		}
 	}

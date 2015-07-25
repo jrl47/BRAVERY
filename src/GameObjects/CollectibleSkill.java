@@ -20,7 +20,6 @@ public class CollectibleSkill extends Collectible{
 		super(0, 0, stage, -1);
 		CollectibleSkillData data = CollectibleSkillBuilder.getSkillObject(i);
 		myGenericSkill = "";
-//		myGenericSkill = data.getName();
 		mySkill = SkillBuilder.getSkill(data.getIndex(), data.getType());
 		roomX = data.getRoomX();
 		roomY = data.getRoomY();
