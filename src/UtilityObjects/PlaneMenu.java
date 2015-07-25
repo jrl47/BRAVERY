@@ -32,7 +32,7 @@ public class PlaneMenu extends SubMenu{
 		super(stage, state);
 		myPurchasedPlane = new State("main");
 		myDesiredPlane = new State("main");
-		subBack = new StateChangeButton(980, 400, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, myDesiredPlane, "main");
+		subBack = new StateChangeButton(990, 455, "BACK", 1.5, myFont,myBlueFont, myBackground, myHoverBackground, myDesiredPlane, "main");
 		one = new StateChangeButton(724, 10, "ONE", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myDesiredPlane, "1");
 		two = new StateChangeButton(796, 10, "TWO", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myDesiredPlane, "2");
 		three = new StateChangeButton(866, 10,"THREE", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myDesiredPlane, "3");

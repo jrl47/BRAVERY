@@ -17,7 +17,9 @@ public class AttackMenu extends SubMenu{
 	private Text myNameDialog;
 	private Text noSelectionDialog;
 	private Text emptySelectionDialog;
+	private Text notEnoughDialog;
 	private Text myCostDialog;
+	private Text costWarningDialog;
 	private Text myPowerDialog;
 	private Text emptyDialog;
 
@@ -40,20 +42,22 @@ public class AttackMenu extends SubMenu{
 		
 		myAttackButtons = new HashSet<StateChangeButton>();
 		
-		noSelectionDialog = new Text(736, 140, "SELECT A VALID TARGET", 2, myFont);
-		emptySelectionDialog = new Text(736, 140, "NO ENEMIES TARGETED", 2, myFont);
-		myNameDialog = new Text(736, 20, " ", 2, myFont);
-		emptyDialog = new Text(750, 20, " ", 2, myFont);
+		noSelectionDialog = new Text(730, 80, "SELECT A VALID TARGET", 1.5, myFont);
+		emptySelectionDialog = new Text(730, 80, "NO ENEMIES TARGETED", 1.5, myFont);
+		notEnoughDialog = new Text(850, 50, "NOT ENOUGH ENERGY", 1.5, myFont);
+		myNameDialog = new Text(736, 20, " ", 1.5, myFont);
+		emptyDialog = new Text(750, 20, " ", 1.5, myFont);
 		mySelectionDialog = emptyDialog;
 		myCostDialog = emptyDialog;
 		myPowerDialog = emptyDialog;
+		costWarningDialog = emptyDialog;
 		
 		earth = new StateChangeButton(724, 10, "EARTH", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "earth");
 		air = new StateChangeButton(816, 10, "AIR", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "air");
 		water = new StateChangeButton(876, 10, "WATER", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "water");
 		fire = new StateChangeButton(968, 10, "FIRE", 2.25, myFont, myBlueFont, myBackground, myHoverBackground, myAttackType, "fire");
-		subBack = new StateChangeButton(980, 400, "BACK", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttackType, "main");
-		cancel = new StateChangeButton(952, 400, "CANCEL", 2, myFont,myBlueFont, myBackground, myHoverBackground, myAttack, "main");
+		subBack = new StateChangeButton(990, 455, "BACK", 1.5, myFont,myBlueFont, myBackground, myHoverBackground, myAttackType, "main");
+		cancel = new StateChangeButton(980, 455, "CANCEL", 1.5, myFont,myBlueFont, myBackground, myHoverBackground, myAttack, "main");
 
 		myObjects.add(earth);
 		myObjects.add(air);
@@ -68,22 +72,23 @@ public class AttackMenu extends SubMenu{
 			myObjects.add(mySelectionDialog);
 			myObjects.add(myCostDialog);
 			myObjects.add(myPowerDialog);
-
+			myObjects.add(costWarningDialog);
+			
 			int xLoc = myPlayer.getX() + myPlayer.getTargetX();
 			int yLoc = myPlayer.getY() + myPlayer.getTargetY();
 			
 			SkillData data = SkillBuilder.getSkill(Integer.parseInt(myAttack.getState()), myAttackType.getState());
-			myNameDialog = new Text(750, 20, data.getName().toUpperCase() + ":", 2, myFont);
-			if(myPlayer.canAfford(data.getCost(), data.getType().toLowerCase())){
-				myCostDialog = new Text(750, 60, 
-					myPlayer.getAction().getCost() + " " + myPlayer.getAction().getType().toUpperCase() + " ENERGY", 2, myFont);
+			myNameDialog = new Text(730, 20, data.getName().toUpperCase() + ":", 1.5, myFont);
+			myCostDialog = new Text(860, 20, 
+					myPlayer.getAction().getCost() + " " + myPlayer.getAction().getType().toUpperCase() + " ENERGY", 1.5, myFont);
+			if(!myPlayer.canAfford(data.getCost(), data.getType().toLowerCase())){
+				costWarningDialog = notEnoughDialog;
+			}else{
+				costWarningDialog = emptyDialog;
 			}
-			else{
-				myCostDialog = new Text(750, 60, 
-						"NOT ENOUGH ENERGY", 2, myFont);
-			}
-			myPowerDialog = new Text(750, 100, 
-					myPlayer.getAction().getPower() +  " POWER", 2, myFont);
+			
+			myPowerDialog = new Text(730, 50, 
+					myPlayer.getAction().getPower() +  " POWER", 1.5, myFont);
 			
 			if(myPlayer.getTargetX()==Integer.MIN_VALUE || myPlayer.getTargetY()==Integer.MIN_VALUE){
 				mySelectionDialog = noSelectionDialog;
@@ -95,7 +100,7 @@ public class AttackMenu extends SubMenu{
 				mySelectionDialog = emptySelectionDialog;
 			}
 			else if(myPlayer.getAction().getCost()!=0){
-				mySelectionDialog = new Text(750, 140, " ", 2, myFont);
+				mySelectionDialog = new Text(750, 80, " ", 2, myFont);
 			}
 			else{
 				mySelectionDialog = noSelectionDialog;

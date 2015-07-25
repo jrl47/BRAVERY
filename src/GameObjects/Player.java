@@ -50,7 +50,7 @@ public class Player extends GameObject{
 		myStage = stage;
 		int roomX = myStage.getRoomX();
 		int roomY = myStage.getRoomY();
-		myX = 3 + Stage.ROOM_SIZE*-(myStage.getRooms().getX(roomX, roomY) - roomX);
+		myX = 6 + Stage.ROOM_SIZE*-(myStage.getRooms().getX(roomX, roomY) - roomX);
 		myY = 14  + Stage.ROOM_SIZE*-(myStage.getRooms().getY(roomX, roomY) - roomY);
 		
 		myEarthSkills = new ArrayList<SkillData>();

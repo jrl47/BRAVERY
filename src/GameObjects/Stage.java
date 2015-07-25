@@ -51,8 +51,8 @@ public class Stage extends GameObject{
 
 	public Stage() {
 		super();
-		roomX = 2;
-		roomY = 1;
+		roomX = 4;
+		roomY = 3;
 		myCamera = new Camera();
 		myBounds = new Rectangle(0, 0, MAP_WIDTH * 32,705);
 		myPlane = new State("1");
