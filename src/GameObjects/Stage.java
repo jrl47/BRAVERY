@@ -253,11 +253,15 @@ public class Stage extends GameObject{
 		for(int i=0; i<myCells.size(); i++){
 			for(int j=0; j<myCells.get(0).size(); j++){
 				if(myCells.get(i).get(j).isPassable()){
-					int rand = r.nextInt(700);
+					int rand = r.nextInt(600);
 					if(rand < 5){
-						Enemy e = new Enemy(i,j,this, 0);
-						myEnemies.add(e);
-						myCells.get(i).get(j).setEnemy(e);
+						if(myRooms.getEnemyIndex(roomX, roomY).size()!=0){
+							for(int index: myRooms.getEnemyIndex(roomX, roomY)){
+								Enemy e = new Enemy(i,j,this, index);
+								myEnemies.add(e);
+								myCells.get(i).get(j).setEnemy(e);
+							}
+						}
 					}
 					else if(rand < 8){
 						Collectible c = new Collectible(i, j, this, 0);

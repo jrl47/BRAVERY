@@ -19,6 +19,7 @@ public class RoomNetwork {
 	private List<List<Integer>> myRoomXs;
 	private List<List<Integer>> myRoomYs;
 	private Stage myStage;
+	private List<BufferedImage> myEnemies;
 	
 	public RoomNetwork(Stage stage){
 		myStage = stage;
@@ -42,6 +43,16 @@ public class RoomNetwork {
 				myRoomYs.get(i).add(-1);
 			}
 		}
+		
+		myEnemies = new ArrayList<BufferedImage>();
+		for(int i=0; i<1; i++){
+			try {
+				myEnemies.add(ImageIO.read(DeciduousTileManager.class.getResource("/enemy" + i + ".png")));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		for(int i=0; i<WORLD_WIDTH; i++){
 			for(int j=0; j<WORLD_HEIGHT; j++){
 				BufferedImage room = null;
@@ -100,5 +111,14 @@ public class RoomNetwork {
 	}
 	public int getHeight(int roomX, int roomY) {
 		return myRoomHeights.get(roomX).get(roomY);
+	}
+	public List<Integer> getEnemyIndex(int roomX, int roomY){
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		for(int i=0; i<1; i++){
+			if(myEnemies.get(i).getRGB(roomX, roomY)==-16777216){
+				result.add(i);
+			}
+		}
+		return result;
 	}
 }
