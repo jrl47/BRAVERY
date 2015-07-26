@@ -2,13 +2,10 @@ package GameObjects;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import UtilitiesData.EnemyBuilder;
 import UtilitiesData.EnemyData;
-import UtilityObjects.Action;
 
 public class NPC extends GameObject{
 
@@ -17,6 +14,7 @@ public class NPC extends GameObject{
 	
 	
 	private int myIndex;
+	private boolean isRemoved;
 	
 	protected String myName;
 	
@@ -31,11 +29,7 @@ public class NPC extends GameObject{
 		myY = y;
 		myIndex = index;
 		data = null;
-		if(myIndex < 100){
-			data = EnemyBuilder.getEnemyObject(myIndex);
-		} else{
-			data = EnemyBuilder.getBossObject(myIndex-100);
-		}
+		data = EnemyBuilder.getEnemyObject(myIndex);
 		myName = data.getName();
 	}
 	
@@ -48,7 +42,6 @@ public class NPC extends GameObject{
 	@Override
 	public void step() {
 		// TODO Auto-generated method stub
-		
 	}
 	public void draw(Graphics g){
 		if(myStage.getRelativeX(myX)*Stage.BLOCK_SIZE <0 || 
@@ -63,10 +56,15 @@ public class NPC extends GameObject{
 	public void doTurn(Player myPlayer) {
 		int dist = Math.abs(myPlayer.getX() - myX) + Math.abs(myPlayer.getY() - myY);
 		if(dist <= 1){
-//			attack(myPlayer);
+			myPlayer.addNPC(this);
+			isRemoved = true;
 		}
 	}
 
+	public boolean isRemoved(){
+		return isRemoved;
+	}
+	
 	public int getIndex() {
 		return myIndex;
 	}

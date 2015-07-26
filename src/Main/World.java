@@ -9,6 +9,7 @@ import Utilities.State;
 import UtilitiesData.CollectibleBuilder;
 import UtilitiesData.CollectibleSkillBuilder;
 import UtilitiesData.EnemyBuilder;
+import UtilitiesData.NPCBuilder;
 import UtilitiesData.RoomDataBuilder;
 import UtilitiesData.SkillBuilder;
 import GameObjects.Background;
@@ -44,6 +45,7 @@ public class World extends GameObject{
 		RoomDataBuilder.init();
 		SkillBuilder.init();
 		CollectibleSkillBuilder.init();
+		NPCBuilder.init();
 		myState = new State("main");
 		mySoundState = new State("false");
 		oldSoundState = "false";
