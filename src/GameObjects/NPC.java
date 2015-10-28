@@ -1,11 +1,10 @@
 package GameObjects;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
 
-import UtilitiesData.EnemyBuilder;
-import UtilitiesData.EnemyData;
+import UtilitiesData.NPCBuilder;
+import UtilitiesData.NPCData;
 
 public class NPC extends GameObject{
 
@@ -14,13 +13,12 @@ public class NPC extends GameObject{
 	
 	
 	private int myIndex;
-	private boolean isRemoved;
 	
 	protected String myName;
 	
 	protected Stage myStage;
 	protected List<List<MapCell>> myCells;
-	protected EnemyData data;
+	protected NPCData data;
 	
 	public NPC(int x, int y, Stage stage, int index){
 		myStage = stage;
@@ -29,8 +27,7 @@ public class NPC extends GameObject{
 		myY = y;
 		myIndex = index;
 		data = null;
-		data = EnemyBuilder.getEnemyObject(myIndex);
-		myName = data.getName();
+		data = NPCBuilder.getNPCObject(myIndex);
 	}
 	
 	@Override
@@ -56,15 +53,10 @@ public class NPC extends GameObject{
 	public void doTurn(Player myPlayer) {
 		int dist = Math.abs(myPlayer.getX() - myX) + Math.abs(myPlayer.getY() - myY);
 		if(dist <= 1){
-			myPlayer.addNPC(this);
-			isRemoved = true;
+			myPlayer.sendMessage(data.getMessage());
 		}
 	}
 
-	public boolean isRemoved(){
-		return isRemoved;
-	}
-	
 	public int getIndex() {
 		return myIndex;
 	}

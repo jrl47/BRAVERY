@@ -46,8 +46,6 @@ public class Player extends GameObject{
 	private List<SkillData> myWaterSkills;
 	private List<SkillData> myFireSkills;
 	
-	private NPC myNPC;
-	
 	public Player(Stage stage){
 		myStage = stage;
 		int roomX = myStage.getRoomX();
@@ -409,7 +407,8 @@ public class Player extends GameObject{
 		return shiftHeld;
 	}
 
-	public void addNPC(NPC npc) {
-		myNPC = npc;
+	public void sendMessage(String message) {
+		// TODO Auto-generated method stub
 	}
+
 }
